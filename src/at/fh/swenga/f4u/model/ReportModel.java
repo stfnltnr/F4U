@@ -16,13 +16,19 @@ public class ReportModel implements java.io.Serializable {
 	private int id;
 	
 	@NotNull(message = "{0} is required")
-	private String bezeichnung;
+	private String name;
 	
 	@NotNull(message = "{0} is required")
 	private Date dayOfCreation;
 	
 	public ReportModel() {
-		
+	}
+	
+	public ReportModel(int id, String name, Date dayOfCreation) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.dayOfCreation = dayOfCreation;
 	}
 
 	public int getId() {
@@ -33,12 +39,12 @@ public class ReportModel implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public String getBezeichnung() {
-		return bezeichnung;
+	public String getName() {
+		return name;
 	}
 
-	public void setBezeichnung(String bezeichnung) {
-		this.bezeichnung = bezeichnung;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Date getDayOfCreation() {
