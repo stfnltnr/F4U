@@ -101,6 +101,7 @@ public class PermanentModel implements java.io.Serializable {
 	public Date getDuration() {
 		return duration;
 	}
+	
 
 	public void setDuration(Date duration) {
 		this.duration = duration;
