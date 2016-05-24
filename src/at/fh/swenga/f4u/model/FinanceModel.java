@@ -1,11 +1,15 @@
 package at.fh.swenga.f4u.model;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 public class FinanceModel implements java.io.Serializable {
@@ -25,6 +29,12 @@ public class FinanceModel implements java.io.Serializable {
 	private double value;
 	
 	private String notes;
+	
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	FinanceModel finance;
+	
+	@Version
+	long version;
 	
 	public FinanceModel() {
 	}
