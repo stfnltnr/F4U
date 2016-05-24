@@ -1,9 +1,14 @@
 package at.fh.swenga.f4u.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 public class CategorieModel implements java.io.Serializable {
@@ -19,6 +24,12 @@ public class CategorieModel implements java.io.Serializable {
 	private String describtion;
 	private String icon;
 	private String color;
+	
+	@OneToMany(mappedBy="categorie", fetch=FetchType.LAZY)
+	private Set<FinanceModel> finances;
+	
+	@Version
+	long version;
 	
 	public CategorieModel() {
 	}
