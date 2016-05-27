@@ -3,6 +3,7 @@ package at.fh.swenga.f4u.model;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
+@Entity
 public class CategorieModel implements java.io.Serializable {
 	
 	@Id
@@ -34,9 +36,8 @@ public class CategorieModel implements java.io.Serializable {
 	public CategorieModel() {
 	}
 	
-	public CategorieModel(int id, String name, String describtion, String icon, String color) {
+	public CategorieModel(String name, String describtion, String icon, String color) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.describtion = describtion;
 		this.icon = icon;
@@ -81,6 +82,14 @@ public class CategorieModel implements java.io.Serializable {
 
 	public void setColor(String color) {
 		this.color = color;
+	}
+
+	public Set<FinanceModel> getFinances() {
+		return finances;
+	}
+
+	public void setFinances(Set<FinanceModel> finances) {
+		this.finances = finances;
 	}
 	
 }

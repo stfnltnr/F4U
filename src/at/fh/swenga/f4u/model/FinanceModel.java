@@ -1,17 +1,20 @@
 package at.fh.swenga.f4u.model;
 
 import java.util.Date;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
+@Entity
+@Table(name = "Finance")
 public class FinanceModel implements java.io.Serializable {
 	
 	@Id
@@ -31,17 +34,15 @@ public class FinanceModel implements java.io.Serializable {
 	private String notes;
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
-	FinanceModel finance;
+	CategorieModel categorie;
 	
-	@Version
-	long version;
+	
 	
 	public FinanceModel() {
 	}
 	
-	public FinanceModel(int id, boolean incoming, boolean outgoing, Date bookDate, double value, String notes) {
+	public FinanceModel(boolean incoming, boolean outgoing, Date bookDate, double value, String notes) {
 		super();
-		this.id = id;
 		this.incoming = incoming;
 		this.outgoing = outgoing;
 		this.bookDate = bookDate;
@@ -95,6 +96,14 @@ public class FinanceModel implements java.io.Serializable {
 
 	public void setNotes(String notes) {
 		this.notes = notes;
+	}
+
+	public CategorieModel getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(CategorieModel categorie) {
+		this.categorie = categorie;
 	}
 	
 }

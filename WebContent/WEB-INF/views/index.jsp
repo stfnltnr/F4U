@@ -27,20 +27,19 @@
 			<!--  paging ----------------------------------------------------------- -->
 			<form action="getPage" method="post">
 				Paging: Page:<input type="text" name="page" value="0"> 
-				Size:<input type="text" name="size" value="10">
-				 <input type="submit" value="Do it">
+				Size:<input	type="text" name="size" value="10"> 
+				<input type="submit" value="Do it">
 			</form>
 			<hr>
 
 			<!--  Search + Fill ----------------------------------------------------------- -->
 			<div class="row">
 				<form method="post" action="find">
-					<label for="searchString">Search:</label> 
-					<select name="type">
+					<label for="searchString">Search:</label> <select name="type">
 						<option value="findAll" selected="selected">findAll</option>
-						<option value="findByLastName">findByLastName</option>
-						<option value="findByFirstName">findByFirstName</option>
-						<option value="findByWhateverName">findByWhateverName</option>
+						<option value="findByNotes">findByNotes</option>
+						<option value="findByCategorieName">findByCategorieName</option>
+						<!-- <option value="findByWhateverName">findByWhateverName</option>
 						<option value="doALike">doALike</option>
 						<option value="countByLastName">countByLastName</option>
 						<option value="removeByLastName">removeByLastName</option>
@@ -48,46 +47,50 @@
 						<option value="findByLastNameContainingOrFirstNameContainingAllIgnoreCase">findByName</option>
 						<option value="findByOrderByLastNameAsc">orderByLastName</option>
 						<option value="findTop10ByOrderByLastNameAsc">orderByLastNameTOP10</option>
-						<option value="findByCompanyNameOrderByLastNameAsc">findByCompanyNameOrderByLastNameAsc</option>
-						
+						<option value="findByCompanyNameOrderByLastNameAsc">findByCompanyNameOrderByLastNameAsc</option> -->
+
 					</select> <input type="text" name="searchString"> <input
 						type="submit" value="Do it">
 				</form>
 			</div>
 
 			<!--  Search + Fill ----------------------------------------------------------- -->
-			<h3>Count: ${count}</h3>
+			<%-- <h3>Count: ${count}</h3> --%>
 		</center>
 
 
 
-		<!--  list all employees ----------------------------------------------------------- -->
+		<!--  list all finances ----------------------------------------------------------- -->
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
-				<h1>Employees</h1>
+				<h1>Finances</h1>
 				<table data-toggle="table" class="table table-striped">
 					<thead>
 						<tr>
 							<th>ID</th>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Company</th>
-							<th>DOB</th>
+							<th>Incoming</th>
+							<th>Outgoing</th>
+							<th>Book Date</th>
+							<th>Value</th>
+							<th>Notes</th>
+							<th>Categorie</th>
 							<th>Action <a href="fill"><button type="button"
 										class="btn btn-success">Fill List</button></a>
 							</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${employees}" var="employee">
+						<c:forEach items="${finances}" var="finance">
 							<tr>
-								<td>${employee.id}</td>
-								<td>${employee.firstName}</td>
-								<td>${employee.lastName}</td>
-								<td>${employee.company.name}</td>
-								<td><fmt:formatDate value="${employee.dayOfBirth}"
+								<td>${finance.id}</td>
+								<td>${finance.incoming}</td>
+								<td>${finance.outgoing}</td>
+								<td><fmt:formatDate value="${finance.bookDate}"
 										pattern="dd.MM.yyyy" />
-								<td><a href="delete?id=${employee.id}">Delete</a></td>
+								<td>${finance.value}</td>
+								<td>${finance.notes}</td>
+								<td>${finance.categorie.name}</td>  
+								<td><a href="delete?id=${finance.id}">Delete</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>
