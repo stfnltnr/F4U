@@ -36,7 +36,11 @@ public class FinanceModel implements java.io.Serializable {
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	CategorieModel categorie;
 	
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	SubcategorieModel subcategorie;
 	
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	UserModel user;
 	
 	public FinanceModel() {
 	}
@@ -104,6 +108,22 @@ public class FinanceModel implements java.io.Serializable {
 
 	public void setCategorie(CategorieModel categorie) {
 		this.categorie = categorie;
+	}
+
+	public SubcategorieModel getSubcategorie() {
+		return subcategorie;
+	}
+
+	public void setSubcategorie(SubcategorieModel subcategorie) {
+		this.subcategorie = subcategorie;
+	}
+
+	public UserModel getUser() {
+		return user;
+	}
+
+	public void setUser(UserModel user) {
+		this.user = user;
 	}
 	
 }

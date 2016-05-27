@@ -39,6 +39,8 @@
 						<option value="findAll" selected="selected">findAll</option>
 						<option value="findByNotes">findByNotes</option>
 						<option value="findByCategorieName">findByCategorieName</option>
+						<option value="findBySubcategorieName">findBySubcategorieName</option>
+						<option value="findByUserLastName">findByUserLastName</option>
 						<!-- <option value="findByWhateverName">findByWhateverName</option>
 						<option value="doALike">doALike</option>
 						<option value="countByLastName">countByLastName</option>
@@ -74,6 +76,8 @@
 							<th>Value</th>
 							<th>Notes</th>
 							<th>Categorie</th>
+							<th>Subcategorie</th>
+							<th>User</th>
 							<th>Action <a href="fill"><button type="button"
 										class="btn btn-success">Fill List</button></a>
 							</th>
@@ -90,6 +94,8 @@
 								<td>${finance.value}</td>
 								<td>${finance.notes}</td>
 								<td>${finance.categorie.name}</td>  
+								<td>${finance.subcategorie.name}</td>  
+								<td>${finance.user.lastName}</td>  
 								<td><a href="delete?id=${finance.id}">Delete</a></td>
 							</tr>
 						</c:forEach>

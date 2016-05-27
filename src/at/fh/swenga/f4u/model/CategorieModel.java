@@ -2,12 +2,14 @@ package at.fh.swenga.f4u.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
@@ -29,6 +31,9 @@ public class CategorieModel implements java.io.Serializable {
 	
 	@OneToMany(mappedBy="categorie", fetch=FetchType.LAZY)
 	private Set<FinanceModel> finances;
+	
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	SubcategorieModel subcategorie;
 	
 	@Version
 	long version;
@@ -90,6 +95,14 @@ public class CategorieModel implements java.io.Serializable {
 
 	public void setFinances(Set<FinanceModel> finances) {
 		this.finances = finances;
+	}
+
+	public SubcategorieModel getSubcategorie() {
+		return subcategorie;
+	}
+
+	public void setSubcategorie(SubcategorieModel subcategorie) {
+		this.subcategorie = subcategorie;
 	}
 	
 }
