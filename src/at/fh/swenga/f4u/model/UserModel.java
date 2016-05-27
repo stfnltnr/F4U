@@ -1,13 +1,18 @@
 package at.fh.swenga.f4u.model;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+@Entity
 public class UserModel implements java.io.Serializable{
 	
 	@Id
@@ -38,17 +43,20 @@ public class UserModel implements java.io.Serializable{
 	@NotNull(message = "{0} is required")
 	private Date dayOfBirth;
 	
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+	private Set<FinanceModel> finances;
+
 	public UserModel() {
 	}
 	
-	public UserModel(int id, String firstName, String lastName, String address, int postCode, String phone, String email,
+	public UserModel(String firstName, String lastName, String address, int postCode, String place, String phone, String email,
 			Date dayOfBirth) {
 		super();
-		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
 		this.postCode = postCode;
+		this.place = place;
 		this.phone = phone;
 		this.email = email;
 		this.dayOfBirth = dayOfBirth;
@@ -126,4 +134,11 @@ public class UserModel implements java.io.Serializable{
 		this.dayOfBirth = dayOfBirth;
 	}
 	
+	public Set<FinanceModel> getFinances() {
+		return finances;
+	}
+
+	public void setFinances(Set<FinanceModel> finances) {
+		this.finances = finances;
+	}
 }
