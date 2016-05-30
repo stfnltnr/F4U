@@ -1,13 +1,17 @@
 package at.fh.swenga.f4u.model;
 
-import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+@Entity
 public class SubcategorieModel implements java.io.Serializable {
 	
 	@Id
@@ -22,12 +26,17 @@ public class SubcategorieModel implements java.io.Serializable {
 	private String icon;
 	private String color;
 	
+	@OneToMany(mappedBy="subcategorie", fetch=FetchType.LAZY)
+	private Set<CategorieModel> categories;
+	
+	@OneToMany(mappedBy="categorie", fetch=FetchType.LAZY)
+	private Set<FinanceModel> finances;
+	
 	public SubcategorieModel() {
 	}
 	
-	public SubcategorieModel(int id, String name, String describtion, String icon, String color) {
+	public SubcategorieModel(String name, String describtion, String icon, String color) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.describtion = describtion;
 		this.icon = icon;
@@ -72,6 +81,22 @@ public class SubcategorieModel implements java.io.Serializable {
 
 	public void setColor(String color) {
 		this.color = color;
+	}
+
+	public Set<CategorieModel> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(Set<CategorieModel> categories) {
+		this.categories = categories;
+	}
+
+	public Set<FinanceModel> getFinances() {
+		return finances;
+	}
+
+	public void setFinances(Set<FinanceModel> finances) {
+		this.finances = finances;
 	}
 	
 }
