@@ -65,12 +65,12 @@ public class CategorieModel implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public String getDescribtion() {
+	public String getDescription() {
 		return description;
 	}
 
-	public void setDescribtion(String describtion) {
-		this.description = describtion;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getIcon() {
