@@ -24,6 +24,6 @@
 	Request-URI:  ${pageContext.errorData.requestURI}<br>
 	Servlet Name: ${pageContext.errorData.servletName}<br>
 	<br>
-	<a href="./">Zurück</a>
+	<a href="./index">Zurück</a>
 </body>
 </html>

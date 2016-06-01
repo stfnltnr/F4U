@@ -3,6 +3,9 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,7 +16,7 @@
 
 </head>
 <body>
-	<div class="container">
+	<div class="container" role="main">
 		<center>
 			<h1>${type}</h1>
 			<br>
@@ -128,6 +131,16 @@
 		</div>
 		<!--  list all employees ----------------------------------------------------------- -->
 	</div>
+	
+		<!-- Logout -->
+	<c:url value="/logout" var="logoutUrl" />
+	<form action="${logoutUrl }" method="post">
+		<input type="hidden" name="${_csrf.parameterName}"
+			value="${_csrf.token}" /> <input class="btn btn-xs btn-danger"
+			type="submit" value="Logout" />
+	</form>
+	
+	
 	<!--  end of container -->
 	<%@include file="includes/bootstrapJs.js"%>
 </body>

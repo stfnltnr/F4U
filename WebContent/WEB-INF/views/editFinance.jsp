@@ -4,6 +4,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -65,7 +68,7 @@
 									name="outgoing" value="<c:out value="${finance.outgoing}"/>">
 							</div>
 						</div>
-<%-- 
+						<%-- 
 						<! ----------------  bookDate ---------------- -->
 						<div class="form-group">
 							<label for="inputDate" class="col-md-2 control-label">Date</label>
@@ -75,7 +78,7 @@
 									value="<fmt:formatDate value="${finance.bookDate}" pattern="dd.MM.yyyy"/>">
 							</div>
 						</div> --%>
-						
+
 						<! ----------------  value ---------------- -->
 						<div class="form-group">
 							<label for="inputValue" class="col-md-2 control-label">Value</label>
@@ -84,7 +87,7 @@
 									name="value" value="<c:out value="${finance.value}"/>">
 							</div>
 						</div>
-						
+
 						<! ----------------  notes ---------------- -->
 						<div class="form-group">
 							<label for="inputNotes" class="col-md-2 control-label">Notes</label>
@@ -105,6 +108,10 @@
 						</div>
 
 					</fieldset>
+
+					<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" />
+
 				</form>
 			</div>
 		</div>
@@ -113,12 +120,12 @@
 	<!--  End of container -->
 
 
-<!-- JS for Bootstrap -->
+	<!-- JS for Bootstrap -->
 	<%@include file="includes/bootstrapJs.js"%>
-<!-- JS for Bootstrap -->
+	<!-- JS for Bootstrap -->
 
 
-<!-- JS for Datetime picker -->
+	<!-- JS for Datetime picker -->
 
 	<script type="text/javascript"
 		src="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
