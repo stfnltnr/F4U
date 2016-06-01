@@ -3,6 +3,9 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,41 +16,42 @@
 
 </head>
 <body>
-	<div class="container">
+	<div class="container" role="main">
 		<center>
 			<h1>${type}</h1>
 			<br>
 			<!--  Error message ----------------------------------------------------------- -->
-		<c:if test="${not empty errorMessage}">
-			<div class="alert alert-danger" role="alert">${errorMessage}</div>
-		</c:if>
-		<!--  Error message ----------------------------------------------------------- -->
+			<c:if test="${not empty errorMessage}">
+				<div class="alert alert-danger" role="alert">${errorMessage}</div>
+			</c:if>
+			<!--  Error message ----------------------------------------------------------- -->
 
-		<!--  Warning message ----------------------------------------------------------- -->
-		<c:if test="${not empty warningMessage}">
-			<div class="alert alert-warning" role="warning">
-				${warningMessage}</div>
-		</c:if>
-		<!--  Warning message ----------------------------------------------------------- -->
+			<!--  Warning message ----------------------------------------------------------- -->
+			<c:if test="${not empty warningMessage}">
+				<div class="alert alert-warning" role="warning">
+					${warningMessage}</div>
+			</c:if>
+			<!--  Warning message ----------------------------------------------------------- -->
 
-		<!--   message ----------------------------------------------------------- -->
-		<c:if test="${not empty message}">
-			<div class="alert alert-success" role="warning">
-				${message}</div>
-		</c:if>
-		<!--   message ----------------------------------------------------------- -->
+			<!--   message ----------------------------------------------------------- -->
+			<c:if test="${not empty message}">
+				<div class="alert alert-success" role="warning">${message}</div>
+			</c:if>
+			<!--   message ----------------------------------------------------------- -->
 			<!--  search by Id ----------------------------------------------------------- -->
 			<form action="findById" method="post">
 				Find by Id: <input type="text" name="id"> <input
-					type="submit" value="Do it">
+					type="submit" value="Do it"> <input type="hidden"
+					name="${_csrf.parameterName}" value="${_csrf.token}" />
 			</form>
 			<hr>
 
 			<!--  paging ----------------------------------------------------------- -->
 			<form action="getPage" method="post">
-				Paging: Page:<input type="text" name="page" value="0"> 
-				Size:<input	type="text" name="size" value="5"> 
-				<input type="submit" value="Do it">
+				Paging: Page:<input type="text" name="page" value="0"> Size:<input
+					type="text" name="size" value="5"> <input type="submit"
+					value="Do it"> <input type="hidden"
+					name="${_csrf.parameterName}" value="${_csrf.token}" />
 			</form>
 			<hr>
 
@@ -71,7 +75,9 @@
 						<option value="findByCompanyNameOrderByLastNameAsc">findByCompanyNameOrderByLastNameAsc</option> -->
 
 					</select> <input type="text" name="searchString"> <input
-						type="submit" value="Do it">
+						type="submit" value="Do it"> <input type="hidden"
+						name="${_csrf.parameterName}" value="${_csrf.token}" />
+
 				</form>
 			</div>
 
@@ -85,23 +91,22 @@
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
 				<h1>Finances</h1>
+				<a href="fill"><button type="button" class="btn btn-success">FillList</button></a>
+				<a href="add"><button type="button" class="btn btn-success">Add</button>
+				</a>
 				<table data-toggle="table" class="table table-striped">
 					<thead>
 						<tr>
 							<th>ID</th>
 							<th>Incoming</th>
 							<th>Outgoing</th>
-						<!-- 	<th>Book Date</th> -->
+							<!-- 	<th>Book Date</th> -->
 							<th>Value</th>
 							<th>Notes</th>
 							<th>Categorie</th>
 							<th>Subcategorie</th>
 							<th>User</th>
-							<th>Action <a href="fill"><button type="button"
-										class="btn btn-success">Fill List</button></a>
-										<a href="add"><button type="button"
-										class="btn btn-success">Add</button></a>
-							</th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -114,20 +119,46 @@
 										pattern="dd.MM.yyyy" /> --%>
 								<td>${finance.value}</td>
 								<td>${finance.notes}</td>
-								<td>${finance.categorie.name}</td>  
-								<td>${finance.subcategorie.name}</td>  
-								<td>${finance.user.lastName}</td>  
-								<td><a href="delete?id=${finance.id}">Delete</a>
-								<a href="edit?id=${finance.id}">Edit</a>
-								</td>
+								<td>${finance.categorie.name}</td>
+								<td>${finance.subcategorie.name}</td>
+								<td>${finance.user.lastName}</td>
+
+								<sec:authorize access="hasRole('ROLE_ADMIN')">
+									<td><a href="edit?id=${finance.id}">
+											<button type="button" class="btn btn-xs btn-success">
+												<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+												Edit
+											</button>
+									</a> <a href="delete?id=${finance.id}">
+											<button type="button" class="btn btn-xs btn-danger">
+												<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+												Delete
+											</button>
+									</a></td>
+								</sec:authorize>
+
+
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 			</div>
 		</div>
-		<!--  list all employees ----------------------------------------------------------- -->
+		<!--  list all employees  ----------------------------------------------------------- -->
 	</div>
+
+	<input type="hidden" name="${_csrf.parameterName}"
+		value="${_csrf.token}" />
+
+	<!-- Logout -->
+	<c:url value="/logout" var="logoutUrl" />
+	<form action="${logoutUrl }" method="post">
+		<input type="hidden" name="${_csrf.parameterName}"
+			value="${_csrf.token}" /> <input class="btn btn-xs btn-danger"
+			type="submit" value="Logout" />
+	</form>
+
+
 	<!--  end of container -->
 	<%@include file="includes/bootstrapJs.js"%>
 </body>
