@@ -104,30 +104,8 @@ public class FinanceController {
 		UserModel user = null;
 
 		for (int i = 0; i < 10; i++) {
-			if (i % 5 == 0) {
-				String categorieName = df.getBusinessName();
-				String categorieDescribtion = df.getLastName();
-				String categorieIcon = df.getRandomChars(2);
-				String categorieColor = df.getRandomChars(5);
-				categorie = categorieRepository.findFirstByName(categorieName);
-
-				if (categorie == null) {
-					categorie = new CategorieModel(categorieName, categorieDescribtion, categorieIcon, categorieColor);
-				}
-			}
-
-			if (i % 2 == 0) {
-				String subcategorieName = df.getBusinessName();
-				String subcategorieDescribtion = df.getLastName();
-				String subcategorieIcon = df.getRandomChars(2);
-				String subcategorieColor = df.getRandomChars(5);
-				subcategorie = subcategorieRepository.findFirstByName(subcategorieName);
-
-				if (subcategorie == null) {
-					subcategorie = new SubcategorieModel(subcategorieName, subcategorieDescribtion, subcategorieIcon,
-							subcategorieColor);
-				}
-			}
+			categorie = new CategorieModel("Cat"+i, "Cat"+i+"desc", "ICON"+i, "Color"+i);
+			subcategorie = new SubcategorieModel("SubCat"+i, "SubCat"+i+"desc", "SubICON"+i, "SubColor"+i);
 			
 				String userFirstName = df.getFirstName();
 				String userLastName = df.getLastName();
@@ -150,7 +128,7 @@ public class FinanceController {
 			fm.setUser(user);
 			financeRepository.save(fm);
 		}
-System.out.print("leck mich du sau");
+		System.out.print("leck mich du sau");
 		return "forward:list";
 	}
 
