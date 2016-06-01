@@ -25,11 +25,13 @@
 				<c:set var="legend">Change Finance ${finance.id}</c:set>
 				<c:set var="formAction">changeFinance</c:set>
 				<c:set var="readonly">readonly</c:set>
+				<c:set var="shown">text</c:set>
 			</c:when>
 			<c:otherwise>
 				<c:set var="legend">New Finance</c:set>
 				<c:set var="formAction">addFinance</c:set>
 				<c:set var="readonly">readonly</c:set>
+				<c:set var="shown">hidden</c:set>
 			</c:otherwise>
 		</c:choose>
 		<!--  add or edit?  ----------------------------------------------------------- -->
@@ -39,16 +41,16 @@
 				<form class="form-horizontal" method="post" action="${formAction}">
 					<fieldset>
 						<legend>${legend}</legend>
-
-						<%-- <! ----------------  id ---------------- -->
+						 <! ----------------  id ---------------- -->
+						 <c:if test="${not empty finance}">
 						<div class="form-group">
 							<label for="inputID" class="col-md-2 control-label">ID</label>
 							<div class="col-md-10">
 								<input class="form-control" id="inputID" type="text" name="id"
 									${readonly} value="<c:out value="${finance.id}"/>">
 							</div>
-						</div> --%>
-
+						</div> 
+						</c:if>
 						<! ----------------  incoming ---------------- -->
 						<div class="form-group">
 							<label for="inputIncoming" class="col-md-2 control-label">Incoming</label>
