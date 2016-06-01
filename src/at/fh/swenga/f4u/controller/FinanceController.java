@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.fluttercode.datafactory.impl.DataFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,8 +13,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.f4u.dao.CategorieRepository;
@@ -33,9 +38,9 @@ public class FinanceController {
 	@Autowired
 	UserRepository userRepository;
 
-	// @Autowired
-	// PermanentRepository permanentRepository;
-	//
+//	@Autowired
+//	PermanentRepository permanentRepository;
+
 	@Autowired
 	CategorieRepository categorieRepository;
 
@@ -97,7 +102,7 @@ public class FinanceController {
 		SubcategorieModel subcategorie = null;
 		UserModel user = null;
 
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 10; i++) {
 			if (i % 5 == 0) {
 				String categorieName = df.getBusinessName();
 				String categorieDescribtion = df.getLastName();
@@ -157,7 +162,38 @@ public class FinanceController {
 
 		return "index";
 	}
+	
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String showAddDataForm(Model model) {
+		return "editFinance";
+	}
 
+	@RequestMapping(value = "/add", method=RequestMethod.POST)
+	public String addData(@Valid @ModelAttribute FinanceModel newFinanceModel, BindingResult bindingResult, 
+			Model model){
+		
+		if (bindingResult.hasErrors()) {
+			String errorMessage = "";
+			for (FieldError fieldError : bindingResult.getFieldErrors()) {
+				errorMessage += fieldError.getField() + " is invalid<br>";
+			}
+			model.addAttribute("errorMessage", errorMessage);
+			return "forward:/index";
+		}
+		
+		boolean fm = financeRepository.equals(newFinanceModel);
+		if(fm){
+			model.addAttribute("errorMessage", "Finance already exists!<br>");
+		}
+		else {
+			financeRepository.save(newFinanceModel);
+			model.addAttribute("message", "New finance " + newFinanceModel.getId() + " added.");
+		}
+		
+		return "forward:index";
+	}
+	
+	
 	@RequestMapping("/delete")
 	public String deleteData(Model model, @RequestParam int id) {
 		financeRepository.delete(id);
