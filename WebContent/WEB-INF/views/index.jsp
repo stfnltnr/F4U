@@ -27,7 +27,7 @@
 			<!--  paging ----------------------------------------------------------- -->
 			<form action="getPage" method="post">
 				Paging: Page:<input type="text" name="page" value="0"> 
-				Size:<input	type="text" name="size" value="10"> 
+				Size:<input	type="text" name="size" value="5"> 
 				<input type="submit" value="Do it">
 			</form>
 			<hr>
@@ -80,6 +80,8 @@
 							<th>User</th>
 							<th>Action <a href="fill"><button type="button"
 										class="btn btn-success">Fill List</button></a>
+										<a href="add"><button type="button"
+										class="btn btn-success">Add</button></a>
 							</th>
 						</tr>
 					</thead>
