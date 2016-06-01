@@ -20,8 +20,6 @@
 //	@Autowired
 //	CategorieRepository categorieRepository;
 //	
-//	@Autowired
-//	SubcategorieRepository subcategorieRepository;
 //	
 //	@RequestMapping(value = {"listCategories"})
 //	public String index(Model model) {
