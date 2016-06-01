@@ -25,7 +25,7 @@ public class CategorieModel implements java.io.Serializable {
 	@NotNull(message = "{0} is required")
 	private String name;
 	
-	private String describtion;
+	private String description;
 	private String icon;
 	private String color;
 	
@@ -41,10 +41,10 @@ public class CategorieModel implements java.io.Serializable {
 	public CategorieModel() {
 	}
 	
-	public CategorieModel(String name, String describtion, String icon, String color) {
+	public CategorieModel(String name, String description, String icon, String color) {
 		super();
 		this.name = name;
-		this.describtion = describtion;
+		this.description = description;
 		this.icon = icon;
 		this.color = color;
 	}
@@ -66,11 +66,11 @@ public class CategorieModel implements java.io.Serializable {
 	}
 
 	public String getDescribtion() {
-		return describtion;
+		return description;
 	}
 
 	public void setDescribtion(String describtion) {
-		this.describtion = describtion;
+		this.description = describtion;
 	}
 
 	public String getIcon() {
