@@ -52,6 +52,7 @@ public class FinanceController {
 		List<FinanceModel> finances = financeRepository.findAll();
 		model.addAttribute("finances", finances);
 		model.addAttribute("type", "findAll");
+		System.out.print("hurrerei!!!!!!!!!!!!!!!AAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHH");
 		return "index";
 	}
 
@@ -143,13 +144,13 @@ public class FinanceController {
 							userEmail, userDayOfBirth);
 				}
 			
-			FinanceModel fm = new FinanceModel(true, false, df.getBirthDate(), 2000.0, df.getFirstName());
+			FinanceModel fm = new FinanceModel(true, false, 2000.0, df.getFirstName());
 			fm.setCategorie(categorie);
 			fm.setSubcategorie(subcategorie);
 			fm.setUser(user);
 			financeRepository.save(fm);
 		}
-
+System.out.print("leck mich du sau");
 		return "forward:list";
 	}
 
@@ -168,7 +169,8 @@ public class FinanceController {
 		return "editFinance";
 	}
 
-	@RequestMapping(value = "/add", method=RequestMethod.POST)
+	@RequestMapping(value = "/addFinance", method=RequestMethod.POST)
+	@Transactional
 	public String addData(@Valid @ModelAttribute FinanceModel newFinanceModel, BindingResult bindingResult, 
 			Model model){
 		
@@ -178,19 +180,76 @@ public class FinanceController {
 				errorMessage += fieldError.getField() + " is invalid<br>";
 			}
 			model.addAttribute("errorMessage", errorMessage);
-			return "forward:/index";
+			return "forward:list";
 		}
 		
-		boolean fm = financeRepository.equals(newFinanceModel);
-		if(fm){
+		FinanceModel finance = financeRepository.findOne(newFinanceModel.getId());
+		System.out.print(finance);
+		
+		if(finance!=null){
 			model.addAttribute("errorMessage", "Finance already exists!<br>");
 		}
 		else {
-			financeRepository.save(newFinanceModel);
+			FinanceModel fm = new FinanceModel();
+//			fm.setId(newFinanceModel.getId());
+			fm.setIncoming(newFinanceModel.isIncoming());
+			fm.setOutgoing(newFinanceModel.isOutgoing());
+//			fm.setBookDate(newFinanceModel.getBookDate());
+			fm.setValue(newFinanceModel.getValue());
+			fm.setNotes(newFinanceModel.getNotes());
+			financeRepository.save(fm);
 			model.addAttribute("message", "New finance " + newFinanceModel.getId() + " added.");
 		}
 		
-		return "forward:index";
+		return "forward:list";
+	}
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public String showEditFinanceForm(Model model, @RequestParam int id) {
+
+		FinanceModel finance = financeRepository.findOne(id);		
+		if (finance!=null) {
+			model.addAttribute("finance", finance);
+			return "editFinance";
+		} else {
+			model.addAttribute("errorMessage", "Couldn't find finance" + id);
+			return "forward:list";
+		}
+	}
+	
+	@RequestMapping(value = "/changeFinance", method = RequestMethod.POST)
+	@Transactional
+	public String editFinance(@Valid @ModelAttribute FinanceModel editFinanceModel, BindingResult bindingResult,
+			Model model) {
+ 
+		if (bindingResult.hasErrors()) {
+			String errorMessage = "";
+			for (FieldError fieldError : bindingResult.getFieldErrors()) {
+				errorMessage += fieldError.getField() + " is invalid<br>";
+			}
+			model.addAttribute("errorMessage", errorMessage);
+			return "forward:list";
+		}
+ 
+		FinanceModel finance = financeRepository.findOne(editFinanceModel.getId());
+
+		if (finance == null) {
+			model.addAttribute("errorMessage", "Finance does not exist!<br>");
+		} else {
+			finance.setId(editFinanceModel.getId());
+			finance.setIncoming(editFinanceModel.isIncoming());
+			finance.setOutgoing(editFinanceModel.isOutgoing());
+//			finance.setBookDate(editFinanceModel.getBookDate());
+			finance.setValue(editFinanceModel.getValue());
+			finance.setNotes(editFinanceModel.getNotes());
+//			finance.setCategorie(editFinanceModel.getCategorie());
+//			finance.setSubcategorie(editFinanceModel.getSubcategorie());
+//			finance.setUser(editFinanceModel.getUser());
+			financeRepository.save(finance);
+			model.addAttribute("message", "Changed finance " + editFinanceModel.getId());
+		}
+ 
+		return "forward:list";
 	}
 	
 	

@@ -17,6 +17,25 @@
 		<center>
 			<h1>${type}</h1>
 			<br>
+			<!--  Error message ----------------------------------------------------------- -->
+		<c:if test="${not empty errorMessage}">
+			<div class="alert alert-danger" role="alert">${errorMessage}</div>
+		</c:if>
+		<!--  Error message ----------------------------------------------------------- -->
+
+		<!--  Warning message ----------------------------------------------------------- -->
+		<c:if test="${not empty warningMessage}">
+			<div class="alert alert-warning" role="warning">
+				${warningMessage}</div>
+		</c:if>
+		<!--  Warning message ----------------------------------------------------------- -->
+
+		<!--   message ----------------------------------------------------------- -->
+		<c:if test="${not empty message}">
+			<div class="alert alert-success" role="warning">
+				${message}</div>
+		</c:if>
+		<!--   message ----------------------------------------------------------- -->
 			<!--  search by Id ----------------------------------------------------------- -->
 			<form action="findById" method="post">
 				Find by Id: <input type="text" name="id"> <input
@@ -72,7 +91,7 @@
 							<th>ID</th>
 							<th>Incoming</th>
 							<th>Outgoing</th>
-							<th>Book Date</th>
+						<!-- 	<th>Book Date</th> -->
 							<th>Value</th>
 							<th>Notes</th>
 							<th>Categorie</th>
@@ -91,14 +110,16 @@
 								<td>${finance.id}</td>
 								<td>${finance.incoming}</td>
 								<td>${finance.outgoing}</td>
-								<td><fmt:formatDate value="${finance.bookDate}"
-										pattern="dd.MM.yyyy" />
+								<%-- <td><fmt:formatDate value="${finance.bookDate}"
+										pattern="dd.MM.yyyy" /> --%>
 								<td>${finance.value}</td>
 								<td>${finance.notes}</td>
 								<td>${finance.categorie.name}</td>  
 								<td>${finance.subcategorie.name}</td>  
 								<td>${finance.user.lastName}</td>  
-								<td><a href="delete?id=${finance.id}">Delete</a></td>
+								<td><a href="delete?id=${finance.id}">Delete</a>
+								<a href="edit?id=${finance.id}">Edit</a>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>

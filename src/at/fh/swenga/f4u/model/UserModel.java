@@ -45,6 +45,9 @@ public class UserModel implements java.io.Serializable{
 	
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private Set<FinanceModel> finances;
+	
+//	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+//	private Set<PermanentModel> permanents;
 
 	public UserModel() {
 	}

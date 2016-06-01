@@ -19,4 +19,5 @@ public interface FinanceRepository extends JpaRepository<FinanceModel, Integer> 
 	public List<FinanceModel> findBySubcategorieName(String companyName);
 	
 	public List<FinanceModel> findByUserLastName (String lastName);
+
 }

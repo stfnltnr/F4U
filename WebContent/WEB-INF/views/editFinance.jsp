@@ -40,14 +40,14 @@
 					<fieldset>
 						<legend>${legend}</legend>
 
-						<! ----------------  id ---------------- -->
+						<%-- <! ----------------  id ---------------- -->
 						<div class="form-group">
 							<label for="inputID" class="col-md-2 control-label">ID</label>
 							<div class="col-md-10">
 								<input class="form-control" id="inputID" type="text" name="id"
 									${readonly} value="<c:out value="${finance.id}"/>">
 							</div>
-						</div>
+						</div> --%>
 
 						<! ----------------  incoming ---------------- -->
 						<div class="form-group">
@@ -65,7 +65,7 @@
 									name="outgoing" value="<c:out value="${finance.outgoing}"/>">
 							</div>
 						</div>
-
+<%-- 
 						<! ----------------  bookDate ---------------- -->
 						<div class="form-group">
 							<label for="inputDate" class="col-md-2 control-label">Date</label>
@@ -74,7 +74,7 @@
 									type="text" readonly name="bookDate"
 									value="<fmt:formatDate value="${finance.bookDate}" pattern="dd.MM.yyyy"/>">
 							</div>
-						</div>
+						</div> --%>
 						
 						<! ----------------  value ---------------- -->
 						<div class="form-group">
@@ -98,7 +98,7 @@
 						<div class="form-group">
 							<div class="col-md-10 col-md-offset-2">
 								<button type="submit" class="btn btn-primary">Submit</button>
-								<a href="listFinances">
+								<a href="list">
 									<button type="button" class="btn btn-default">Cancel</button>
 								</a>
 							</div>

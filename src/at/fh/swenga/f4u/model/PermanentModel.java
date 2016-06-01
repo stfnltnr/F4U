@@ -2,10 +2,12 @@
 //
 //import java.util.Date;
 //
+//import javax.persistence.CascadeType;
 //import javax.persistence.Column;
 //import javax.persistence.GeneratedValue;
 //import javax.persistence.GenerationType;
 //import javax.persistence.Id;
+//import javax.persistence.ManyToOne;
 //import javax.validation.constraints.NotNull;
 //
 //public class PermanentModel implements java.io.Serializable {
@@ -34,12 +36,14 @@
 //	
 //	private String notes;
 //	
+//	@ManyToOne(cascade = CascadeType.PERSIST)
+//	UserModel user;
+//	
 //	public PermanentModel() {
 //	}
 //	
-//	public PermanentModel(int id, String name, double value, boolean month, boolean quarter, boolean year, Date duration, Date begin, String notes) {
+//	public PermanentModel( String name, double value, boolean month, boolean quarter, boolean year, Date duration, Date begin, String notes) {
 //		super();
-//		this.id = id;
 //		this.name = name;
 //		this.value = value;
 //		this.month = month;
