@@ -46,6 +46,14 @@ public class FinanceController {
 
 	@Autowired
 	SubcategorieRepository subcategorieRepository;
+	
+	// LOGIN
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String handleLogin() {
+		return "login";
+	}
+
+	
 
 	@RequestMapping(value = { "/", "list" })
 	public String index(Model model) {
