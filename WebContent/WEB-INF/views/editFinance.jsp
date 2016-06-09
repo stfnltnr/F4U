@@ -67,7 +67,7 @@
 									name="outgoing" value="<c:out value="${finance.outgoing}"/>">
 							</div>
 						</div>
-<%-- 
+
 						<! ----------------  bookDate ---------------- -->
 						<div class="form-group">
 							<label for="inputDate" class="col-md-2 control-label">Date</label>
@@ -76,7 +76,7 @@
 									type="text" readonly name="bookDate"
 									value="<fmt:formatDate value="${finance.bookDate}" pattern="dd.MM.yyyy"/>">
 							</div>
-						</div> --%>
+						</div> 
 						
 						<! ----------------  value ---------------- -->
 						<div class="form-group">

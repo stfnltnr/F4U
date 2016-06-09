@@ -26,9 +26,9 @@ public class FinanceModel implements java.io.Serializable {
 	private boolean incoming;
 	private boolean outgoing;
 	
-//	@Temporal(TemporalType.DATE)
-//	@NotNull(message = "{0} is required")
-//	private Date bookDate;
+	@Temporal(TemporalType.DATE)
+	@NotNull(message = "{0} is required")
+	private Date bookDate;
 	
 	@NotNull(message = "{0} is required")
 	private double value;
@@ -47,11 +47,11 @@ public class FinanceModel implements java.io.Serializable {
 	public FinanceModel() {
 	}
 	
-	public FinanceModel(boolean incoming, boolean outgoing, double value, String notes) {
+	public FinanceModel(boolean incoming, boolean outgoing, Date bookDate, double value, String notes) {
 		super();
 		this.incoming = incoming;
 		this.outgoing = outgoing;
-//		this.bookDate = bookDate;
+		this.bookDate = bookDate;
 		this.value = value;
 		this.notes = notes;
 	}
@@ -80,13 +80,13 @@ public class FinanceModel implements java.io.Serializable {
 		this.outgoing = outgoing;
 	}
 
-//	public Date getBookDate() {
-//		return bookDate;
-//	}
-//
-//	public void setBookDate(Date bookDate) {
-//		this.bookDate = bookDate;
-//	}
+	public Date getBookDate() {
+		return bookDate;
+	}
+
+	public void setBookDate(Date bookDate) {
+		this.bookDate = bookDate;
+	}
 
 	public double getValue() {
 		return value;
