@@ -25,6 +25,7 @@
 						<tr>
 							<th>id</th>
 							<th>name</th>
+							<th>date</th>
 							<th>Action 
 							<a href="fillTest"><button type="button" class="btn btn-success">Fill List</button></a>
 							<a href="addTest"><button type="button" class="btn btn-success">Add Test</button></a>
@@ -35,7 +36,8 @@
 						<c:forEach items="${test}" var="test">
 							<tr>
 								<td>${test.id}</td>
-								<td>${test.name}</td>  
+								<td>${test.name}</td>
+								<td>${test.date}</td>  
 								<td><a href="deleteTest?id=${test.id}">Delete</a>
 									<a href="editTest?id=${test.id}">Edit</a>
 								
