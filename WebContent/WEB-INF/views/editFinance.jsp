@@ -69,11 +69,7 @@
 									name="outgoing" value="<c:out value="${finance.outgoing}"/>">
 							</div>
 						</div>
-<<<<<<< HEAD
 
-=======
-						<%-- 
->>>>>>> branch 'master' of https://github.com/loete/F4U.git
 						<! ----------------  bookDate ---------------- -->
 						<div class="form-group">
 							<label for="inputDate" class="col-md-2 control-label">Date</label>
@@ -82,13 +78,8 @@
 									type="text" readonly name="bookDate"
 									value="<fmt:formatDate value="${finance.bookDate}" pattern="dd.MM.yyyy"/>">
 							</div>
-<<<<<<< HEAD
-						</div> 
-						
-=======
-						</div> --%>
+							</div>
 
->>>>>>> branch 'master' of https://github.com/loete/F4U.git
 						<! ----------------  value ---------------- -->
 						<div class="form-group">
 							<label for="inputValue" class="col-md-2 control-label">Value</label>

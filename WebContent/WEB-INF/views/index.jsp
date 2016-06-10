@@ -123,11 +123,7 @@
 							<th>ID</th>
 							<th>Incoming</th>
 							<th>Outgoing</th>
-<<<<<<< HEAD
 							<th>Book Date</th>
-=======
-							<!-- 	<th>Book Date</th> -->
->>>>>>> branch 'master' of https://github.com/loete/F4U.git
 							<th>Value</th>
 							<th>Notes</th>
 							<th>Categorie</th>

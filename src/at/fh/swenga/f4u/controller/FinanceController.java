@@ -103,50 +103,50 @@ public class FinanceController {
 		UserModel user = null;
 
 		for (int i = 0; i < 10; i++) {
-//			if (i % 5 == 0) {
-//				String categorieName = df.getBusinessName();
-//				String categorieDescribtion = df.getLastName();
-//				String categorieIcon = df.getRandomChars(2);
-//				String categorieColor = df.getRandomChars(5);
-//				categorie = categorieRepository.findFirstByName(categorieName);
-//
-//				if (categorie == null) {
-//					categorie = new CategorieModel(categorieName, categorieDescribtion, categorieIcon, categorieColor);
-//				}
-//			}
-//
-//			if (i % 2 == 0) {
-//				String subcategorieName = df.getBusinessName();
-//				String subcategorieDescribtion = df.getLastName();
-//				String subcategorieIcon = df.getRandomChars(2);
-//				String subcategorieColor = df.getRandomChars(5);
-//				subcategorie = subcategorieRepository.findFirstByName(subcategorieName);
-//
-//				if (subcategorie == null) {
-//					subcategorie = new SubcategorieModel(subcategorieName, subcategorieDescribtion, subcategorieIcon,
-//							subcategorieColor);
-//				}
-//			}
-//			
-//				String userFirstName = df.getFirstName();
-//				String userLastName = df.getLastName();
-//				String userAddress = df.getStreetName();
-//				int userPostCode = 8010;
-//				String userPlace = df.getCity();
-//				String userPhone = df.getNumberText(8);
-//				String userEmail = df.getEmailAddress();
-//				Date userDayOfBirth = df.getBirthDate();
-//				user = userRepository.findFirstByLastName(userLastName);
-//
-//				if (user == null) {
-//					user = new UserModel(userFirstName, userLastName, userAddress, userPostCode, userPlace,userPhone,
-//							userEmail, userDayOfBirth);
-//				}
-//			
+			if (i % 5 == 0) {
+				String categorieName = df.getBusinessName();
+				String categorieDescribtion = df.getLastName();
+				String categorieIcon = df.getRandomChars(2);
+				String categorieColor = df.getRandomChars(5);
+				categorie = categorieRepository.findFirstByName(categorieName);
+
+				if (categorie == null) {
+					categorie = new CategorieModel(categorieName, categorieDescribtion, categorieIcon, categorieColor);
+				}
+			}
+
+			if (i % 2 == 0) {
+				String subcategorieName = df.getBusinessName();
+				String subcategorieDescribtion = df.getLastName();
+				String subcategorieIcon = df.getRandomChars(2);
+				String subcategorieColor = df.getRandomChars(5);
+				subcategorie = subcategorieRepository.findFirstByName(subcategorieName);
+
+				if (subcategorie == null) {
+					subcategorie = new SubcategorieModel(subcategorieName, subcategorieDescribtion, subcategorieIcon,
+							subcategorieColor);
+				}
+			}
+			
+				String userFirstName = df.getFirstName();
+				String userLastName = df.getLastName();
+				String userAddress = df.getStreetName();
+				int userPostCode = 8010;
+				String userPlace = df.getCity();
+				String userPhone = df.getNumberText(8);
+				String userEmail = df.getEmailAddress();
+				Date userDayOfBirth = df.getBirthDate();
+				user = userRepository.findFirstByLastName(userLastName);
+
+				if (user == null) {
+					user = new UserModel(userFirstName, userLastName, userAddress, userPostCode, userPlace,userPhone,
+							userEmail, userDayOfBirth);
+				}
+			
 			FinanceModel fm = new FinanceModel(true, false, df.getBirthDate(), 2000.0, df.getFirstName());
-//			fm.setCategorie(categorie);
-//			fm.setSubcategorie(subcategorie);
-//			fm.setUser(user);
+			fm.setCategorie(categorie);
+			fm.setSubcategorie(subcategorie);
+			fm.setUser(user);
 			financeRepository.save(fm);
 		}
 
