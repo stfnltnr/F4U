@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,7 +61,6 @@ public class FinanceController {
 		List<FinanceModel> finances = financeRepository.findAll();
 		model.addAttribute("finances", finances);
 		model.addAttribute("type", "findAll");
-		System.out.print("hurrerei!!!!!!!!!!!!!!!AAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHH");
 		return "index";
 	}
 
@@ -72,6 +72,7 @@ public class FinanceController {
 		model.addAttribute("type", "findAll");
 		return "index";
 	}
+	
 
 	@RequestMapping(value = { "/find" })
 	public String find(Model model, @RequestParam String searchString, @ModelAttribute("type") String type) {
@@ -136,7 +137,6 @@ public class FinanceController {
 			fm.setUser(user);
 			financeRepository.save(fm);
 		}
-		System.out.print("leck mich du sau");
 		return "forward:list";
 	}
 
@@ -237,7 +237,7 @@ public class FinanceController {
  
 		return "forward:list";
 	}
-	
+		
 	
 	@RequestMapping("/delete")
 	public String deleteData(Model model, @RequestParam int id) {
