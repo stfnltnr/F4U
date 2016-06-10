@@ -1,16 +1,21 @@
 package at.fh.swenga.f4u.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.fluttercode.datafactory.impl.DataFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +29,19 @@ public class TestController {
 	
 	@Autowired
 	TestRepository testRepository;
+	
+	/**
+	 * Before the controller is used the first time -> add a custom editor for
+	 * handling Date objects
+	 * 
+	 * @param binder
+	 */
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+		dateFormat.setLenient(false);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
+	}
 	
 	@RequestMapping("/test")
 	public String test(Model model) {
@@ -40,8 +58,9 @@ public class TestController {
 		
 		for(int i = 0; i <20; i++) {
 			String testName = df.getName();
+			Date testDate = df.getBirthDate();
 			
-			TestModel tm = new TestModel(testName);
+			TestModel tm = new TestModel(testName, testDate);
 			testRepository.save(tm);
 		}
 		
@@ -75,6 +94,7 @@ public class TestController {
 		else {
 			TestModel tm = new TestModel();
 			tm.setName(newTestModel.getName());
+			tm.setDate(newTestModel.getDate());
 			testRepository.save(tm);
 			model.addAttribute("message", "New test " + newTestModel.getId() + " added.");
 		}
@@ -116,6 +136,7 @@ public class TestController {
 		} else {
 			test.setId(editTestModel.getId());
 			test.setName(editTestModel.getName());
+			test.setDate(editTestModel.getDate());
 			testRepository.save(test);
 			model.addAttribute("message", "Changed test " + editTestModel.getId());
 		}

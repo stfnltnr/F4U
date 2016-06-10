@@ -20,6 +20,8 @@
 </head>
 <body>
 	<div class="container" role="main">
+		<!-- Navigation -->
+		<jsp:include page="includes/nav.jsp"></jsp:include>
 
 		<!--  add or edit?  ----------------------------------------------------------- -->
 		<c:choose>
@@ -43,8 +45,8 @@
 				<form class="form-horizontal" method="post" action="${formAction}">
 					<fieldset>
 						<legend>${legend}</legend>
-						 <! ----------------  id ---------------- -->
-						 <c:if test="${not empty finance}">
+						 <!-- id -->
+						 <c:if test="${not empty test}">
 						<div class="form-group">
 							<label for="inputID" class="col-md-2 control-label">ID</label>
 							<div class="col-md-10">
@@ -53,26 +55,26 @@
 							</div>
 						</div> 
 						</c:if>
-						<! ----------------  Name ---------------- -->
+						<!-- Name - String -->
 						<div class="form-group">
-							<label for="inputIncoming" class="col-md-2 control-label">Name</label>
+							<label for="Name" class="col-md-2 control-label">Name</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputIncoming" type="text"
-									name="incoming" value="<c:out value="${test.name}"/>">
+								<input class="form-control" id="name" type="text"
+									name="name" value="<c:out value="${test.name}"/>">
 							</div>
 						</div>
-						<%-- 
-						<! ----------------  bookDate ---------------- -->
+						<!-- Date -->
 						<div class="form-group">
 							<label for="inputDate" class="col-md-2 control-label">Date</label>
 							<div class="col-md-10">
 								<input class="form_datetime" id="inputDate" placeholder="Date"
-									type="text" readonly name="bookDate"
-									value="<fmt:formatDate value="${finance.bookDate}" pattern="dd.MM.yyyy"/>">
+									type="text" name="date"
+									value="<fmt:formatDate value="${test.Date}" pattern="dd.MM.yyyy"/>">
 							</div>
-						</div> --%>
+						</div>
+						
 
-						<! ----------------  buttons ---------------- -->
+						<!-- Buttons -->
 						<div class="form-group">
 							<div class="col-md-10 col-md-offset-2">
 								<button type="submit" class="btn btn-primary">Submit</button>
@@ -93,17 +95,13 @@
 	</div>
 	<!--  End of container -->
 
-
 	<!-- JS for Bootstrap -->
 	<%@include file="includes/bootstrapJs.js"%>
 	<!-- JS for Bootstrap -->
 
 
 	<!-- JS for Datetime picker -->
-
-	<script type="text/javascript"
-		src="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-
+	<script type="text/javascript" src="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
 	<script>
 		$(function() {
 
@@ -117,6 +115,5 @@
 
 		});
 	</script>
-
 </body>
 </html>
