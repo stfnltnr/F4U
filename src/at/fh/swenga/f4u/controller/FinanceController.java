@@ -46,14 +46,6 @@ public class FinanceController {
 
 	@Autowired
 	SubcategorieRepository subcategorieRepository;
-	
-	// LOGIN
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String handleLogin() {
-		return "login";
-	}
-
-	
 
 	@RequestMapping(value = { "/", "list" })
 	public String index(Model model) {
@@ -111,7 +103,6 @@ public class FinanceController {
 		UserModel user = null;
 
 		for (int i = 0; i < 10; i++) {
-
 //			if (i % 5 == 0) {
 //				String categorieName = df.getBusinessName();
 //				String categorieDescribtion = df.getLastName();
@@ -156,32 +147,12 @@ public class FinanceController {
 //			fm.setCategorie(categorie);
 //			fm.setSubcategorie(subcategorie);
 //			fm.setUser(user);
-
-			categorie = new CategorieModel("Cat"+i, "Cat"+i+"desc", "ICON"+i, "Color"+i);
-			subcategorie = new SubcategorieModel("SubCat"+i, "SubCat"+i+"desc", "SubICON"+i, "SubColor"+i);
-			
-				String userFirstName = df.getFirstName();
-				String userLastName = df.getLastName();
-				String userAddress = df.getStreetName();
-				int userPostCode = 8010;
-				String userPlace = df.getCity();
-				String userPhone = df.getNumberText(8);
-				String userEmail = df.getEmailAddress();
-				Date userDayOfBirth = df.getBirthDate();
-				user = userRepository.findFirstByLastName(userLastName);
-
-				if (user == null) {
-					user = new UserModel(userFirstName, userLastName, userAddress, userPostCode, userPlace,userPhone,
-							userEmail, userDayOfBirth);
-				}
-			
-			FinanceModel fm = new FinanceModel(true, false, df.getBirthDate(), 2000.0, df.getFirstName());
-			fm.setCategorie(categorie);
-			fm.setSubcategorie(subcategorie);
-			fm.setUser(user);
+			financeRepository.save(fm);
 		}
+
+		return "forward:list";
 	}
-	
+
 	@RequestMapping(value = { "/findById" })
 	public String findById(@RequestParam("id") FinanceModel e, Model model) {
 

@@ -10,7 +10,7 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "test")
+@Table(name = "Test")
 public class TestModel implements java.io.Serializable {
 	
 	@Id

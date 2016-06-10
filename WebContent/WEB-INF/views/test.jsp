@@ -10,12 +10,35 @@
 <title>finance4you</title>
 <%@include file="includes/bootstrapCss.css"%>
 <%@include file="includes/treeView.css"%>
-
 </head>
 <body>
+	<!--  Navigation ----------------------------------------------------------- -->
+	<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<jsp:include page="includes/nav.jsp" />
+		<ul class="nav navbar-nav navbar-right">		
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			<!-- Logout -->
+			<li>
+			<p>  
+				<c:url value="/logout" var="logoutUrl" />
+				<form action="${logoutUrl }" method="post">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					<button class="btn btn-sm btn-danger" type="submit" value="Logout">
+					<span class="glyphicon glyphicon-log-out"></span> Logout
+					</button>
+				</form>
+			</p>
+			</li>
+		</ul>
+		</div>
+	</div>
+	</nav>
+	<!--  Navigation ----------------------------------------------------------- -->
+
 	<div class="container">
 
-		<!--  list all finances ----------------------------------------------------------- -->
+		<!--  list all tests ----------------------------------------------------------- -->
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
 				<h1>Test</h1>
@@ -26,7 +49,7 @@
 							<th>name</th>
 							<th>Action 
 							<a href="fillTest"><button type="button" class="btn btn-success">Fill List</button></a>
-							<a href="test2"><button type="button" class="btn btn-success">Add Test</button></a>
+							<a href="addTest"><button type="button" class="btn btn-success">Add Test</button></a>
 							</th>
 						</tr>
 					</thead>
@@ -45,7 +68,7 @@
 				</table>
 			</div>
 		</div>
-		<!--  list all employees ----------------------------------------------------------- -->
+		<!--  list all tests ----------------------------------------------------------- -->
 	</div>
 	<!--  end of container -->
 	<%@include file="includes/bootstrapJs.js"%>
