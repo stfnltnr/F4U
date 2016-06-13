@@ -20,6 +20,8 @@ public class CategorieController {
 	@Autowired
 	CategorieRepository categorieRepository;
 	
+	@Autowired
+	SubcategorieRepository subcategorieRepository;
 	
 	@RequestMapping(value = {"listCat"})
 	public String index(Model model) {
