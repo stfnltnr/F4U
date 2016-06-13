@@ -39,7 +39,7 @@
 			</c:otherwise>
 		</c:choose>
 		<!--  add or edit?  ----------------------------------------------------------- -->
-
+				
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<form class="form-horizontal" method="post" action="${formAction}">
@@ -55,24 +55,24 @@
 							</div>
 						</div> 
 						</c:if>
-						<! ----------------  incoming ---------------- -->
+						<! ----------------  payment ---------------- -->
 						<div class="form-group">
-							<label for="inputIncoming" class="col-md-2 control-label">Incoming</label>
+							<label for="inputPayment" class="col-md-2 control-label">Incoming</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputIncoming" type="text"
-									name="incoming" value="<c:out value="${finance.incoming}"/>">
+								<select name="payment" size="2" value="<c:out value="${finance.payment}"/>">
+								<c:if test="${finance.payment == true}">
+									<option value="true" selected>Incoming</option>
+									<option value="false">Outgoing</option>
+								</c:if>
+								<c:if test="${finance.payment == false}">
+									<option value="true">Incoming</option>
+									<option value="false" selected>Outgoing</option>
+								</c:if>
+								</select>
 							</div>
 						</div>
-						<! ----------------  outgoing ---------------- -->
-						<div class="form-group">
-							<label for="inputOutgoing" class="col-md-2 control-label">Outgoing</label>
-							<div class="col-md-10">
-								<input class="form-control" id="inputOutgoing" type="text"
-									name="outgoing" value="<c:out value="${finance.outgoing}"/>">
-							</div>
-						</div>
-						<%-- 
-						<! ----------------  bookDate ---------------- -->
+						
+						<%-- <! ----------------  bookDate ---------------- -->
 						<div class="form-group">
 							<label for="inputDate" class="col-md-2 control-label">Date</label>
 							<div class="col-md-10">
@@ -80,7 +80,7 @@
 									type="text" readonly name="bookDate"
 									value="<fmt:formatDate value="${finance.bookDate}" pattern="dd.MM.yyyy"/>">
 							</div>
-						</div> --%>
+							</div> --%>
 
 						<! ----------------  value ---------------- -->
 						<div class="form-group">

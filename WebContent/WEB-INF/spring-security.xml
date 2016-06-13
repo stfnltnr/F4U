@@ -6,6 +6,8 @@
 
 	<http>
 		<csrf />
+		<intercept-url pattern="/addU" access="permitAll" />
+		<intercept-url pattern="/addUser" access="permitAll" />
 		<intercept-url pattern="/login" access="permitAll" />
 		<intercept-url pattern="/**" access="hasRole('USER')" />
 		<intercept-url pattern="/delete" access="permitAll" />
