@@ -2,6 +2,7 @@ package at.fh.swenga.f4u.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,9 +30,16 @@ public class SubcategorieModel implements java.io.Serializable {
 	private String icon;
 	private String color;
 	
+
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	CategorieModel categorie;
+
 	@ManyToOne(fetch=FetchType.LAZY)
 	private CategorieModel categories;
-	
+
+	@OneToMany(mappedBy="subcategorie", fetch=FetchType.LAZY)
+	private Set<FinanceModel> finances;
+
 	
 	public SubcategorieModel() {
 	}
@@ -86,10 +94,20 @@ public class SubcategorieModel implements java.io.Serializable {
 
 	public CategorieModel getCategories() {
 		return categories;
+
+	}
+
+	public Set<FinanceModel> getFinances() {
+		return finances;
+	}
+
+	public void setFinances(Set<FinanceModel> finances) {
+		this.finances = finances;
 	}
 
 	public void setCategories(CategorieModel categories) {
 		this.categories = categories;
+
 	}
 	
 }

@@ -122,15 +122,14 @@ public class FinanceController {
 				String userPlace = df.getCity();
 				String userPhone = df.getNumberText(8);
 				String userEmail = df.getEmailAddress();
-				Date userDayOfBirth = df.getBirthDate();
 				user = userRepository.findFirstByLastName(userLastName);
 
 				if (user == null) {
 					user = new UserModel(userFirstName, userLastName, userAddress, userPostCode, userPlace,userPhone,
-							userEmail, userDayOfBirth);
+							userEmail);
 				}
 			
-			FinanceModel fm = new FinanceModel(true, false, 2000.0, df.getFirstName());
+			FinanceModel fm = new FinanceModel(df.chance(50), 2000.0, df.getFirstName());
 			fm.setCategorie(categorie);
 			fm.setSubcategorie(subcategorie);
 			fm.setUser(user);
@@ -177,8 +176,7 @@ public class FinanceController {
 		else {
 			FinanceModel fm = new FinanceModel();
 //			fm.setId(newFinanceModel.getId());
-			fm.setIncoming(newFinanceModel.isIncoming());
-			fm.setOutgoing(newFinanceModel.isOutgoing());
+			fm.setPayment(newFinanceModel.isPayment());
 //			fm.setBookDate(newFinanceModel.getBookDate());
 			fm.setValue(newFinanceModel.getValue());
 			fm.setNotes(newFinanceModel.getNotes());
@@ -222,8 +220,7 @@ public class FinanceController {
 			model.addAttribute("errorMessage", "Finance does not exist!<br>");
 		} else {
 			finance.setId(editFinanceModel.getId());
-			finance.setIncoming(editFinanceModel.isIncoming());
-			finance.setOutgoing(editFinanceModel.isOutgoing());
+			finance.setPayment(editFinanceModel.isPayment());
 //			finance.setBookDate(editFinanceModel.getBookDate());
 			finance.setValue(editFinanceModel.getValue());
 			finance.setNotes(editFinanceModel.getNotes());
