@@ -14,6 +14,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "Finance")
 public class FinanceModel implements java.io.Serializable {
@@ -25,9 +27,10 @@ public class FinanceModel implements java.io.Serializable {
 	
 	private boolean payment;
 	
-//	@Temporal(TemporalType.DATE)
-//	@NotNull(message = "{0} is required")
-//	private Date bookDate;
+	@DateTimeFormat(pattern="dd.MM.yyyy")
+	@Temporal(TemporalType.DATE)
+	@NotNull(message = "{0} is required")
+	private Date bookDate;
 	
 	@NotNull(message = "{0} is required")
 	private double value;
@@ -46,10 +49,10 @@ public class FinanceModel implements java.io.Serializable {
 	public FinanceModel() {
 	}
 	
-	public FinanceModel(boolean payment, double value, String notes) {
+	public FinanceModel(boolean payment, Date bookDate, double value, String notes) {
 		super();
 		this.payment = payment;
-//		this.bookDate = bookDate;
+		this.bookDate = bookDate;
 		this.value = value;
 		this.notes = notes;
 	}
@@ -70,14 +73,13 @@ public class FinanceModel implements java.io.Serializable {
 		this.payment = payment;
 	}
 
-//
-//	public Date getBookDate() {
-//		return bookDate;
-//	}
-//
-//	public void setBookDate(Date bookDate) {
-//		this.bookDate = bookDate;
-//	}
+	public Date getBookDate() {
+		return bookDate;
+	}
+
+	public void setBookDate(Date bookDate) {
+		this.bookDate = bookDate;
+	}
 
 	public double getValue() {
 		return value;
