@@ -20,6 +20,8 @@
 </head>
 <body>
 	<div class="container" role="main">
+	<!-- Navigation -->
+	<jsp:include page="includes/nav.jsp"></jsp:include>
 
 		<!--  add or edit?  ----------------------------------------------------------- -->
 		<c:choose>
