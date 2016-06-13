@@ -46,6 +46,14 @@ public class FinanceController {
 
 	@Autowired
 	SubcategorieRepository subcategorieRepository;
+	
+	// LOGIN
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String handleLogin() {
+		return "login";
+	}
+
+	
 
 	@RequestMapping(value = { "/", "list" })
 	public String index(Model model) {
@@ -63,6 +71,7 @@ public class FinanceController {
 		model.addAttribute("type", "findAll");
 		return "index";
 	}
+	
 
 	@RequestMapping(value = { "/find" })
 	public String find(Model model, @RequestParam String searchString, @ModelAttribute("type") String type) {
@@ -103,30 +112,8 @@ public class FinanceController {
 		UserModel user = null;
 
 		for (int i = 0; i < 10; i++) {
-			if (i % 5 == 0) {
-				String categorieName = df.getBusinessName();
-				String categorieDescribtion = df.getLastName();
-				String categorieIcon = df.getRandomChars(2);
-				String categorieColor = df.getRandomChars(5);
-				categorie = categorieRepository.findFirstByName(categorieName);
-
-				if (categorie == null) {
-					categorie = new CategorieModel(categorieName, categorieDescribtion, categorieIcon, categorieColor);
-				}
-			}
-
-			if (i % 2 == 0) {
-				String subcategorieName = df.getBusinessName();
-				String subcategorieDescribtion = df.getLastName();
-				String subcategorieIcon = df.getRandomChars(2);
-				String subcategorieColor = df.getRandomChars(5);
-				subcategorie = subcategorieRepository.findFirstByName(subcategorieName);
-
-				if (subcategorie == null) {
-					subcategorie = new SubcategorieModel(subcategorieName, subcategorieDescribtion, subcategorieIcon,
-							subcategorieColor);
-				}
-			}
+			categorie = new CategorieModel("Cat"+i, "Cat"+i+"desc", "ICON"+i, "Color"+i);
+			subcategorie = new SubcategorieModel("SubCat"+i, "SubCat"+i+"desc", "SubICON"+i, "SubColor"+i);
 			
 				String userFirstName = df.getFirstName();
 				String userLastName = df.getLastName();
@@ -135,12 +122,11 @@ public class FinanceController {
 				String userPlace = df.getCity();
 				String userPhone = df.getNumberText(8);
 				String userEmail = df.getEmailAddress();
-				Date userDayOfBirth = df.getBirthDate();
 				user = userRepository.findFirstByLastName(userLastName);
 
 				if (user == null) {
 					user = new UserModel(userFirstName, userLastName, userAddress, userPostCode, userPlace,userPhone,
-							userEmail, userDayOfBirth);
+							userEmail);
 				}
 			
 			FinanceModel fm = new FinanceModel(true, false, df.getBirthDate(), 2000.0, df.getFirstName());
@@ -149,7 +135,6 @@ public class FinanceController {
 			fm.setUser(user);
 			financeRepository.save(fm);
 		}
-
 		return "forward:list";
 	}
 
@@ -193,7 +178,7 @@ public class FinanceController {
 //			fm.setId(newFinanceModel.getId());
 			fm.setIncoming(newFinanceModel.isIncoming());
 			fm.setOutgoing(newFinanceModel.isOutgoing());
-			fm.setBookDate(newFinanceModel.getBookDate());
+//			fm.setBookDate(newFinanceModel.getBookDate());
 			fm.setValue(newFinanceModel.getValue());
 			fm.setNotes(newFinanceModel.getNotes());
 			financeRepository.save(fm);
@@ -238,7 +223,7 @@ public class FinanceController {
 			finance.setId(editFinanceModel.getId());
 			finance.setIncoming(editFinanceModel.isIncoming());
 			finance.setOutgoing(editFinanceModel.isOutgoing());
-			finance.setBookDate(editFinanceModel.getBookDate());
+//			finance.setBookDate(editFinanceModel.getBookDate());
 			finance.setValue(editFinanceModel.getValue());
 			finance.setNotes(editFinanceModel.getNotes());
 //			finance.setCategorie(editFinanceModel.getCategorie());
@@ -250,7 +235,7 @@ public class FinanceController {
  
 		return "forward:list";
 	}
-	
+		
 	
 	@RequestMapping("/delete")
 	public String deleteData(Model model, @RequestParam int id) {

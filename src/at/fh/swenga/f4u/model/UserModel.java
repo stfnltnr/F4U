@@ -1,6 +1,6 @@
 package at.fh.swenga.f4u.model;
 
-import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -10,10 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class UserModel implements java.io.Serializable{
+@Table(name = "users")
+public class UserModel implements java.io.Serializable {
+	private static final long serialVersionUID = 8198173157518983615L;
 	
 	@Id
 	@Column(name="id")
@@ -39,9 +42,10 @@ public class UserModel implements java.io.Serializable{
 	
 	@NotNull(message = "{0} is required")
 	private String email;
+
 	
-	@NotNull(message = "{0} is required")
-	private Date dayOfBirth;
+//	@NotNull(message = "{0} is required")
+//	private Date dayOfBirth;
 	
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private Set<FinanceModel> finances;
@@ -52,8 +56,7 @@ public class UserModel implements java.io.Serializable{
 	public UserModel() {
 	}
 	
-	public UserModel(String firstName, String lastName, String address, int postCode, String place, String phone, String email,
-			Date dayOfBirth) {
+	public UserModel(String firstName, String lastName, String address, int postCode, String place, String phone, String email) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -62,7 +65,7 @@ public class UserModel implements java.io.Serializable{
 		this.place = place;
 		this.phone = phone;
 		this.email = email;
-		this.dayOfBirth = dayOfBirth;
+//		this.dayOfBirth = dayOfBirth;
 	}
 
 	public int getId() {
@@ -129,13 +132,13 @@ public class UserModel implements java.io.Serializable{
 		this.email = email;
 	}
 
-	public Date getDayOfBirth() {
-		return dayOfBirth;
-	}
-
-	public void setDayOfBirth(Date dayOfBirth) {
-		this.dayOfBirth = dayOfBirth;
-	}
+//	public Date getDayOfBirth() {
+//		return dayOfBirth;
+//	}
+//
+//	public void setDayOfBirth(Date dayOfBirth) {
+//		this.dayOfBirth = dayOfBirth;
+//	}
 	
 	public Set<FinanceModel> getFinances() {
 		return finances;
