@@ -84,7 +84,7 @@
 						<tr>
 							<th>ID</th>
 							<th>Payment</th>
-							<!-- <th>Book Date</th> -->
+							<th>Book Date</th>
 							<th>Value</th>
 							<th>Notes</th>
 							<th>Categorie</th>
@@ -98,8 +98,8 @@
 							<tr>
 								<td>${finance.id}</td>
 								<td>${finance.payment}</td>
-								<%-- <td><fmt:formatDate value="${finance.bookDate}"
-										pattern="dd.MM.yyyy" /> --%>
+								<td><fmt:formatDate value="${finance.bookDate}"
+										pattern="dd.MM.yyyy" /> </td>
 								<td>${finance.value}</td>
 								<td>${finance.notes}</td>
 								<td>${finance.categorie.name}</td>

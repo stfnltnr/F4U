@@ -129,7 +129,7 @@ public class FinanceController {
 							userEmail);
 				}
 			
-			FinanceModel fm = new FinanceModel(df.chance(50), 2000.0, df.getFirstName());
+			FinanceModel fm = new FinanceModel(df.chance(50), df.getBirthDate(), 2000.0, df.getFirstName());
 			fm.setCategorie(categorie);
 			fm.setSubcategorie(subcategorie);
 			fm.setUser(user);
@@ -177,7 +177,7 @@ public class FinanceController {
 			FinanceModel fm = new FinanceModel();
 //			fm.setId(newFinanceModel.getId());
 			fm.setPayment(newFinanceModel.isPayment());
-//			fm.setBookDate(newFinanceModel.getBookDate());
+			fm.setBookDate(newFinanceModel.getBookDate());
 			fm.setValue(newFinanceModel.getValue());
 			fm.setNotes(newFinanceModel.getNotes());
 			financeRepository.save(fm);
@@ -221,7 +221,7 @@ public class FinanceController {
 		} else {
 			finance.setId(editFinanceModel.getId());
 			finance.setPayment(editFinanceModel.isPayment());
-//			finance.setBookDate(editFinanceModel.getBookDate());
+			finance.setBookDate(editFinanceModel.getBookDate());
 			finance.setValue(editFinanceModel.getValue());
 			finance.setNotes(editFinanceModel.getNotes());
 //			finance.setCategorie(editFinanceModel.getCategorie());

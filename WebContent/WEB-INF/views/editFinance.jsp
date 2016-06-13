@@ -72,7 +72,7 @@
 							</div>
 						</div>
 						
-						<%-- <! ----------------  bookDate ---------------- -->
+						<! ----------------  bookDate ---------------- -->
 						<div class="form-group">
 							<label for="inputDate" class="col-md-2 control-label">Date</label>
 							<div class="col-md-10">
@@ -80,7 +80,7 @@
 									type="text" readonly name="bookDate"
 									value="<fmt:formatDate value="${finance.bookDate}" pattern="dd.MM.yyyy"/>">
 							</div>
-							</div> --%>
+							</div>
 
 						<! ----------------  value ---------------- -->
 						<div class="form-group">
