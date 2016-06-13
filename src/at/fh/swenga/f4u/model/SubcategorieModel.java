@@ -26,7 +26,7 @@ public class SubcategorieModel implements java.io.Serializable {
 	@NotNull(message = "{0} is required")
 	private String name;
 	
-	private String describtion;
+	private String description;
 	private String icon;
 	private String color;
 	
@@ -44,10 +44,10 @@ public class SubcategorieModel implements java.io.Serializable {
 	public SubcategorieModel() {
 	}
 	
-	public SubcategorieModel(String name, String describtion, String icon, String color) {
+	public SubcategorieModel(String name, String description, String icon, String color) {
 		super();
 		this.name = name;
-		this.describtion = describtion;
+		this.description = description;
 		this.icon = icon;
 		this.color = color;
 	}
@@ -68,12 +68,12 @@ public class SubcategorieModel implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public String getDescribtion() {
-		return describtion;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescribtion(String describtion) {
-		this.describtion = describtion;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getIcon() {

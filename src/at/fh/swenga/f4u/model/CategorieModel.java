@@ -9,10 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(name="Categorie")
 public class CategorieModel implements java.io.Serializable {
 	
 	@Id
@@ -26,6 +28,7 @@ public class CategorieModel implements java.io.Serializable {
 	private String description;
 	private String icon;
 	private String color;
+	private Integer maincat;
 	
 	@Version
 	long version;
@@ -33,12 +36,13 @@ public class CategorieModel implements java.io.Serializable {
 	public CategorieModel() {
 	}
 	
-	public CategorieModel(String name, String description, String icon, String color) {
+	public CategorieModel(String name, String description, String icon, String color,Integer maincat) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.icon = icon;
 		this.color = color;
+		this.maincat = maincat;
 	}
 
 	public int getId() {
@@ -80,6 +84,14 @@ public class CategorieModel implements java.io.Serializable {
 	public void setColor(String color) {
 		this.color = color;
 
+	}
+
+	public Integer getMaincat() {
+		return maincat;
+	}
+
+	public void setMaincat(Integer maincat) {
+		this.maincat = maincat;
 	}
 	
 }

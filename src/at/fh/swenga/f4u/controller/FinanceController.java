@@ -112,7 +112,7 @@ public class FinanceController {
 		UserModel user = null;
 
 		for (int i = 0; i < 10; i++) {
-			categorie = new CategorieModel("Cat"+i, "Cat"+i+"desc", "ICON"+i, "Color"+i);
+			categorie = new CategorieModel("Cat"+i, "Cat"+i+"desc", "ICON"+i, "Color"+i,1);
 			subcategorie = new SubcategorieModel("SubCat"+i, "SubCat"+i+"desc", "SubICON"+i, "SubColor"+i);
 			
 				String userFirstName = df.getFirstName();

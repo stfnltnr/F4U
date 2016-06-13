@@ -37,7 +37,7 @@
 							<tr>
 								<td>${test.id}</td>
 								<td>${test.name}</td>
-								<td>${test.date}</td>  
+								<td><fmt:formatDate value="${test.date}" pattern="dd.MM.yyyy"/></td>  
 								<td><a href="deleteTest?id=${test.id}">Delete</a>
 									<a href="editTest?id=${test.id}">Edit</a>
 								
