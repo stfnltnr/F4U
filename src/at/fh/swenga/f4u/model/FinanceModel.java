@@ -23,12 +23,11 @@ public class FinanceModel implements java.io.Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	private boolean incoming;
-	private boolean outgoing;
+	private boolean payment;
 	
-	@Temporal(TemporalType.DATE)
-	@NotNull(message = "{0} is required")
-	private Date bookDate;
+//	@Temporal(TemporalType.DATE)
+//	@NotNull(message = "{0} is required")
+//	private Date bookDate;
 	
 	@NotNull(message = "{0} is required")
 	private double value;
@@ -47,11 +46,10 @@ public class FinanceModel implements java.io.Serializable {
 	public FinanceModel() {
 	}
 	
-	public FinanceModel(boolean incoming, boolean outgoing, Date bookDate, double value, String notes) {
+	public FinanceModel(boolean payment, double value, String notes) {
 		super();
-		this.incoming = incoming;
-		this.outgoing = outgoing;
-		this.bookDate = bookDate;
+		this.payment = payment;
+//		this.bookDate = bookDate;
 		this.value = value;
 		this.notes = notes;
 	}
@@ -64,29 +62,22 @@ public class FinanceModel implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public boolean isIncoming() {
-		return incoming;
+	public boolean isPayment() {
+		return payment;
 	}
 
-	public void setIncoming(boolean incoming) {
-		this.incoming = incoming;
+	public void setPayment(boolean payment) {
+		this.payment = payment;
 	}
 
-	public boolean isOutgoing() {
-		return outgoing;
-	}
-
-	public void setOutgoing(boolean outgoing) {
-		this.outgoing = outgoing;
-	}
-
-	public Date getBookDate() {
-		return bookDate;
-	}
-
-	public void setBookDate(Date bookDate) {
-		this.bookDate = bookDate;
-	}
+//
+//	public Date getBookDate() {
+//		return bookDate;
+//	}
+//
+//	public void setBookDate(Date bookDate) {
+//		this.bookDate = bookDate;
+//	}
 
 	public double getValue() {
 		return value;

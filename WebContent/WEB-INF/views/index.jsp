@@ -83,9 +83,8 @@
 					<thead>
 						<tr>
 							<th>ID</th>
-							<th>Incoming</th>
-							<th>Outgoing</th>
-							<th>Book Date</th>
+							<th>Payment</th>
+							<!-- <th>Book Date</th> -->
 							<th>Value</th>
 							<th>Notes</th>
 							<th>Categorie</th>
@@ -98,10 +97,9 @@
 						<c:forEach items="${finances}" var="finance">
 							<tr>
 								<td>${finance.id}</td>
-								<td>${finance.incoming}</td>
-								<td>${finance.outgoing}</td>
-								<td><fmt:formatDate value="${finance.bookDate}"
-										pattern="dd.MM.yyyy" />
+								<td>${finance.payment}</td>
+								<%-- <td><fmt:formatDate value="${finance.bookDate}"
+										pattern="dd.MM.yyyy" /> --%>
 								<td>${finance.value}</td>
 								<td>${finance.notes}</td>
 								<td>${finance.categorie.name}</td>
