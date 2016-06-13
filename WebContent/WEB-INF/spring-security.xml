@@ -6,6 +6,8 @@
 
 	<http>
 		<csrf />
+		<intercept-url pattern="/addU" access="permitAll" />
+		<intercept-url pattern="/addUser" access="permitAll" />
 		<intercept-url pattern="/login" access="permitAll" />
 		<intercept-url pattern="/**" access="hasRole('USER')" />
 		<intercept-url pattern="/delete" access="permitAll" />
@@ -13,7 +15,7 @@
 		<logout logout-success-url="/" logout-url="/logout" />
 	</http>
 
-	<authentication-manager>
+	<!-- <authentication-manager>
 		<authentication-provider>
 			<user-service>
 				<user name="user" password="password" authorities="ROLE_USER" />
@@ -23,6 +25,11 @@
 				<user name="leitner" password="password" authorities="ROLE_USER" />
 
 			</user-service>
+		</authentication-provider>
+	</authentication-manager> -->
+	<authentication-manager>
+		<authentication-provider user-service-ref="myUserDetailsService">
+			<password-encoder hash="bcrypt" />
 		</authentication-provider>
 	</authentication-manager>
 </b:beans>
