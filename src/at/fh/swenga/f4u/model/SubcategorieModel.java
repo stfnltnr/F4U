@@ -8,10 +8,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(name="Subcategorie")
 public class SubcategorieModel implements java.io.Serializable {
 	
 	@Id
@@ -26,11 +29,9 @@ public class SubcategorieModel implements java.io.Serializable {
 	private String icon;
 	private String color;
 	
-	@OneToMany(mappedBy="subcategorie", fetch=FetchType.LAZY)
-	private Set<CategorieModel> categories;
+	@ManyToOne(fetch=FetchType.LAZY)
+	private CategorieModel categories;
 	
-	@OneToMany(mappedBy="categorie", fetch=FetchType.LAZY)
-	private Set<FinanceModel> finances;
 	
 	public SubcategorieModel() {
 	}
@@ -83,20 +84,12 @@ public class SubcategorieModel implements java.io.Serializable {
 		this.color = color;
 	}
 
-	public Set<CategorieModel> getCategories() {
+	public CategorieModel getCategories() {
 		return categories;
 	}
 
-	public void setCategories(Set<CategorieModel> categories) {
+	public void setCategories(CategorieModel categories) {
 		this.categories = categories;
-	}
-
-	public Set<FinanceModel> getFinances() {
-		return finances;
-	}
-
-	public void setFinances(Set<FinanceModel> finances) {
-		this.finances = finances;
 	}
 	
 }

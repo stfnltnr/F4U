@@ -29,12 +29,6 @@ public class CategorieModel implements java.io.Serializable {
 	private String icon;
 	private String color;
 	
-	@OneToMany(mappedBy="categorie", fetch=FetchType.LAZY)
-	private Set<FinanceModel> finances;
-	
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	SubcategorieModel subcategorie;
-	
 	@Version
 	long version;
 	
@@ -87,22 +81,6 @@ public class CategorieModel implements java.io.Serializable {
 
 	public void setColor(String color) {
 		this.color = color;
-	}
-
-	public Set<FinanceModel> getFinances() {
-		return finances;
-	}
-
-	public void setFinances(Set<FinanceModel> finances) {
-		this.finances = finances;
-	}
-
-	public SubcategorieModel getSubcategorie() {
-		return subcategorie;
-	}
-
-	public void setSubcategorie(SubcategorieModel subcategorie) {
-		this.subcategorie = subcategorie;
 	}
 	
 }
