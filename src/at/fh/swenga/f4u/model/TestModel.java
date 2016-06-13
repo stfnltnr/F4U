@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -29,6 +31,7 @@ public class TestModel implements java.io.Serializable {
 	@NotNull(message = "{0} is required") // {0} placeholder for variable
 	@DateTimeFormat(pattern = "dd.MM.yyyy")
 	@Past(message = "{0} must be in the past")
+	@Temporal(value = TemporalType.DATE)
 	private Date date;
 	
 
