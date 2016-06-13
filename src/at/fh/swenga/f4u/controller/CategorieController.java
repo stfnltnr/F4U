@@ -59,6 +59,8 @@ public class CategorieController {
 	
 	@RequestMapping(value="/addCat", method=RequestMethod.GET)
 	public String showAddCatForm(Model model){
+		List<CategorieModel> cats = categorieRepository.findAll();
+		model.addAttribute("cats", cats);
 		return "editCat";
 	}
 	
@@ -96,6 +98,8 @@ public class CategorieController {
 		CategorieModel categorie = categorieRepository.findOne(id);
 		if(categorie != null){
 			model.addAttribute("categorie", categorie);
+			List<CategorieModel> cats = categorieRepository.findAll();
+			model.addAttribute("cats", cats);
 			return "editCat";
 		} else {
 			model.addAttribute("errorMessage", "Couldn't find Categorie!");
@@ -124,7 +128,7 @@ public class CategorieController {
 			cm.setDescription(editCatModel.getDescription());
 			cm.setColor(editCatModel.getIcon());
 			cm.setIcon(editCatModel.getIcon());
-			cm.setMaincat(1);
+			cm.setMaincat(editCatModel.getMaincat());
 			categorieRepository.save(cm);
 			model.addAttribute("message", "Changed categorie " + editCatModel.getName());
 		}

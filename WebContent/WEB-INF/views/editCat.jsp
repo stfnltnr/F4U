@@ -91,13 +91,11 @@
 						<div class="form-group">
 							<label for="inputNotes" class="col-md-2 control-label">Main Categorie</label>
 							<div class="col-md-10">
-	 							<select name="maincat" value="<c:out value="${categorie.maincat}" />">
-	 								<option value="1"> 1 - Essen</option>
-	 								<option value="2"> 2 - Bier</option>
-	 								<option value="3"> 3 - Trinken</option>
-	 								<option value="4"> 4 - Aufwand</option>
-	 								<option value="5"> 5 - LALA</option>
-	 							</select>
+ 							<select name="maincat" size="5" value="<c:out value="${categorie.maincat}" />">
+	 							<c:forEach items="${cats}" var="cat">
+	 								<option value="${cat.id }"> ${ cat.name}</option>
+	 							</c:forEach>
+	 						</select>
  							</div>
 						</div>
 
