@@ -180,6 +180,7 @@ public class FinanceController {
 			fm.setBookDate(newFinanceModel.getBookDate());
 			fm.setValue(newFinanceModel.getValue());
 			fm.setNotes(newFinanceModel.getNotes());
+			fm.setCategorie(newFinanceModel.getCategorie());
 			financeRepository.save(fm);
 			model.addAttribute("message", "New finance " + newFinanceModel.getId() + " added.");
 		}
@@ -192,6 +193,8 @@ public class FinanceController {
 
 		FinanceModel finance = financeRepository.findOne(id);		
 		if (finance!=null) {
+			List<CategorieModel> cats = categorieRepository.findAll();
+			model.addAttribute("cats", cats);
 			model.addAttribute("finance", finance);
 			return "editFinance";
 		} else {
@@ -224,7 +227,7 @@ public class FinanceController {
 			finance.setBookDate(editFinanceModel.getBookDate());
 			finance.setValue(editFinanceModel.getValue());
 			finance.setNotes(editFinanceModel.getNotes());
-//			finance.setCategorie(editFinanceModel.getCategorie());
+			finance.setCategorie(editFinanceModel.getCategorie());
 //			finance.setSubcategorie(editFinanceModel.getSubcategorie());
 //			finance.setUser(editFinanceModel.getUser());
 			financeRepository.save(finance);

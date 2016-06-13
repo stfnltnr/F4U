@@ -57,7 +57,7 @@
 						</c:if>
 						<! ----------------  payment ---------------- -->
 						<div class="form-group">
-							<label for="inputPayment" class="col-md-2 control-label">Incoming</label>
+							<label for="inputPayment" class="col-md-2 control-label">Payment</label>
 							<div class="col-md-10">
 								<select name="payment" size="2" value="<c:out value="${finance.payment}"/>">
 								<c:if test="${finance.payment == true}">
@@ -67,6 +67,10 @@
 								<c:if test="${finance.payment == false}">
 									<option value="true">Incoming</option>
 									<option value="false" selected>Outgoing</option>
+								</c:if>
+								<c:if test="${empty finance.payment}">
+									<option value="true" selected>Incoming</option>
+									<option value="false">Outgoing</option>
 								</c:if>
 								</select>
 							</div>
@@ -97,6 +101,18 @@
 							<div class="col-md-10">
 								<input class="form-control" id="inputNotes" type="text"
 									name="notes" value="<c:out value="${finance.notes}"/>">
+							</div>
+						</div>
+						
+						<! ----------------  category ---------------- -->
+						<div class="form-group">
+							<label for="inputCategory" class="col-md-2 control-label">Category</label>
+							<div class="col-md-10">
+							<select name="category">
+								<c:forEach items="${cats}" var="cat" value="${cat.id}">
+									<option value="${cat.id}">${cat.name}</option>
+								</c:forEach>
+							</select>
 							</div>
 						</div>
 
