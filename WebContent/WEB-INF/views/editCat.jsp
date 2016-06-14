@@ -82,7 +82,7 @@
 						<div class="form-group">
 							<label for="inputNotes" class="col-md-2 control-label">Color</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputColor" type="text"
+								<input class="form-control" id="inputColor" type="color"
 									name="color" value="<c:out value="${categorie.color}"/>">
 							</div>
 						</div>

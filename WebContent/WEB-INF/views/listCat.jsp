@@ -23,7 +23,6 @@
 				<table data-toggle="table" class="table table-striped">
 					<thead>
 						<tr>
-							<th>ID</th>
 							<th>Name</th>
 							<th>Description</th>
 							<th>Icon</th>
@@ -39,7 +38,6 @@
 						<c:forEach items="${categories}" var="cat">
 							<c:if test="${cat.maincat==0}">	
 								<tr>
-									<td>${cat.id}</td>
 									<td>${cat.name}</td>
 									<td>${cat.description}</td>
 									<td>${cat.icon}</td>
@@ -47,16 +45,15 @@
 									<td>${cat.maincat}</td>
 									<td>
 										<a href="addCat">
-										<button type="button" class="btn btn-xs btn-success">
-										<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-										Add SubCategorie</button>
+										<button type="button" class="btn btn-sm btn-success">
+										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+										SubCategorie</button></a>
 									</td>
 								</tr>
-							</c:if>	
+							</c:if>
 							<c:forEach items="${categories}" var="cat">
 								<c:if test="${cat.maincat == i }">
 									<tr>
-										<td>${cat.id}</td>
 										<td>${cat.name}</td>
 										<td>${cat.description}</td>
 										<td>${cat.icon}</td>
@@ -66,15 +63,17 @@
 											<a href="editC?id=${cat.id}">
 											<button type="button" class="btn btn-xs btn-success">
 											<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-											Edit SubCategorie</button></a>
+											Edit</button></a>
 											<a href="deleteCat?id=${cat.id}">
 											<button type="button" class="btn btn-xs btn-danger">
 											<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-											DeleteSubcategorie</button></a>
+											Delete</button></a>
 										</td>
-									<tr>
+									</tr>
 								</c:if>
 							</c:forEach>
+							
+							</div>
 							<c:set var="i" value="${i+1}"></c:set>
 						</c:forEach>
 					</tbody>
