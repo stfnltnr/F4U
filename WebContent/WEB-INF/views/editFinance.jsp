@@ -110,7 +110,7 @@
 							<div class="col-md-10">
 								<select name="categorie" value="<c:out value="${finance.categorie}"/>">
 									<c:forEach items="${cats}" var="cat">
-										<option value="${cat}">${cat.name}</option>
+										<option value="${cat.id}">${cat.name}</option>
 									</c:forEach>
 								</select>
 							</div>
