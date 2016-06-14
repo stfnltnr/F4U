@@ -1,7 +1,6 @@
 package at.fh.swenga.f4u.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -22,11 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.f4u.dao.CategorieRepository;
 import at.fh.swenga.f4u.dao.FinanceRepository;
-import at.fh.swenga.f4u.dao.SubcategorieRepository;
 import at.fh.swenga.f4u.dao.UserRepository;
 import at.fh.swenga.f4u.model.CategorieModel;
 import at.fh.swenga.f4u.model.FinanceModel;
-import at.fh.swenga.f4u.model.SubcategorieModel;
 import at.fh.swenga.f4u.model.UserModel;
 
 @Controller
@@ -43,9 +40,6 @@ public class FinanceController {
 
 	@Autowired
 	CategorieRepository categorieRepository;
-
-	@Autowired
-	SubcategorieRepository subcategorieRepository;
 	
 	// LOGIN
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -89,10 +83,6 @@ public class FinanceController {
 		case "findByCategorieName":
 			finances = financeRepository.findByCategorieName(searchString);
 			break;
-
-		case "findBySubcategorieName":
-			finances = financeRepository.findBySubcategorieName(searchString);
-			break;
 			
 		case "findByUserLastName":
 			finances = financeRepository.findByUserLastName(searchString);
@@ -108,12 +98,10 @@ public class FinanceController {
 
 		DataFactory df = new DataFactory();
 		CategorieModel categorie = null;
-		SubcategorieModel subcategorie = null;
 		UserModel user = null;
 
 		for (int i = 0; i < 10; i++) {
 			categorie = new CategorieModel("Cat"+i, "Cat"+i+"desc", "ICON"+i, "Color"+i,1);
-			subcategorie = new SubcategorieModel("SubCat"+i, "SubCat"+i+"desc", "SubICON"+i, "SubColor"+i);
 			
 				String userFirstName = df.getFirstName();
 				String userLastName = df.getLastName();
@@ -131,7 +119,6 @@ public class FinanceController {
 			
 			FinanceModel fm = new FinanceModel(df.chance(50), df.getBirthDate(), 2000.0, df.getFirstName());
 			fm.setCategorie(categorie);
-			fm.setSubcategorie(subcategorie);
 			fm.setUser(user);
 			financeRepository.save(fm);
 		}
@@ -222,13 +209,13 @@ public class FinanceController {
 		if (finance == null) {
 			model.addAttribute("errorMessage", "Finance does not exist!<br>");
 		} else {
+			
 			finance.setId(editFinanceModel.getId());
 			finance.setPayment(editFinanceModel.isPayment());
 			finance.setBookDate(editFinanceModel.getBookDate());
 			finance.setValue(editFinanceModel.getValue());
 			finance.setNotes(editFinanceModel.getNotes());
 			finance.setCategorie(editFinanceModel.getCategorie());
-//			finance.setSubcategorie(editFinanceModel.getSubcategorie());
 //			finance.setUser(editFinanceModel.getUser());
 			financeRepository.save(finance);
 			model.addAttribute("message", "Changed finance " + editFinanceModel.getId());

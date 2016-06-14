@@ -30,6 +30,9 @@ public class CategorieModel implements java.io.Serializable {
 	private String color;
 	private Integer maincat;
 	
+	@OneToMany(mappedBy="categorie", fetch=FetchType.LAZY)
+	private Set<FinanceModel> finances;
+	
 	@Version
 	long version;
 	
@@ -93,5 +96,12 @@ public class CategorieModel implements java.io.Serializable {
 	public void setMaincat(Integer maincat) {
 		this.maincat = maincat;
 	}
-	
+
+	public Set<FinanceModel> getFinances() {
+		return finances;
+	}
+
+	public void setFinances(Set<FinanceModel> finances) {
+		this.finances = finances;
+	}
 }
