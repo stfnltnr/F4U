@@ -150,6 +150,8 @@ public class FinanceController {
 	
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String showAddDataForm(Model model) {
+		List<CategorieModel> cats = categorieRepository.findAll();
+		model.addAttribute("cats", cats);
 		return "editFinance";
 	}
 
@@ -168,7 +170,6 @@ public class FinanceController {
 		}
 		
 		FinanceModel finance = financeRepository.findOne(newFinanceModel.getId());
-		System.out.print(finance);
 		
 		if(finance!=null){
 			model.addAttribute("errorMessage", "Finance already exists!<br>");
@@ -218,7 +219,6 @@ public class FinanceController {
 		}
  
 		FinanceModel finance = financeRepository.findOne(editFinanceModel.getId());
-
 		if (finance == null) {
 			model.addAttribute("errorMessage", "Finance does not exist!<br>");
 		} else {

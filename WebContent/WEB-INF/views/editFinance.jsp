@@ -104,18 +104,18 @@
 							</div>
 						</div>
 						
-						<! ----------------  category ---------------- -->
+						<! ----------------  category ---------------- -->			
 						<div class="form-group">
-							<label for="inputCategory" class="col-md-2 control-label">Category</label>
+							<label for="inputCategorie" class="col-md-2 control-label">Categorie</label>
 							<div class="col-md-10">
-							<select name="category">
-								<c:forEach items="${cats}" var="cat" value="${cat.id}">
-									<option value="${cat.id}">${cat.name}</option>
-								</c:forEach>
-							</select>
+								<select name="categorie" value="<c:out value="${finance.categorie}"/>">
+									<c:forEach items="${cats}" var="cat">
+										<option value="${cat}">${cat.name}</option>
+									</c:forEach>
+								</select>
 							</div>
 						</div>
-
+						
 						<! ----------------  buttons ---------------- -->
 						<div class="form-group">
 							<div class="col-md-10 col-md-offset-2">
