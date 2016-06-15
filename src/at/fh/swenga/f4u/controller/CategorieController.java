@@ -38,21 +38,19 @@ public class CategorieController {
 	@Transactional
 	public String fillData(Model model) {
 		
-		categorieRepository.save(new CategorieModel("Cat1", "Cat1desc", "ICON1", "Color1",0));
-		categorieRepository.save(new CategorieModel("Cat2", "Cat2desc", "ICON2", "Color2",0));
-		categorieRepository.save(new CategorieModel("Cat3", "Cat3desc", "ICON3", "Color3",0));
-		categorieRepository.save(new CategorieModel("Cat4", "Cat4desc", "ICON4", "Color4",0));
-		categorieRepository.save(new CategorieModel("Cat5", "Cat5desc", "ICON5", "Color5",0));
-		categorieRepository.save(new CategorieModel("sCat1", "sCat1desc", "sICON1", "sColor1",1));
-		categorieRepository.save(new CategorieModel("sCat2", "sCat2desc", "sICON2", "sColor2",2));
-		categorieRepository.save(new CategorieModel("sCat3", "sCat3desc", "sICON3", "sColor3",3));
-		categorieRepository.save(new CategorieModel("sCat4", "sCat4desc", "sICON4", "sColor4",4));
-		categorieRepository.save(new CategorieModel("sCat5", "sCat5desc", "sICON5", "sColor5",5));
-		categorieRepository.save(new CategorieModel("sCat6", "sCat6desc", "sICON6", "sColor6",1));
-		categorieRepository.save(new CategorieModel("sCat7", "sCat7desc", "sICON7", "sColor7",2));
-		categorieRepository.save(new CategorieModel("sCat8", "sCat8desc", "sICON8", "sColor8",3));
-		categorieRepository.save(new CategorieModel("sCat9", "sCat9desc", "sICON9", "sColor9",4));
-		categorieRepository.save(new CategorieModel("sCat10", "sCat10desc", "sICON10", "sColor10",5));
+		categorieRepository.save(new CategorieModel("Shopping", "All payments regarding shopping", "glyphicon glyphicon-shopping-cart", "#000000",0));
+		categorieRepository.save(new CategorieModel("Home", "Outgoings like rent, fixed costs, ...", "glyphicon glyphicon-home", "#000000",0));
+		categorieRepository.save(new CategorieModel("Restaurant", "Everything regarding going out for meal", "glyphicon glyphicon-cutlery", "#000000",0));
+		categorieRepository.save(new CategorieModel("Nightlife", "All spendings on alcohol and more ...", "glyphicon glyphicon-glass", "#000000",0));
+		categorieRepository.save(new CategorieModel("Bills", "Miscellaneous bills", "glyphicon glyphicon-euro", "#000000",0));
+		categorieRepository.save(new CategorieModel("Travelling", "All payments related to traveling, vacation, ...","glyphicon glyphicon-plane", "#000000",0));
+		categorieRepository.save(new CategorieModel("Miscellaneous", "All miscellaneous payments", "glyphicon glyphicon-question-sign", "#000000",0));
+		categorieRepository.save(new CategorieModel("Spar", "all payments at Spar", "glyphicon glyphicon-shopping-cart", "#5cb85c",1));
+		categorieRepository.save(new CategorieModel("Hofer", "all payments at Hofer", "glyphicon glyphicon-shopping-cart", "#428bca",1));
+		categorieRepository.save(new CategorieModel("Penny Markt", "all payments at Penny", "glyphicon glyphicon-shopping-cart", "#d9534f",1));
+		categorieRepository.save(new CategorieModel("Rent", "Rent for flat", "sICON5", "sColor5",2));
+		categorieRepository.save(new CategorieModel("Phone", "Mobile bill", "glyphicon glyphicon-phone", "#5cb85c",2));
+		categorieRepository.save(new CategorieModel("Internet", "Internet bill", "glyphicon glyphicon-globe", "#428bca",2));
 
 		return "forward:listCat";
 	}
@@ -126,7 +124,7 @@ public class CategorieController {
 			cm.setId(editCatModel.getId());
 			cm.setName(editCatModel.getName());
 			cm.setDescription(editCatModel.getDescription());
-			cm.setColor(editCatModel.getIcon());
+			cm.setColor(editCatModel.getColor());
 			cm.setIcon(editCatModel.getIcon());
 			cm.setMaincat(editCatModel.getMaincat());
 			categorieRepository.save(cm);

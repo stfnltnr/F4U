@@ -20,14 +20,11 @@
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
 				<h1>Manage Categories</h1>
-				<table data-toggle="table" class="table table-striped">
+				<table data-toggle="table" class="table table-striped table-condensed">
 					<thead>
 						<tr>
 							<th>Name</th>
 							<th>Description</th>
-							<th>Icon</th>
-							<th>Color</th>
-							<th>MainCat</th>
 							<th>Action <a href="fillCat"><button type="button"
 										class="btn btn-success">Fill Cat</button></a>
 							</th>
@@ -38,27 +35,23 @@
 						<c:forEach items="${categories}" var="cat">
 							<c:if test="${cat.maincat==0}">	
 								<tr>
-									<td>${cat.name}</td>
+									
+									<td><span class="${cat.icon }" style="color:${cat.color};" aria-hidden="true"></span> ${cat.name}</td>
 									<td>${cat.description}</td>
-									<td>${cat.icon}</td>
-									<td>${cat.color}</td>
-									<td>${cat.maincat}</td>
 									<td>
 										<a href="addCat">
 										<button type="button" class="btn btn-sm btn-success">
 										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 										SubCategorie</button></a>
 									</td>
+									</strong>
 								</tr>
 							</c:if>
 							<c:forEach items="${categories}" var="cat">
 								<c:if test="${cat.maincat == i }">
 									<tr>
-										<td>${cat.name}</td>
+										<td><span class="${cat.icon }" style="color:${cat.color};" aria-hidden="true"></span> ${cat.name}</td>
 										<td>${cat.description}</td>
-										<td>${cat.icon}</td>
-										<td>${cat.color}</td>
-										<td>${cat.maincat}</td>
 										<td>
 											<a href="editC?id=${cat.id}">
 											<button type="button" class="btn btn-xs btn-success">
