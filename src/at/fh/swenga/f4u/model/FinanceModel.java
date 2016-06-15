@@ -5,9 +5,11 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -38,10 +40,8 @@ public class FinanceModel implements java.io.Serializable {
 	private String notes;
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
+//	@JoinColumn(name="categorie_id", referencedColumnName="id")
 	CategorieModel categorie;
-	
-	@ManyToOne(cascade = CascadeType.PERSIST)
-	SubcategorieModel subcategorie;
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	UserModel user;
@@ -103,14 +103,6 @@ public class FinanceModel implements java.io.Serializable {
 
 	public void setCategorie(CategorieModel categorie) {
 		this.categorie = categorie;
-	}
-
-	public SubcategorieModel getSubcategorie() {
-		return subcategorie;
-	}
-
-	public void setSubcategorie(SubcategorieModel subcategorie) {
-		this.subcategorie = subcategorie;
 	}
 
 	public UserModel getUser() {

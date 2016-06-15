@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.f4u.dao.CategorieRepository;
-import at.fh.swenga.f4u.dao.SubcategorieRepository;
 import at.fh.swenga.f4u.model.CategorieModel;
 
 @Controller
