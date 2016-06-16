@@ -9,14 +9,15 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="Categorie")
-public class CategorieModel implements java.io.Serializable {
+@Table(name="SubCategorie")
+public class SubCategorieModel implements java.io.Serializable {
 	
 	@Id
 	@Column(name="id")
@@ -30,20 +31,16 @@ public class CategorieModel implements java.io.Serializable {
 	private String icon;
 	private String color;
 	
-	@OneToMany(mappedBy="categorie", fetch=FetchType.LAZY)
-	private Set<FinanceModel> finances;
-	
-	@OneToMany(mappedBy="categorie", fetch=FetchType.LAZY)
-	private Set<SubCategorieModel> subcategories;
-	
+	@ManyToOne(fetch=FetchType.EAGER)
+	private CategorieModel categorie;
 	
 	@Version
 	long version;
 	
-	public CategorieModel() {
+	public SubCategorieModel() {
 	}
 	
-	public CategorieModel(String name, String description, String icon, String color) {
+	public SubCategorieModel(String name, String description, String icon, String color) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -91,21 +88,14 @@ public class CategorieModel implements java.io.Serializable {
 		this.color = color;
 	}
 
-	public Set<FinanceModel> getFinances() {
-		return finances;
+	public CategorieModel getCategorie() {
+		return categorie;
 	}
 
-	public void setFinances(Set<FinanceModel> finances) {
-		this.finances = finances;
-	}
-
-	public Set<SubCategorieModel> getSubcategories() {
-		return subcategories;
-	}
-
-	public void setSubcategories(Set<SubCategorieModel> subcategories) {
-		this.subcategories = subcategories;
+	public void setCategorie(CategorieModel categorie) {
+		this.categorie = categorie;
 	}
 	
 	
+
 }

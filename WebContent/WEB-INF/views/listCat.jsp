@@ -31,43 +31,37 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:set var="i" value="${1}"></c:set>
+						
 						<c:forEach items="${categories}" var="cat">
-							<c:if test="${cat.maincat==0}">	
+						<c:set var="i" value="${cat.id}" />	
 								<tr>
 									
 									<td><span class="${cat.icon }" style="color:${cat.color};" aria-hidden="true"></span> ${cat.name}</td>
 									<td>${cat.description}</td>
 									<td>
-										<a href="addCat">
+										<a href="addCat?id=${cat.id }">
 										<button type="button" class="btn btn-sm btn-success">
 										<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 										SubCategorie</button></a>
 									</td>
-									</strong>
 								</tr>
-							</c:if>
-							<c:forEach items="${categories}" var="cat">
-								<c:if test="${cat.maincat == i }">
-									<tr>
-										<td><span class="${cat.icon }" style="color:${cat.color};" aria-hidden="true"></span> ${cat.name}</td>
-										<td>${cat.description}</td>
-										<td>
-											<a href="editC?id=${cat.id}">
-											<button type="button" class="btn btn-xs btn-success">
-											<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-											Edit</button></a>
-											<a href="deleteCat?id=${cat.id}">
-											<button type="button" class="btn btn-xs btn-danger">
-											<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-											Delete</button></a>
-										</td>
-									</tr>
-								</c:if>
-							</c:forEach>
-							
+ 								<c:forEach items="${subcategories}" var="subcat">
+								<tr>
+									<td><span class="${scat.icon }" style="color:${subcat.color};" aria-hidden="true" ></span> ${subcat.name}</td>
+									<td>${subcat.description}</td>
+									<td>
+										<a href="editC?id=${subcat.id}">
+										<button type="button" class="btn btn-xs btn-success">
+										<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+										Edit</button></a>
+										<a href="deleteCat?id=${subcat.id}">
+										<button type="button" class="btn btn-xs btn-danger">
+										<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+										Delete</button></a>
+									</td>
+								</tr>
+								</c:forEach>
 							</div>
-							<c:set var="i" value="${i+1}"></c:set>
 						</c:forEach>
 					</tbody>
 				</table>

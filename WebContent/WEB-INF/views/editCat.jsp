@@ -23,8 +23,8 @@
 
 		<!--  add or edit?  ----------------------------------------------------------- -->
 		<c:choose>
-			<c:when test="${not empty categorie}">
-				<c:set var="legend">Change SubCategorie ${categorie.name}</c:set>
+			<c:when test="${not empty subcategorie}">
+				<c:set var="legend">Change SubCategorie ${subcategorie.name}</c:set>
 				<c:set var="formAction">editCategorie</c:set>
 				<c:set var="readonly">readonly</c:set>
 				<c:set var="shown">hidden</c:set>
@@ -44,10 +44,10 @@
 					<fieldset>
 						<legend>${legend}</legend>
 						 <!-- id Subcategorie-->
-						 <c:if test="${not empty categorie}">
+						 <c:if test="${not empty subcategorie}">
 						
 								<input class="form-control" id="inputID" type="${shown }" name="id"
-									${readonly} value="<c:out value="${categorie.id}"/>">
+									${readonly} value="<c:out value="${subcategorie.id}"/>">
 
 						</c:if>
 						<!-- Name Subcategorie  -->
@@ -55,7 +55,7 @@
 							<label for="inputIncoming" class="col-md-2 control-label">Name</label>
 							<div class="col-md-10">
 								<input class="form-control" id="inputName" type="text"
-									name="name" value="<c:out value="${categorie.name}"/>">
+									name="name" value="<c:out value="${subcategorie.name}"/>">
 							</div>
 						</div>
 						<!-- Description Subcategorie  -->
@@ -63,14 +63,14 @@
 							<label for="inputOutgoing" class="col-md-2 control-label">Description</label>
 							<div class="col-md-10">
 								<input class="form-control" id="inputDescription" type="text"
-									name="description"  value="<c:out value="${categorie.description}"/>"></textarea>
+									name="description"  value="<c:out value="${subcategorie.description}"/>"></textarea>
 							</div>
 						</div>
 						<!-- Icon Subcategorie  -->
 						<div class="form-group">
 							<label for="inputIcon" class="col-md-2 control-label">Icon</label>
 							<div class="col-md-10">
-							<select name="icon" id="inputIcon" class="selectpicker" data-width="fit" data-size="10" title="Choose icon ..." value="<c:out value="${categorie.icon }"/>">
+							<select name="icon" id="inputIcon" class="selectpicker" data-width="fit" data-size="10" title="Choose icon ..." value="<c:out value="${subcategorie.icon }"/>">
 								<option data-icon="glyphicon glyphicon-euro"  value="glyphicon glyphicon-euro"></option>
 								<option data-icon="glyphicon glyphicon-glass"  value="glyphicon glyphicon-glass"></option>
 								<option data-icon="glyphicon glyphicon-home"  value="glyphicon glyphicon-home"></option>
@@ -115,7 +115,7 @@
 						<div class="form-group">
 							<label for="inputColor" class="col-md-2 control-label">Color</label>
 							<div class="col-md-10">
-							<select name="color" id="inputColor" title="Choose color ..." class="selectpicker" data-width="fit" value="<c:out value="${categorie.color }"/>">
+							<select name="color" id="inputColor" title="Choose color ..." class="selectpicker" data-width="fit" value="<c:out value="${subcategorie.color }"/>">
 							  <option style="background: #000; color: #000;" value="#000">Black</option>
 							  <option style="background: #428bca; color: #428bca;" value="#428bca">Blue</option>
 							  <option style="background: #5bc0de; color: #5bc0de;" value="#5bc0de">Lightblue</option>
@@ -130,11 +130,9 @@
 						<div class="form-group">
 							<label for="inputNotes" class="col-md-2 control-label">Main Categorie</label>
 							<div class="col-md-10">
- 							<select name="maincat" size="5" class="selectpicker" value="<c:out value="${categorie.maincat}" />">
+ 							<select name="categorie" size="5" class="selectpicker" value="<c:out value="${subcategorie.categorie}" />">
 	 							<c:forEach items="${cats}" var="cat">
-	 							<c:if test="${cat.maincat == 0 }">
 	 								<option data-icon="${cat.icon }"value="${cat.id }"> ${ cat.name}</option>
-	 							</c:if>
 	 							</c:forEach>
 	 						</select>
  							</div>
