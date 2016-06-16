@@ -39,8 +39,7 @@ public class FinanceModel implements java.io.Serializable {
 	
 	private String notes;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
-//	@JoinColumn(name="categorie_id", referencedColumnName="id")
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH})
 	CategorieModel categorie;
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)

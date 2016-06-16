@@ -76,8 +76,8 @@ public class FinanceController {
 			finances = financeRepository.findAll();
 			break;
 
-		case "findByNotes":
-			finances = financeRepository.findByNotes(searchString);
+		case "findByNotesIgnoreCaseContaining":
+			finances = financeRepository.findByNotesIgnoreCaseContaining(searchString);
 			break;
 
 		case "findByCategorieName":
@@ -92,6 +92,35 @@ public class FinanceController {
 		return "index";
 	}
 
+	@RequestMapping(value = { "/findValue" })
+	public String findValue(Model model, @RequestParam double searchValue, @ModelAttribute("type") String type) {
+		List<FinanceModel> finances = null;
+
+		switch (type) {
+		case "findAll":
+			finances = financeRepository.findAll();
+			break;
+			
+		case "findByValue":
+			finances = financeRepository.findByValue(searchValue);
+			break;
+			
+//		case "findByValueBetween":
+//			finances = financeRepository.findByValueBetween(searchValue);
+//			break;
+			
+		case "findByValueGreaterThanEqual":
+			finances = financeRepository.findByValueGreaterThanEqual(searchValue);
+			break;
+			
+		case "findByValueLessThanEqual":
+			finances = financeRepository.findByValueLessThanEqual(searchValue);
+			break;
+		}
+		model.addAttribute("finances", finances);
+		return "index";
+	}
+	
 	@RequestMapping("/fill")
 	@Transactional
 	public String fillData(Model model) {
@@ -117,7 +146,7 @@ public class FinanceController {
 							userEmail);
 				}
 			
-			FinanceModel fm = new FinanceModel(df.chance(50), df.getBirthDate(), 2000.0, df.getFirstName());
+			FinanceModel fm = new FinanceModel(df.chance(50), df.getBirthDate(), df.getNumberBetween(1, 2000), df.getFirstName());
 			fm.setCategorie(categorie);
 			fm.setUser(user);
 			financeRepository.save(fm);

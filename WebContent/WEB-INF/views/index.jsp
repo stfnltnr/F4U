@@ -40,12 +40,31 @@
 			</form>
 			<hr>
 
+			<!--  Betragssuche ----------------------------------------------------------- -->
+			<div class="row">
+				<form method="post" action="findValue">
+					<label for="searchValue">Search Value:</label> <select name="type">
+						<option value="findByValue">genauer Betrag</option>
+						<option value="findByValueBetween">von bis</option>
+						<option value="findByValueGreaterThanEqual">>=</option>
+						<option value="findByValueLessThanEqual"><=</option>
+					
+
+					</select> <input type="text" name="searchValue"> <input
+						type="submit" value="Do it"> <input type="hidden"
+						name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+				</form>
+			</div>
+
+			<!--  Betragssuche ----------------------------------------------------------- -->
+			
 			<!--  Search + Fill ----------------------------------------------------------- -->
 			<div class="row">
 				<form method="post" action="find">
 					<label for="searchString">Search:</label> <select name="type">
 						<option value="findAll" selected="selected">findAll</option>
-						<option value="findByNotes">findByNotes</option>
+						<option value="findByNotesIgnoreCaseContaining">Volltextsuche</option>
 						<option value="findByCategorieName">findByCategorieName</option>
 						<option value="findByUserLastName">findByUserLastName</option>
 						<!-- <option value="findByWhateverName">findByWhateverName</option>

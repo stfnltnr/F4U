@@ -12,7 +12,15 @@ import at.fh.swenga.f4u.model.FinanceModel;
 @Transactional
 public interface FinanceRepository extends JpaRepository<FinanceModel, Integer> {
 	
-	public List<FinanceModel> findByNotes(String notes);
+	public List<FinanceModel> findByNotesIgnoreCaseContaining(String notes);
+	
+	public List<FinanceModel> findByValue(double value);
+	
+//	public List<FinanceModel> findByValueBetween(double value, double value);
+	
+	public List<FinanceModel> findByValueGreaterThanEqual(double value);
+	
+	public List<FinanceModel> findByValueLessThanEqual(double value);
 	
 	public List<FinanceModel> findByCategorieName(String companyName);
 	
