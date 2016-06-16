@@ -1,6 +1,7 @@
 package at.fh.swenga.f4u.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -120,6 +121,57 @@ public class FinanceController {
 		model.addAttribute("finances", finances);
 		return "index";
 	}
+	
+	@RequestMapping(value = { "/findBool" })
+	public String findBool(Model model, @ModelAttribute("type") String type) {
+		List<FinanceModel> finances = null;
+		boolean income = true;
+		boolean outcome = false;
+
+		switch (type) {
+		case "findAll":
+			finances = financeRepository.findAll();
+			break;
+			
+		case "findIncome":
+			finances = financeRepository.findIncome(income);
+			break;
+		
+		case "findOutcome":
+			finances = financeRepository.findOutcome(outcome);
+			break;
+		}
+		model.addAttribute("finances", finances);
+		return "index";
+	}
+	
+	@RequestMapping(value = { "/findDate" })
+	public String findDate(Model model, @RequestParam Date searchDate, @ModelAttribute("type") String type) {
+		List<FinanceModel> finances = null;
+
+		switch (type) {
+		case "findAll":
+			finances = financeRepository.findAll();
+			break;
+			
+		case "findByBookDate":
+			finances = financeRepository.findByBookDate(searchDate);
+			break;
+		
+		}
+		model.addAttribute("finances", finances);
+		return "index";
+	}
+	
+//	@RequestMapping(value = { "/findIncome" })
+//	public String findIncome(@RequestParam(true) FinanceModel e, Model model) {
+//
+//		List<FinanceModel> finances = new ArrayList<>();
+//		finances.add(e);
+//		model.addAttribute("finances", finances);
+//
+//		return "index";
+//	}
 	
 	@RequestMapping("/fill")
 	@Transactional
