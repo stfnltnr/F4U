@@ -186,16 +186,10 @@ public class FinanceController {
 			
 				String userFirstName = df.getFirstName();
 				String userLastName = df.getLastName();
-				String userAddress = df.getStreetName();
-				int userPostCode = 8010;
-				String userPlace = df.getCity();
-				String userPhone = df.getNumberText(8);
-				String userEmail = df.getEmailAddress();
 				user = userRepository.findFirstByLastName(userLastName);
 
 				if (user == null) {
-					user = new UserModel(userFirstName, userLastName, userAddress, userPostCode, userPlace,userPhone,
-							userEmail);
+					user = new UserModel(userFirstName, userLastName, userLastName, "1234", true);
 				}
 			
 			FinanceModel fm = new FinanceModel(df.chance(50), df.getBirthDate(), df.getNumberBetween(1, 2000), df.getFirstName());
