@@ -13,7 +13,10 @@
 <title>finance4you</title>
 <%@include file="includes/bootstrapCss.css"%>
 <%@include file="includes/treeView.css"%>
-
+<link
+	href="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css"
+	rel="stylesheet">
+	
 </head>
 <body>
 	<div class="container" role="main">
@@ -39,8 +42,31 @@
 					name="${_csrf.parameterName}" value="${_csrf.token}" />
 			</form>
 			<hr>
+			
+			<!-- Eingang oder Ausgang --------------------------------------------------- -->
+	<div class="row">
+<%-- 				<form method="post" action="findBool">
+					<label for="searchValue">Search Value:</label> <select name="type">
+						<option value="findIncome">Income</option>			
 
-			<!--  Betragssuche ----------------------------------------------------------- -->
+					</select><input
+						type="submit" value="Do it"> <input type="hidden"
+						name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+				</form> --%>
+	 		<form method="post" action="findBool">
+       <fieldset>
+                <legend>What are you search for?</legend>
+                        <input type="radio" name="type" value="findAll" />All<br />
+                        <input type="radio" name="type" value="findIncome" />Income<br />
+                        <input type="radio" name="type" value="findOutcome" />Outcome<br />
+                        <input type="submit" value="Submit now" /><input type="hidden"
+						name="${_csrf.parameterName}" value="${_csrf.token}" />
+       </fieldset>
+</form> 
+</div>
+		<hr>	
+			<!-- Betragssuche ----------------------------------------------------------- -->
 			<div class="row">
 				<form method="post" action="findValue">
 					<label for="searchValue">Search Value:</label> <select name="type">
@@ -56,8 +82,25 @@
 
 				</form>
 			</div>
-
 			<!--  Betragssuche ----------------------------------------------------------- -->
+			
+			<hr>	
+			<!-- Search for Date ----------------------------------------------------------- -->
+			<div class="row">
+				<form method="post" action="findDate">
+					<label for="searchDate">Search Date:</label> <select name="type">
+						<option value="findByBookDate">Search for Date</option>	
+
+					</select> 
+					<input class="form_datetime" placeholder="Date"
+						 name="searchDate" type="text">
+					 <input	type="submit" value="Search"> <input type="hidden"
+						name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+				</form>
+			</div>
+			<hr>
+			<!--  Search for Date ----------------------------------------------------------- -->
 			
 			<!--  Search + Fill ----------------------------------------------------------- -->
 			<div class="row">
@@ -145,5 +188,25 @@
 	</div>
 	<!--  end of container -->
 	<%@include file="includes/bootstrapJs.js"%>
+	
+	<!-- JS for Datetime picker -->
+
+	<script type="text/javascript"
+		src="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+
+	<script>
+		$(function() {
+
+			$(".form_datetime").datetimepicker({
+				format : "dd.mm.yyyy",
+				autoclose : true,
+				todayBtn : true,
+				pickerPosition : "bottom-left",
+				minView : 2
+			});
+
+		});
+	</script>
+	
 </body>
 </html>
