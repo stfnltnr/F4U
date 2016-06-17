@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name="Categorie")
 public class CategorieModel implements java.io.Serializable {
@@ -30,12 +31,11 @@ public class CategorieModel implements java.io.Serializable {
 	private String icon;
 	private String color;
 	
-	@OneToMany(mappedBy="categorie", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="categorie", fetch=FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
 	private Set<FinanceModel> finances;
 	
 	@OneToMany(mappedBy="categorie", fetch=FetchType.LAZY)
 	private Set<SubCategorieModel> subcategories;
-	
 	
 	@Version
 	long version;
@@ -106,6 +106,5 @@ public class CategorieModel implements java.io.Serializable {
 	public void setSubcategories(Set<SubCategorieModel> subcategories) {
 		this.subcategories = subcategories;
 	}
-	
 	
 }

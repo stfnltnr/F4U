@@ -94,7 +94,7 @@
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
 				<h1>Finances</h1>
-				<a href="fill"><button type="button" class="btn btn-success">FillList</button></a>
+				<!-- <a href="fill"><button type="button" class="btn btn-success">FillList</button></a> -->
 				<a href="add"><button type="button" class="btn btn-success">Add</button>
 				</a>
 				<table data-toggle="table" class="table table-striped">
@@ -119,8 +119,8 @@
 										pattern="dd.MM.yyyy" /> </td>
 								<td>${finance.value}</td>
 								<td>${finance.notes}</td>
-								<td>${finance.categorie.name}</td>
-								<td>${finance.user.lastName}</td>
+								<td><span class="${finance.categorie.icon }" aria-hidden="true" ></span> ${finance.categorie.name}</td>
+								<td><span class="${finance.subcategorie.icon }" style="color:${finance.subcategorie.color};" aria-hidden="true" ></span> ${finance.subcategorie.name}</td>
 
 								<sec:authorize access="hasRole('ROLE_ADMIN')">
 									<td><a href="edit?id=${finance.id}">
@@ -135,8 +135,6 @@
 											</button>
 									</a></td>
 								</sec:authorize>
-
-
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -145,8 +143,6 @@
 		</div>
 		<!--  list all finances  ----------------------------------------------------------- -->
 	</div>
-		
-
 	<!--  end of container -->
 	<%@include file="includes/bootstrapJs.js"%>
 </body>

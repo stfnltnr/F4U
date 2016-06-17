@@ -70,44 +70,20 @@
 						<div class="form-group">
 							<label for="inputIcon" class="col-md-2 control-label">Icon</label>
 							<div class="col-md-10">
-							<select name="icon" id="inputIcon" class="selectpicker" data-width="fit" data-size="10" title="Choose icon ..." value="<c:out value="${subcategorie.icon }"/>">
-								<option data-icon="glyphicon glyphicon-euro"  value="glyphicon glyphicon-euro"></option>
-								<option data-icon="glyphicon glyphicon-glass"  value="glyphicon glyphicon-glass"></option>
-								<option data-icon="glyphicon glyphicon-home"  value="glyphicon glyphicon-home"></option>
-								<option data-icon="glyphicon glyphicon-heart"  value="glyphicon glyphicon-heart"></option>
-								<option data-icon="glyphicon glyphicon-film"  value="glyphicon glyphicon-film"></option>
-								<option data-icon="glyphicon glyphicon-ok"  value="glyphicon glyphicon-ok"></option>
-								<option data-icon="glyphicon glyphicon-remove"  value="glyphicon glyphicon-remove"></option>
-								<option data-icon="glyphicon glyphicon-road"  value="glyphicon glyphicon-road"></option>
-								<option data-icon="glyphicon glyphicon-lock"  value="glyphicon glyphicon-lock"></option>
-								<option data-icon="glyphicon glyphicon-headphones"  value="glyphicon glyphicon-headphones"></option>
-								<option data-icon="glyphicon glyphicon-book"  value="glyphicon glyphicon-book"></option>
-								<option data-icon="glyphicon glyphicon-picture"  value="glyphicon glyphicon-picture"></option>
-								<option data-icon="glyphicon glyphicon-facetime-video"  value="glyphicon glyphicon-facetime-video"></option>
-								<option data-icon="glyphicon glyphicon-exclamation-sign"  value="glyphicon glyphicon-exclamation-sign"></option>
-								<option data-icon="glyphicon glyphicon-gift"  value="glyphicon glyphicon-gift"></option>
-								<option data-icon="glyphicon glyphicon-plane"  value="glyphicon glyphicon-plane"></option>
-								<option data-icon="glyphicon glyphicon-shopping-cart"  value="glyphicon glyphicon-shopping-cart"></option>
-								<option data-icon="glyphicon glyphicon-wrench"  value="glyphicon glyphicon-wrench"></option>
-								<option data-icon="glyphicon glyphicon-phone"  value="glyphicon glyphicon-phone"></option>
-								<option data-icon="glyphicon glyphicon-flash"  value="glyphicon glyphicon-flash"></option>
-								<option data-icon="glyphicon glyphicon-cutlery"  value="glyphicon glyphicon-cutlery"></option>
-								<option data-icon="glyphicon glyphicon-phone-alt"  value="glyphicon glyphicon-phone-alt"></option>
-								<option data-icon="glyphicon glyphicon-piggy-bank"  value="glyphicon glyphicon-piggy-bank"></option>
-								<option data-icon="glyphicon glyphicon-sunglasses"  value="glyphicon glyphicon-sunglasses"></option>
-								<option data-icon="glyphicon glyphicon-education"  value="glyphicon glyphicon-education"></option>
-								<option data-icon="glyphicon glyphicon-ice-lolly-tasted"  value="glyphicon glyphicon-ice-lolly-tasted"></option>
-								<option data-icon="glyphicon glyphicon-ice-lolly"  value="glyphicon glyphicon-ice-lolly"></option>
-								<option data-icon="glyphicon glyphicon-cd"  value="glyphicon glyphicon-cd"></option>
-								<option data-icon="glyphicon glyphicon-tree-deciduous"  value="glyphicon glyphicon-tree-deciduous"></option>
-								<option data-icon="glyphicon glyphicon-cog"  value="glyphicon glyphicon-cog"></option>
-								<option data-icon="glyphicon glyphicon-user"  value="glyphicon glyphicon-user"></option>
-								<option data-icon="glyphicon glyphicon-film"  value="glyphicon glyphicon-film"></option>
-								<option data-icon="glyphicon glyphicon-pencil"  value="glyphicon glyphicon-pencil"></option>
-								<option data-icon="glyphicon glyphicon-music"  value="glyphicon glyphicon-music"></option>
-								<option data-icon="glyphicon glyphicon-map-marker"  value="glyphicon glyphicon-map-marker"></option>
-								<option data-icon="glyphicon glyphicon-question-sign"  value="glyphicon glyphicon-question-sign"></option>
-								<option data-icon="glyphicon glyphicon-baby-formula"  value="glyphicon glyphicon-baby-formula"></option>
+							<select name="icon" id="inputIcon" class="selectpicker show-tick" data-width="fit" data-size="10" title="Choose icon ..." value="<c:out value="${subcategorie.icon }"/>">
+							<c:forTokens items="glyphicon glyphicon-euro,glyphicon glyphicon-shopping-cart,glyphicon glyphicon-cutlery,glyphicon glyphicon-glass,glyphicon glyphicon-home,glyphicon glyphicon-piggy-bank,glyphicon glyphicon-user,glyphicon glyphicon-heart,glyphicon glyphicon-globe,glyphicon glyphicon-film,glyphicon glyphicon-ok,glyphicon glyphicon-remove,glyphicon glyphicon-road,glyphicon glyphicon-lock,glyphicon glyphicon-headphones,glyphicon glyphicon-book,glyphicon glyphicon-picture,glyphicon glyphicon-facetime-video,glyphicon glyphicon-exclamation-sign,glyphicon glyphicon-gift,glyphicon glyphicon-plane,glyphicon glyphicon-shopping-cart,glyphicon glyphicon-wrench,glyphicon glyphicon-phone,glyphicon glyphicon-flash,glyphicon glyphicon-phone-alt,glyphicon glyphicon-sunglasses,glyphicon glyphicon-education,glyphicon glyphicon-ice-lolly-tasted,glyphicon glyphicon-ice-lolly,glyphicon glyphicon-cd,glyphicon glyphicon-tree-deciduous,glyphicon glyphicon-cog,glyphicon glyphicon-film,glyphicon glyphicon-pencil,glyphicon glyphicon-music,glyphicon glyphicon-map-marker,glyphicon glyphicon-question-sign,glyphicon glyphicon-baby-formula"
+							delims="," var="glyph">
+												
+												
+								<c:choose>
+									<c:when test="${glyph == subcategorie.icon }">
+										<option data-icon="${glyph}" value="${glyph}" selected="selected" >&zwnj;</option>
+									</c:when>
+									<c:otherwise>
+										<option data-icon="${glyph}"  value="${glyph}"></option>
+									</c:otherwise>
+								</c:choose>
+							</c:forTokens>
 							</select>
 							</div>
 						</div>
@@ -115,25 +91,51 @@
 						<div class="form-group">
 							<label for="inputColor" class="col-md-2 control-label">Color</label>
 							<div class="col-md-10">
-							<select name="color" id="inputColor" title="Choose color ..." class="selectpicker" data-width="fit" value="<c:out value="${subcategorie.color }"/>">
-							  <option style="background: #000; color: #000;" value="#000">Black</option>
-							  <option style="background: #428bca; color: #428bca;" value="#428bca">Blue</option>
-							  <option style="background: #5bc0de; color: #5bc0de;" value="#5bc0de">Lightblue</option>
-							  <option style="background: #5cb85c; color: #5cb85c;" value="#5cb85c">Green</option>
-							  <option style="background: #f0ad4e; color: #f0ad4e;" value="#f0ad4e">Yellow</option>
-							  <option style="background: #d9534f; color: #d9534f;" value="#d9534f">Red</option>
+							<select name="color" id="inputColor" title="Choose color ..." class="selectpicker show-tick" data-width="fit" value="<c:out value="${subcategorie.color }"/>">
+							<c:forTokens items="#000,#428bca,#5bc0de,#5cb85c,#f0ad4e,#d9534f" delims="," var="hex">
+								<c:choose>
+									<c:when test="${hex == subcategorie.color }">
+										<option selected="selected" style="background: ${hex}; color: ${hex};" value="${hex}">
+										<c:if test="${hex == '#000'}">Black</c:if>
+										<c:if test="${hex == '#428bca'}">Blue</c:if>
+										<c:if test="${hex == '#5bc0de'}">Lightblue</c:if>
+										<c:if test="${hex == '#5cb85c'}">Green</c:if>
+										<c:if test="${hex == '#f0ad4e'}">Yellow</c:if>
+										<c:if test="${hex == '#d9534f'}">Red</c:if>
+										</option>
+									</c:when>
+									<c:otherwise>
+										<option style="background: ${hex}; color: ${hex};" value="${hex}">
+										<c:if test="${hex == '#000'}">Black</c:if>
+										<c:if test="${hex == '#428bca'}">Blue</c:if>
+										<c:if test="${hex == '#5bc0de'}">Lightblue</c:if>
+										<c:if test="${hex == '#5cb85c'}">Green</c:if>
+										<c:if test="${hex == '#f0ad4e'}">Yellow</c:if>
+										<c:if test="${hex == '#d9534f'}">Red</c:if>
+										</option>
+									</c:otherwise>
+								</c:choose>
+							</c:forTokens>
 							</select>
 							</div>
 						</div>
 						
-						<!-- MainCategorie -->
+						<!--  MainCategorie  -->
 						<div class="form-group">
 							<label for="inputNotes" class="col-md-2 control-label">Main Categorie</label>
 							<div class="col-md-10">
- 							<select name="categorie" size="5" class="selectpicker" value="<c:out value="${subcategorie.categorie}" />">
-	 							<c:forEach items="${cats}" var="cat">
-	 								<option data-icon="${cat.icon }"value="${cat.id }"> ${ cat.name}</option>
-	 							</c:forEach>
+ 							<select name="categorie" size="5" class="selectpicker show-tick" value="<c:out value="${subcategorie.categorie}" />">
+ 							<c:set var="maincat" value="${subcategorie.maincat }"/>
+ 							<c:forEach items="${cats}" var="cat">
+ 							<c:choose>
+ 								<c:when test="${cat.id == maincat }">
+ 									<option selected="selected" data-icon="${cat.icon}"value="${cat.id}"> ${cat.name}</option>
+ 								</c:when>
+ 								<c:otherwise>
+ 									<option data-icon="${cat.icon}"value="${cat.id}"> ${cat.name}</option>
+ 								</c:otherwise>
+ 							</c:choose>
+	 						</c:forEach>
 	 						</select>
  							</div>
 						</div>

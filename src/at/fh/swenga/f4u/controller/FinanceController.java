@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.f4u.dao.CategorieRepository;
 import at.fh.swenga.f4u.dao.FinanceRepository;
+import at.fh.swenga.f4u.dao.SubCategorieRepository;
 import at.fh.swenga.f4u.dao.UserRepository;
 import at.fh.swenga.f4u.model.CategorieModel;
 import at.fh.swenga.f4u.model.FinanceModel;
+import at.fh.swenga.f4u.model.SubCategorieModel;
 import at.fh.swenga.f4u.model.UserModel;
 
 @Controller
@@ -41,13 +43,14 @@ public class FinanceController {
 	@Autowired
 	CategorieRepository categorieRepository;
 	
+	@Autowired
+	SubCategorieRepository subCategorieRepository;
+	
 	// LOGIN
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String handleLogin() {
 		return "login";
 	}
-
-	
 
 	@RequestMapping(value = { "/", "list" })
 	public String index(Model model) {
@@ -128,9 +131,10 @@ public class FinanceController {
 		DataFactory df = new DataFactory();
 		CategorieModel categorie = null;
 		UserModel user = null;
+		
 
-		for (int i = 0; i < 10; i++) {
-			categorie = new CategorieModel("Cat"+i, "Cat"+i+"desc", "ICON"+i, "Color"+i);
+		for (int i = 0; i < 5; i++) {
+			categorie = new CategorieModel("TestCategorie", "Description", "glyphicon glyphicon-shopping-cart", "#000000");
 			
 				String userFirstName = df.getFirstName();
 				String userLastName = df.getLastName();
@@ -167,7 +171,9 @@ public class FinanceController {
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String showAddDataForm(Model model) {
 		List<CategorieModel> cats = categorieRepository.findAll();
+		List<SubCategorieModel> subcats = subCategorieRepository.findAll();
 		model.addAttribute("cats", cats);
+		model.addAttribute("subcats", subcats);
 		return "editFinance";
 	}
 
@@ -198,8 +204,9 @@ public class FinanceController {
 			fm.setValue(newFinanceModel.getValue());
 			fm.setNotes(newFinanceModel.getNotes());
 			fm.setCategorie(newFinanceModel.getCategorie());
+			fm.setSubcategorie(newFinanceModel.getSubcategorie());
 			financeRepository.save(fm);
-			model.addAttribute("message", "New finance " + newFinanceModel.getId() + " added.");
+			model.addAttribute("message", "New finance " + newFinanceModel.getNotes() + " added.");
 		}
 		
 		return "forward:list";
@@ -211,7 +218,9 @@ public class FinanceController {
 		FinanceModel finance = financeRepository.findOne(id);		
 		if (finance!=null) {
 			List<CategorieModel> cats = categorieRepository.findAll();
+			List<SubCategorieModel> subcats = subCategorieRepository.findAll();
 			model.addAttribute("cats", cats);
+			model.addAttribute("subcats",subcats);
 			model.addAttribute("finance", finance);
 			return "editFinance";
 		} else {
@@ -245,15 +254,15 @@ public class FinanceController {
 			finance.setValue(editFinanceModel.getValue());
 			finance.setNotes(editFinanceModel.getNotes());
 			finance.setCategorie(editFinanceModel.getCategorie());
+			finance.setSubcategorie(editFinanceModel.getSubcategorie());
 //			finance.setUser(editFinanceModel.getUser());
 			financeRepository.save(finance);
-			model.addAttribute("message", "Changed finance " + editFinanceModel.getId());
+			model.addAttribute("message", "Changed finance " + editFinanceModel.getNotes());
 		}
  
 		return "forward:list";
 	}
-		
-	
+			
 	@RequestMapping("/delete")
 	public String deleteData(Model model, @RequestParam int id) {
 		financeRepository.delete(id);

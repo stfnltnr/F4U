@@ -9,12 +9,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name="SubCategorie")
 public class SubCategorieModel implements java.io.Serializable {
@@ -30,9 +32,13 @@ public class SubCategorieModel implements java.io.Serializable {
 	private String description;
 	private String icon;
 	private String color;
+	private int maincat;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.REFRESH})
 	private CategorieModel categorie;
+	
+	@OneToMany(mappedBy="subcategorie", fetch=FetchType.LAZY, cascade = {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH})
+	private Set<FinanceModel> finances;
 	
 	@Version
 	long version;
@@ -40,12 +46,13 @@ public class SubCategorieModel implements java.io.Serializable {
 	public SubCategorieModel() {
 	}
 	
-	public SubCategorieModel(String name, String description, String icon, String color) {
+	public SubCategorieModel(String name, String description, String icon, String color,int maincat) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.icon = icon;
 		this.color = color;
+		this.maincat = maincat;
 	}
 
 	public int getId() {
@@ -88,6 +95,14 @@ public class SubCategorieModel implements java.io.Serializable {
 		this.color = color;
 	}
 
+	public int getMaincat() {
+		return maincat;
+	}
+
+	public void setMaincat(int maincat) {
+		this.maincat = maincat;
+	}
+
 	public CategorieModel getCategorie() {
 		return categorie;
 	}
@@ -95,7 +110,14 @@ public class SubCategorieModel implements java.io.Serializable {
 	public void setCategorie(CategorieModel categorie) {
 		this.categorie = categorie;
 	}
-	
-	
 
+	public Set<FinanceModel> getFinances() {
+		return finances;
+	}
+
+	public void setFinances(Set<FinanceModel> finances) {
+		this.finances = finances;
+	}
+	
+	
 }

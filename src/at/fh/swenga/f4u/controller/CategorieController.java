@@ -53,33 +53,8 @@ public class CategorieController {
 		CategorieModel cat1 = new CategorieModel("Shopping", "All payments regarding shopping", "glyphicon glyphicon-shopping-cart", "#000000");
 		categorieRepository.save(cat1);
 		
-		// Fill Subcategories
-		SubCategorieModel sc1 = new SubCategorieModel("Spar", "all payments at Spar", "glyphicon glyphicon-shopping-cart", "#5cb85c");
-		sc1.setCategorie(cat1);
-		subCategorieRepository.save(sc1);
-		SubCategorieModel sc2 = new SubCategorieModel("Hofer", "all payments at Hofer", "glyphicon glyphicon-shopping-cart", "#428bca");
-		sc2.setCategorie(cat1);
-		subCategorieRepository.save(sc2);
-		SubCategorieModel sc3 = new SubCategorieModel("Penny Markt", "all payments at Penny", "glyphicon glyphicon-shopping-cart", "#d9534f");
-		sc3.setCategorie(cat1);
-		subCategorieRepository.save(sc3);
-
-		// Fill MainCategories
 		CategorieModel cat2 = new CategorieModel("Home", "Outgoings like rent, fixed costs, ...", "glyphicon glyphicon-home", "#000000");
 		categorieRepository.save(cat2);
-		
-		
-		// Fill Subcategories;
-		SubCategorieModel sc4 = new SubCategorieModel("Rent", "Rent for flat", "glyphicon glyphicon-home", "#5cb85c");
-		sc1.setCategorie(cat2);
-		subCategorieRepository.save(sc4);
-		SubCategorieModel sc5 = new SubCategorieModel("Phone", "Mobile bill", "glyphicon glyphicon-phone", "#5cb85c");
-		sc2.setCategorie(cat2);
-		subCategorieRepository.save(sc5);
-		SubCategorieModel sc6 = new SubCategorieModel("Internet", "Internet bill", "glyphicon glyphicon-globe", "#428bca");
-		sc3.setCategorie(cat2);
-		subCategorieRepository.save(sc6);
-		
 		
 		CategorieModel cat3 = new CategorieModel("Restaurant", "Everything regarding going out for meal", "glyphicon glyphicon-cutlery", "#000000");
 		categorieRepository.save(cat3);
@@ -92,6 +67,26 @@ public class CategorieController {
 		CategorieModel cat7 = new CategorieModel("Miscellaneous", "All miscellaneous payments", "glyphicon glyphicon-question-sign", "#000000");
 		categorieRepository.save(cat7);
 
+		// Fill Subcategories
+		SubCategorieModel sc1 = new SubCategorieModel("Spar", "all payments at Spar", "glyphicon glyphicon-shopping-cart", "#5cb85c",1);
+		sc1.setCategorie(categorieRepository.findOne(1));
+		subCategorieRepository.save(sc1);
+		SubCategorieModel sc2 = new SubCategorieModel("Hofer", "all payments at Hofer", "glyphicon glyphicon-shopping-cart", "#428bca",1);
+		sc2.setCategorie(categorieRepository.findOne(1));
+		subCategorieRepository.save(sc2);
+		SubCategorieModel sc3 = new SubCategorieModel("Penny Markt", "all payments at Penny", "glyphicon glyphicon-shopping-cart", "#d9534f",1);
+		sc3.setCategorie(categorieRepository.findOne(1));
+		subCategorieRepository.save(sc3);
+		SubCategorieModel sc4 = new SubCategorieModel("Rent", "Rent for flat", "glyphicon glyphicon-home", "#5cb85c",2);
+		sc1.setCategorie(categorieRepository.findOne(2));
+		subCategorieRepository.save(sc4);
+		SubCategorieModel sc5 = new SubCategorieModel("Phone", "Mobile bill", "glyphicon glyphicon-phone", "#5cb85c",2);
+		sc2.setCategorie(categorieRepository.findOne(2));
+		subCategorieRepository.save(sc5);
+		SubCategorieModel sc6 = new SubCategorieModel("Internet", "Internet bill", "glyphicon glyphicon-globe", "#428bca",2);
+		sc3.setCategorie(categorieRepository.findOne(2));
+		subCategorieRepository.save(sc6);
+		
 		return "forward:listCat";
 	}
 	
@@ -126,6 +121,7 @@ public class CategorieController {
 			cm.setDescription(newCatModel.getDescription());
 			cm.setColor(newCatModel.getColor());
 			cm.setIcon(newCatModel.getIcon());
+			cm.setMaincat(newCatModel.getCategorie().getId());
 			cm.setCategorie(newCatModel.getCategorie());
 			subCategorieRepository.save(cm);
 			model.addAttribute("message", "New SubCategorie " +newCatModel.getName() + " added!");
@@ -168,6 +164,7 @@ public class CategorieController {
 			cm.setDescription(editCatModel.getDescription());
 			cm.setColor(editCatModel.getColor());
 			cm.setIcon(editCatModel.getIcon());
+			cm.setMaincat(editCatModel.getCategorie().getId());
 			cm.setCategorie(editCatModel.getCategorie());
 			subCategorieRepository.save(cm);
 			model.addAttribute("message", "Changed categorie " + editCatModel.getName());
@@ -179,9 +176,9 @@ public class CategorieController {
 	
 	@RequestMapping(value="/deleteCat")
 	public String deleteCat(Model model, @RequestParam int id) {
-		subCategorieRepository.delete(id);
 		
-		List<FinanceModel> finances = financeRepository.findByCategorieId(id);
+		
+		List<FinanceModel> finances = financeRepository.findBySubcategorieId(id);
 		for(int i = 0; i< finances.size();i++) {
 			FinanceModel f = finances.get(i);
 			f.setId(f.getId());
@@ -189,23 +186,19 @@ public class CategorieController {
 			f.setBookDate(f.getBookDate());
 			f.setValue(f.getValue());
 			f.setNotes(f.getNotes());
-			f.setCategorie(null);
+			f.setCategorie(f.getCategorie());
+			f.setSubcategorie(null);
 //			finance.setUser(editFinanceModel.getUser());
 			financeRepository.save(f);
 		}
+		subCategorieRepository.delete(id);
 		
-		
-		return "forward:listCat";
-		
-		
+		return "forward:listCat";		
 	}
-	
-	
+		
 	@ExceptionHandler(Exception.class)
 	public String handleAllException(Exception ex) {
 
 		return "showError";
-
 	}
-
 }
