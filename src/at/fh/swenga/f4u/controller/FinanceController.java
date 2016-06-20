@@ -51,30 +51,38 @@ public class FinanceController {
 	SubCategorieRepository subCategorieRepository;
 	
 	//get current User
-		public void currentUser(Model model) { 		
-				Object curUser = SecurityContextHolder.getContext()
-				.getAuthentication().getPrincipal();
-			String userName = ((UserDetails) curUser).getUsername();
-			UserModel user = userRepository.findByUsername(userName);
-			model.addAttribute("user", user);
+		public void currentUser(Model model) { 	
+			model.addAttribute("user", getCurrrentUserModel());
 		}
 		
-	// LOGIN
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String handleLogin() {
-		return "login";
-	}
+		public String getCurrentUserName(){
+			Object curUser = SecurityContextHolder.getContext()
+			.getAuthentication().getPrincipal();
+		String userName = ((UserDetails) curUser).getUsername();
+		return userName;
+		}
+		
+		public UserModel getCurrrentUserModel(){
+		UserModel user = userRepository.findByUsername(getCurrentUserName());
+		return user;
+		}
 	
 	public void addCats(Model model) {
 		List<CategorieModel> cats = categorieRepository.findAll();
-		List<SubCategorieModel> subcats = subCategorieRepository.findAll();
+		List<SubCategorieModel> subcats = subCategorieRepository.findByUser_username(getCurrentUserName());
 		model.addAttribute("cats", cats);
 		model.addAttribute("subcats", subcats);	
 	}
+	
+	// LOGIN
+		@RequestMapping(value = "/login", method = RequestMethod.GET)
+		public String handleLogin() {
+			return "login";
+		}
 
 	@RequestMapping(value = { "/", "list" })
 	public String index(Model model) {
-		List<FinanceModel> finances = financeRepository.findAllByOrderByBookDate();
+		List<FinanceModel> finances = financeRepository.findByUser_UsernameOrderByBookDate(getCurrentUserName());
 		model.addAttribute("finances", finances);
 		addCats(model);
 		currentUser(model);
@@ -90,39 +98,13 @@ public class FinanceController {
 		model.addAttribute("type", "findAll");
 		return "index";
 	}
-	
-
-	@RequestMapping(value = { "/find" })
-	public String find(Model model, @RequestParam String searchString, @ModelAttribute("type") String type) {
-		List<FinanceModel> finances = null;
-
-		switch (type) {
-		case "findAll":
-			finances = financeRepository.findAll();
-			break;
-
-		case "findByNotesIgnoreCaseContaining":
-			finances = financeRepository.findByNotesIgnoreCaseContaining(searchString);
-			break;
-
-		case "findByCategorieName":
-			finances = financeRepository.findByCategorieName(searchString);
-			break;
-			
-		case "findByUsername":
-			finances = financeRepository.findByUser_Username(searchString);
-			break;
-		}
-		model.addAttribute("finances", finances);
-		return "index";
-	}
-	
+		
 	@RequestMapping(value = { "/searchNotes" })
 	public String findById(Model model, @RequestParam String searchString ) {
 		List<FinanceModel> finances = null;
 		addCats(model);
 		currentUser(model);
-		finances = financeRepository.findByNotesIgnoreCaseContaining(searchString);
+		finances = financeRepository.findByUser_UsernameAndNotesIgnoreCaseContaining(getCurrentUserName(),searchString);
 		model.addAttribute("finances", finances);
 		return "index";
 	}
@@ -132,7 +114,7 @@ public class FinanceController {
 		List<FinanceModel> finances = null;
 		addCats(model);
 		currentUser(model);
-		if(id==0) {finances = financeRepository.findAllByOrderByBookDate();} else finances=financeRepository.findByCategorieId(id);
+		if(id==0) {finances = financeRepository.findByUser_UsernameOrderByBookDate(getCurrentUserName());} else finances=financeRepository.findByUser_UsernameAndCategorieId(getCurrentUserName(),id);
 		model.addAttribute("finances", finances);
 		return "index";
 	}
@@ -142,7 +124,8 @@ public class FinanceController {
 		List<FinanceModel> finances = null;
 		addCats(model);
 		currentUser(model);
-		if(id==0) {finances = financeRepository.findAllByOrderByBookDate();} else finances = financeRepository.findBySubcategorieId(id);
+		if(id==0) {finances = financeRepository.findByUser_UsernameOrderByBookDate(getCurrentUserName());} 
+		else finances = financeRepository.findByUser_UsernameAndSubcategorieId(getCurrentUserName(),id);
 		model.addAttribute("finances", finances);
 		return "index";
 	}
@@ -155,11 +138,11 @@ public class FinanceController {
 
 		switch (type) {
 		case "findAll":
-			finances = financeRepository.findAll();
+			finances = financeRepository.findByUser_Username(getCurrentUserName());
 			break;
 			
 		case "findByValue":
-			finances = financeRepository.findByValue(searchValue);
+			finances = financeRepository.findByUser_UsernameAndValue(getCurrentUserName(),searchValue);
 			break;
 			
 //		case "findByValueBetween":
@@ -167,11 +150,11 @@ public class FinanceController {
 //			break;
 			
 		case "findByValueGreaterThanEqual":
-			finances = financeRepository.findByValueGreaterThanEqual(searchValue);
+			finances = financeRepository.findByUser_UsernameAndValueGreaterThanEqual(getCurrentUserName(),searchValue);
 			break;
 			
 		case "findByValueLessThanEqual":
-			finances = financeRepository.findByValueLessThanEqual(searchValue);
+			finances = financeRepository.findByUser_UsernameAndValueLessThanEqual(getCurrentUserName(),searchValue);
 			break;
 		}
 		model.addAttribute("finances", finances);
@@ -188,15 +171,15 @@ public class FinanceController {
 
 		switch (type) {
 		case "findAll":
-			finances = financeRepository.findAll();
+			finances = financeRepository.findByUser_Username(getCurrentUserName());
 			break;
 			
 		case "findIncome":
-			finances = financeRepository.findIncome(income);
+			finances = financeRepository.findByUser_UsernameAndIncome(getCurrrentUserModel(),income);
 			break;
 		
 		case "findOutcome":
-			finances = financeRepository.findOutcome(outcome);
+			finances = financeRepository.findByUser_UsernameAndOutcome(getCurrrentUserModel(),outcome);
 			break;
 		}
 		model.addAttribute("finances", finances);
@@ -209,7 +192,7 @@ public class FinanceController {
 		List<FinanceModel> finances = null;
 		addCats(model);
 		currentUser(model);
-		finances = financeRepository.findByBookDate(searchDate);
+		finances = financeRepository.findByUser_UsernameAndBookDate(getCurrentUserName(),searchDate);
 		model.addAttribute("finances", finances);
 		return "index";
 	}
@@ -228,7 +211,7 @@ public class FinanceController {
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String showAddDataForm(Model model) {
 		List<CategorieModel> cats = categorieRepository.findAll();
-		List<SubCategorieModel> subcats = subCategorieRepository.findAll();
+		List<SubCategorieModel> subcats = subCategorieRepository.findByUser_username(getCurrentUserName());
 		model.addAttribute("cats", cats);
 		model.addAttribute("subcats", subcats);
 		currentUser(model);
@@ -263,6 +246,7 @@ public class FinanceController {
 			fm.setNotes(newFinanceModel.getNotes());
 			fm.setCategorie(newFinanceModel.getCategorie());
 			fm.setSubcategorie(newFinanceModel.getSubcategorie());
+			fm.setUser(getCurrrentUserModel());
 			financeRepository.save(fm);
 			model.addAttribute("message", "New finance " + newFinanceModel.getNotes() + " added.");
 		}
@@ -311,7 +295,7 @@ public class FinanceController {
 			finance.setNotes(editFinanceModel.getNotes());
 			finance.setCategorie(editFinanceModel.getCategorie());
 			finance.setSubcategorie(editFinanceModel.getSubcategorie());
-//			finance.setUser(editFinanceModel.getUser());
+			finance.setUser(getCurrrentUserModel());
 			financeRepository.save(finance);
 			model.addAttribute("message", "Changed finance " + editFinanceModel.getNotes());
 		}

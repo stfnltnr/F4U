@@ -44,18 +44,28 @@ public class CategorieController {
 	FinanceRepository financeRepository;
 	
 	//get current User
-	public void currentUser(Model model) { 		
-			Object curUser = SecurityContextHolder.getContext()
-			.getAuthentication().getPrincipal();
-		String userName = ((UserDetails) curUser).getUsername();
-		UserModel user = userRepository.findByUsername(userName);
-		model.addAttribute("user", user);
+	public void currentUser(Model model) { 	
+		model.addAttribute("user", getCurrrentUserModel());
 	}
 	
+	public String getCurrrentUserName(){
+		Object curUser = SecurityContextHolder.getContext()
+		.getAuthentication().getPrincipal();
+	String userName = ((UserDetails) curUser).getUsername();
+	return userName;
+	}
+	
+	public UserModel getCurrrentUserModel(){
+	UserModel user = userRepository.findByUsername(getCurrrentUserName());
+	return user;
+	}
+	
+
+	
 	@RequestMapping(value = "/listCat")
-	public String index(Model model) {		
+	public String index(Model model) {	
 		List<CategorieModel> categories = categorieRepository.findAll();
-		List<SubCategorieModel> subcategories = subCategorieRepository.findAll();
+		List<SubCategorieModel> subcategories = subCategorieRepository.findByUser_username(getCurrrentUserName());
 		model.addAttribute("categories", categories);
 		model.addAttribute("subcategories", subcategories);
 		currentUser(model);
@@ -130,7 +140,7 @@ public class CategorieController {
 		}
 		
 		SubCategorieModel subcat = subCategorieRepository.findOne(newCatModel.getId());
-		
+
 		if(subcat!=null){
 			model.addAttribute("errormessage","Subcategorie already exists!<br>");
 		} else {
@@ -141,6 +151,7 @@ public class CategorieController {
 			cm.setIcon(newCatModel.getIcon());
 			cm.setMaincat(newCatModel.getCategorie().getId());
 			cm.setCategorie(newCatModel.getCategorie());
+			cm.setUser(getCurrrentUserModel());
 			subCategorieRepository.save(cm);
 			model.addAttribute("message", "New SubCategorie " +newCatModel.getName() + " added!");
 		}
@@ -174,7 +185,7 @@ public class CategorieController {
 		}
 		
 		SubCategorieModel cm = subCategorieRepository.findOne(editCatModel.getId());
-		
+
 		if(cm == null){
 			model.addAttribute("errorMessage", "Categorie doesn't exist!<br>");
 		} else {
@@ -185,6 +196,7 @@ public class CategorieController {
 			cm.setIcon(editCatModel.getIcon());
 			cm.setMaincat(editCatModel.getCategorie().getId());
 			cm.setCategorie(editCatModel.getCategorie());
+			cm.setUser(getCurrrentUserModel());
 			subCategorieRepository.save(cm);
 			model.addAttribute("message", "Changed categorie " + editCatModel.getName());
 		}
@@ -197,7 +209,7 @@ public class CategorieController {
 	public String deleteCat(Model model, @RequestParam int id) {
 		
 		
-		List<FinanceModel> finances = financeRepository.findBySubcategorieId(id);
+		List<FinanceModel> finances = financeRepository.findByUser_UsernameAndSubcategorieId(getCurrrentUserName(),id);
 		for(int i = 0; i< finances.size();i++) {
 			FinanceModel f = finances.get(i);
 			f.setId(f.getId());
