@@ -14,8 +14,7 @@
 	<div class="collapse navbar-collapse" id="collapseNav">
 	<ul class="nav navbar-nav">
 		<li><a href="list">Overview</a></li>
-		<li><a href="listCat">Categories</a></li>
-		<li><a href="test">Test</a></li>
+		<li><a href="listCat">Mange Categories</a></li>
 	</ul>		
 	<ul class="nav navbar-nav navbar-right">		
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

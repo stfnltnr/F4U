@@ -12,10 +12,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "Finance")
 public class FinanceModel implements java.io.Serializable {
@@ -37,11 +39,18 @@ public class FinanceModel implements java.io.Serializable {
 	
 	private String notes;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+
+	@ManyToOne
 	CategorieModel categorie;
+	
+	@ManyToOne
+	SubCategorieModel subcategorie;
 	
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH})
 	UserModel user;
+	
+	@Version
+	long version;
 	
 	public FinanceModel() {
 	}
@@ -102,6 +111,14 @@ public class FinanceModel implements java.io.Serializable {
 		this.categorie = categorie;
 	}
 
+	public SubCategorieModel getSubcategorie() {
+		return subcategorie;
+	}
+
+	public void setSubcategorie(SubCategorieModel subcategorie) {
+		this.subcategorie = subcategorie;
+	}
+
 	public UserModel getUser() {
 		return user;
 	}
@@ -109,5 +126,4 @@ public class FinanceModel implements java.io.Serializable {
 	public void setUser(UserModel user) {
 		this.user = user;
 	}
-	
 }
