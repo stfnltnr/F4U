@@ -3,6 +3,8 @@ package at.fh.swenga.f4u.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,7 +52,6 @@ public class UserController {
 	
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
 	public String addData(@RequestParam String pwd2, @Valid @ModelAttribute UserModel newUserModel, BindingResult bindingResult,Model model) {
-//		
 		
 		if (bindingResult.hasErrors()) {
 			String errorMessage = "";
@@ -81,21 +82,29 @@ public class UserController {
 		return "login";
 	}
 	
-	@RequestMapping(value = "/editU", method = RequestMethod.GET)
-	public String showEditUserForm(Model model, @RequestParam String username) {
-
-		UserModel user = userRepository.findByUsername(username);		
+	@RequestMapping(value = "/editUser", method = RequestMethod.GET)
+	public String showEditUserForm(Model model) {
+		
+		//get current User
+		Object curUser = SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		if (curUser instanceof UserDetails) {
+			String userName = ((UserDetails) curUser).getUsername();
+			UserModel user = userRepository.findByUsername(userName);
+		
 		if (user!=null) {
 			model.addAttribute("user", user);
 			return "editUser";
 		} else {
-			model.addAttribute("errorMessage", "Couldn't find user" + username);
+			model.addAttribute("errorMessage", "Couldn't find user " + userName);
 			return "forward:list";
 		}
+		}
+		else {return "forward:list";}
 	}
 	
 	@RequestMapping(value = "/changeUser", method = RequestMethod.POST)
-	public String editUser(@Valid @ModelAttribute UserModel editUserModel, BindingResult bindingResult,
+	public String editUser(@RequestParam String pwd2, @Valid @ModelAttribute UserModel editUserModel, BindingResult bindingResult,
 			Model model) {
  
 		if (bindingResult.hasErrors()) {
@@ -113,7 +122,7 @@ public class UserController {
 			model.addAttribute("errorMessage", "User does not exist!<br>");
 		} else {
 			user.setUsername(editUserModel.getUsername());
-			user.setPassword(editUserModel.getBCryptedPassword());
+			user.setPassword(pwd2);
 			userRepository.save(user);
 			model.addAttribute("message", "Changed finance " + editUserModel.getUsername());
 		}

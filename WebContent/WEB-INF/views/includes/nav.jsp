@@ -17,6 +17,7 @@
 		<li><a href="listCat">Mange Categories</a></li>
 	</ul>		
 	<ul class="nav navbar-nav navbar-right">		
+		<li><a href="editUser">${user.username}</a></li>
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<!-- Logout -->
 		<li>
