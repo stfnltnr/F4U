@@ -4,11 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import at.fh.swenga.f4u.model.SubcategorieModel;
+import at.fh.swenga.f4u.model.SubCategorieModel;
 
 @Repository
-public interface SubcategorieRepository extends JpaRepository<SubcategorieModel, Integer> {
-	
-	@Transactional
-	public SubcategorieModel findFirstByName(String name);
+@Transactional
+public interface SubCategorieRepository  extends JpaRepository<SubCategorieModel, Integer>{
+
 }

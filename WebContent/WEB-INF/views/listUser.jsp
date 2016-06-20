@@ -1,4 +1,4 @@
-<%@page language="java" contentType="text/html; charset=UTF-8"
+<%-- <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -14,40 +14,45 @@
 </head>
 <body>
 	<div class="container">
-
-		<!--  list all finances ----------------------------------------------------------- -->
+	<!-- navigation -->
+	<jsp:include page="includes/nav.jsp"></jsp:include>
+	<!-- navigation -->
+		<!--  list all users ----------------------------------------------------------- -->
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
-				<h1>Test</h1>
+				<h1>Manage Users</h1>
 				<table data-toggle="table" class="table table-striped">
 					<thead>
 						<tr>
-							<th>id</th>
-							<th>name</th>
-							<th>Action 
-							<a href="fillTest"><button type="button" class="btn btn-success">Fill List</button></a>
-							<a href="test2"><button type="button" class="btn btn-success">Add Test</button></a>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Description</th>
+							<th>Icon</th>
+							<th>Color</th>
+							<th>Action <a href="fillCat"><button type="button"
+										class="btn btn-success">Fill Cat</button></a>
 							</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${test}" var="test">
+						<c:forEach items="${categories}" var="cat">
 							<tr>
-								<td>${test.id}</td>
-								<td>${test.name}</td>  
-								<td><a href="deleteTest?id=${test.id}">Delete</a>
-									<a href="editTest?id=${test.id}">Edit</a>
-								
-								</td>
+								<td>${cat.id}</td>
+								<td>${cat.name}</td>
+								<td>${cat.description}</td>
+								<td>${cat.icon}</td>
+								<td>${cat.color}</td>
+								<td></td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 			</div>
 		</div>
-		<!--  list all employees ----------------------------------------------------------- -->
+		<!--  list all categories ----------------------------------------------------------- -->
 	</div>
 	<!--  end of container -->
 	<%@include file="includes/bootstrapJs.js"%>
 </body>
 </html>
+ --%>

@@ -2,17 +2,24 @@ package at.fh.swenga.f4u.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
+@SuppressWarnings("serial")
 @Entity
-public class SubcategorieModel implements java.io.Serializable {
+@Table(name="SubCategorie")
+public class SubCategorieModel implements java.io.Serializable {
 	
 	@Id
 	@Column(name="id")
@@ -22,25 +29,30 @@ public class SubcategorieModel implements java.io.Serializable {
 	@NotNull(message = "{0} is required")
 	private String name;
 	
-	private String describtion;
+	private String description;
 	private String icon;
 	private String color;
+	private int maincat;
 	
-	@OneToMany(mappedBy="subcategorie", fetch=FetchType.LAZY)
-	private Set<CategorieModel> categories;
+	@ManyToOne(fetch=FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.REFRESH})
+	private CategorieModel categorie;
 	
-	@OneToMany(mappedBy="categorie", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="subcategorie", fetch=FetchType.LAZY, cascade = {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH})
 	private Set<FinanceModel> finances;
 	
-	public SubcategorieModel() {
+	@Version
+	long version;
+	
+	public SubCategorieModel() {
 	}
 	
-	public SubcategorieModel(String name, String describtion, String icon, String color) {
+	public SubCategorieModel(String name, String description, String icon, String color,int maincat) {
 		super();
 		this.name = name;
-		this.describtion = describtion;
+		this.description = description;
 		this.icon = icon;
 		this.color = color;
+		this.maincat = maincat;
 	}
 
 	public int getId() {
@@ -59,12 +71,12 @@ public class SubcategorieModel implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public String getDescribtion() {
-		return describtion;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescribtion(String describtion) {
-		this.describtion = describtion;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getIcon() {
@@ -83,12 +95,20 @@ public class SubcategorieModel implements java.io.Serializable {
 		this.color = color;
 	}
 
-	public Set<CategorieModel> getCategories() {
-		return categories;
+	public int getMaincat() {
+		return maincat;
 	}
 
-	public void setCategories(Set<CategorieModel> categories) {
-		this.categories = categories;
+	public void setMaincat(int maincat) {
+		this.maincat = maincat;
+	}
+
+	public CategorieModel getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(CategorieModel categorie) {
+		this.categorie = categorie;
 	}
 
 	public Set<FinanceModel> getFinances() {
@@ -98,5 +118,6 @@ public class SubcategorieModel implements java.io.Serializable {
 	public void setFinances(Set<FinanceModel> finances) {
 		this.finances = finances;
 	}
+	
 	
 }
