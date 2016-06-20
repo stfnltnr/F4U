@@ -1,5 +1,6 @@
 package at.fh.swenga.f4u.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -9,59 +10,52 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import at.fh.swenga.f4u.model.UserRole;
+
 @Entity
 @Table(name = "users")
 public class UserModel implements java.io.Serializable {
 	private static final long serialVersionUID = 8198173157518983615L;
 	
+	@Id
+	@Column(name = "username", unique = true, nullable = false, length = 45)
 	private String username;
-	private String password;
+	
+	@Column(name = "password", nullable = false, length = 60)
+	private String bCryptedPassword;
+	
+	@Column(name = "enabled", nullable = false)
 	private boolean enabled;
-	private String userRole;
-//	private Set<UserRole> userRole = new HashSet<UserRole>(0);
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	private Set<UserRole> userRole = new HashSet<UserRole>(0);
 	
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private Set<FinanceModel> finances;
 	
 //	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 //	private Set<PermanentModel> permanents;
 
 	public UserModel() {
+		super();
 	}
 	
-	public UserModel(String username, String password, boolean enabled,  String userRole) {
+	public UserModel(String username, String password, boolean enabled) {
 		super();
 		this.username = username;
-		this.password = password;
+		setBCryptedPassword(password);
+		this.enabled = enabled;
+	}
+
+	public UserModel(String username, String password, boolean enabled,
+			Set<UserRole> userRole) {
+		this.username = username;
+		//this.matchingPassword = matchingPassword;
+		setBCryptedPassword(password);
 		this.enabled = enabled;
 		this.userRole = userRole;
 	}
 
-//	public UserModel(String username, String password, boolean enabled,
-//			Set<UserRole> userRole) {
-//		this.username = username;
-//		this.password = password;
-//		this.enabled = enabled;
-//		this.userRole = userRole;
-//	}
-
-//	public String getFirstName() {
-//		return firstName;
-//	}
-//
-//	public void setFirstName(String firstName) {
-//		this.firstName = firstName;
-//	}
-//
-//	public String getLastName() {
-//		return lastName;
-//	}
-//
-//	public void setLastName(String lastName) {
-//		this.lastName = lastName;
-//	}
-	@Id
-	@Column(name = "username", unique = true, nullable = false, length = 45)
 	public String getUsername() {
 		return username;
 	}
@@ -70,13 +64,12 @@ public class UserModel implements java.io.Serializable {
 		this.username = username;
 	}
 
-	@Column(name = "password", nullable = false, length = 60)
-	public String getPassword() {
-		return password;
+	public void setBCryptedPassword(String hackedPassword) {
+		this.bCryptedPassword = hackedPassword;
 	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	
+	public String getBCryptedPassword() {
+		return bCryptedPassword;
 	}
 
 	@Column(name = "enabled", nullable=true)
@@ -88,15 +81,15 @@ public class UserModel implements java.io.Serializable {
 		this.enabled = enabled;
 	}
 	
-	public String getUserRole() {
+	public Set<UserRole> getUserRole() {
 		return userRole;
 	}
 
-	public void setUserRole(String userRole) {
+	public void setUserRole(Set<UserRole> userRole) {
 		this.userRole = userRole;
 	}
 
-	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
+
 	public Set<FinanceModel> getFinances() {
 		return finances;
 	}
