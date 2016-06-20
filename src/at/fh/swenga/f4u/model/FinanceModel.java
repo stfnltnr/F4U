@@ -42,7 +42,7 @@ public class FinanceModel implements java.io.Serializable {
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH})
 	CategorieModel categorie;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH})
 	UserModel user;
 	
 	public FinanceModel() {

@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import at.fh.swenga.f4u.model.UserModel;
 
 @Repository
+@Transactional
 public interface UserRepository extends JpaRepository<UserModel, Integer> {
+		
+	public List<UserModel> findByUsernameOrderByUsernameAsc(String username);
 	
-	@Transactional
-	public UserModel findFirstByLastName(String lastName);
-	
-	public List<UserModel> findByUsername(String username);
-	
+	public UserModel findByUsername(String username);
+		
 }

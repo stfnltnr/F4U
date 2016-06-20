@@ -25,6 +25,7 @@
 	<!-- navigation -->
 		<center>
 			<h1>${type}</h1>
+			This is User:
 			<!--   message ----------------------------------------------------------- -->
 			<!--  search by Id ----------------------------------------------------------- -->
 			<form action="findById" method="post">
@@ -109,7 +110,7 @@
 						<option value="findAll" selected="selected">findAll</option>
 						<option value="findByNotesIgnoreCaseContaining">Volltextsuche</option>
 						<option value="findByCategorieName">findByCategorieName</option>
-						<option value="findByUserLastName">findByUserLastName</option>
+						<option value="findByUserLastName">findByUsername</option>
 						<!-- <option value="findByWhateverName">findByWhateverName</option>
 						<option value="doALike">doALike</option>
 						<option value="countByLastName">countByLastName</option>

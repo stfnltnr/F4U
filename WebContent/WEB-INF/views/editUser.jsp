@@ -46,83 +46,24 @@
 				<form class="form-horizontal" method="post" action="${formAction}">
 					<fieldset>
 						<legend>${legend}</legend>
-						<! ----------------  id ---------------- -->
-						<c:if test="${not empty user}">
-							<div class="form-group">
-								<label for="inputID" class="col-md-2 control-label">ID</label>
-								<div class="col-md-10">
-									<input class="form-control" id="inputID" type="text" name="id"
-										${readonly} value="<c:out value="${user.id}"/>">
-								</div>
-							</div>
-						</c:if>
-						<! ----------------  firstName ---------------- -->
+						<! ----------------  username ---------------- -->
 						<div class="form-group">
-							<label for="inputFirstName" class="col-md-2 control-label">First
-								Name</label>
+							<label for="inputUsername" class="col-md-2 control-label">Username</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputFirstName" type="text"
-									name="firstName" value="<c:out value="${user.firstName}"/>">
+								<input class="form-control" id="inputUsername" type="text"
+									name="username" value="<c:out value="${user.username}"/>">
 							</div>
 						</div>
-						<! ----------------  lastName ---------------- -->
+						
+						<! ----------------  password ---------------- -->
 						<div class="form-group">
-							<label for="inputLastName" class="col-md-2 control-label">Last
-								Name</label>
+							<label for="inputPassword" class="col-md-2 control-label">Password</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputLastName" type="text"
-									name="lastName" value="<c:out value="${user.lastName}"/>">
+								<input class="form-control" id="inputPassword" type="text"
+									name="password" value="<c:out value="${user.password}"/>">
 							</div>
 						</div>
-						<! ----------------  address ---------------- -->
-						<div class="form-group">
-							<label for="inputAddress" class="col-md-2 control-label">Address</label>
-							<div class="col-md-10">
-								<input class="form-control" id="inputAddress" type="text"
-									name="address" value="<c:out value="${user.address}"/>">
-							</div>
-						</div>
-						<! ----------------  postCode ---------------- -->
-						<div class="form-group">
-							<label for="inputPostCode" class="col-md-2 control-label">Post Code</label>
-							<div class="col-md-10">
-								<input class="form-control" id="inputPostCode" type="text"
-									name="postCode" value="<c:out value="${user.postCode}"/>">
-							</div>
-						</div>
-						<! ----------------  place ---------------- -->
-						<div class="form-group">
-							<label for="inputPlace" class="col-md-2 control-label">Place</label>
-							<div class="col-md-10">
-								<input class="form-control" id="inputPlace" type="text"
-									name="place" value="<c:out value="${user.place}"/>">
-							</div>
-						</div>
-						<! ----------------  phone ---------------- -->
-						<div class="form-group">
-							<label for="inputPhone" class="col-md-2 control-label">Phone</label>
-							<div class="col-md-10">
-								<input class="form-control" id="inputPhone" type="text"
-									name="phone" value="<c:out value="${user.phone}"/>">
-							</div>
-						</div>
-						<! ----------------  email ---------------- -->
-						<div class="form-group">
-							<label for="inputEmail" class="col-md-2 control-label">E-Mail</label>
-							<div class="col-md-10">
-								<input class="form-control" id="inputEmail" type="text"
-									name="email" value="<c:out value="${user.email}"/>">
-							</div>
-						</div>
-						<%-- <! ----------------  dayOfBirth ---------------- -->
-						<div class="form-group">
-							<label for="inputDayOfBirth" class="col-md-2 control-label">Birthday</label>
-							<div class="col-md-10">
-								<input class="form_datetime" id="inputDayOfBirth" placeholder="Date"
-									type="text" readonly name="dayOfBirth"
-									value="<fmt:formatDate value="${user.dayOfBirth}" pattern="dd.MM.yyyy"/>">
-							</div>
-						</div> --%>
+			
 						<! ----------------  buttons ---------------- -->
 						<div class="form-group">
 							<div class="col-md-10 col-md-offset-2">
@@ -151,24 +92,6 @@
 	<!-- JS for Bootstrap -->
 
 
-	<!-- JS for Datetime picker -->
-
-	<script type="text/javascript"
-		src="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-
-	<script>
-		$(function() {
-
-			$(".form_datetime").datetimepicker({
-				format : "dd.mm.yyyy",
-				autoclose : true,
-				todayBtn : true,
-				pickerPosition : "bottom-left",
-				minView : 2
-			});
-
-		});
-	</script>
 
 </body>
 </html>

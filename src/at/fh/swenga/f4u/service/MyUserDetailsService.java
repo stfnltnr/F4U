@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import at.fh.swenga.f4u.dao.UserRepository;
 import at.fh.swenga.f4u.model.UserModel;
-import at.fh.swenga.f4u.model.UserRole;
 
 @Service
 @Transactional
@@ -27,7 +26,7 @@ public class MyUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserModel user = null;
-		List<UserModel> userList = userDao.findByUsername(username);
+		List<UserModel> userList = userDao.findByUsernameOrderByUsernameAsc(username);
 		if (userList != null && userList.size() > 0) {
 			user = userList.get(0);
 		}
@@ -45,11 +44,11 @@ public class MyUserDetailsService implements UserDetailsService {
 				authorities);
 	}
 
-	private List<GrantedAuthority> buildUserAuthority(Set<UserRole> userRoles) {
+	private List<GrantedAuthority> buildUserAuthority(String userRole) {
 		Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
-		for (UserRole userRole : userRoles) {
-			setAuths.add(new SimpleGrantedAuthority(userRole.getRole()));
-		}
+		
+			setAuths.add(new SimpleGrantedAuthority(userRole));
+		
 		List<GrantedAuthority> Result = new ArrayList<GrantedAuthority>(setAuths);
 		return Result;
 	}
