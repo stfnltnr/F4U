@@ -1,0 +1,14 @@
+INSERT INTO users(username,password,enabled)
+VALUES ('admin','$2a$10$2BZh7qw/FSh23ZCbojA.OOoo7vzg7KaqHUp34l8/i9.ktxzcr3vJm', TRUE);
+
+INSERT INTO user_roles (username, ROLE)
+VALUES ('admin', 'ROLE_USER');
+
+INSERT INTO user_roles (username, ROLE)
+VALUES ('admin', 'ROLE_ADMIN');
+
+INSERT INTO users(username,password,enabled)
+VALUES ('user','$2a$10$2BZh7qw/FSh23ZCbojA.OOoo7vzg7KaqHUp34l8/i9.ktxzcr3vJm', TRUE);
+
+INSERT INTO user_roles (username, ROLE)
+VALUES ('user', 'ROLE_USER');

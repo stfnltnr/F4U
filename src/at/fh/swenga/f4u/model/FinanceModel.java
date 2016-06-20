@@ -5,7 +5,6 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,13 +39,15 @@ public class FinanceModel implements java.io.Serializable {
 	
 	private String notes;
 	
+
 	@ManyToOne
 	CategorieModel categorie;
 	
+
 	@ManyToOne
 	SubCategorieModel subcategorie;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH})
 	UserModel user;
 	
 	@Version

@@ -91,8 +91,8 @@ public class FinanceController {
 			finances = financeRepository.findByCategorieName(searchString);
 			break;
 			
-		case "findByUserLastName":
-			finances = financeRepository.findByUserLastName(searchString);
+		case "findByUsername":
+			finances = financeRepository.findByUser_Username(searchString);
 			break;
 		}
 		model.addAttribute("finances", finances);
@@ -178,46 +178,33 @@ public class FinanceController {
 		return "index";
 	}
 	
-//	@RequestMapping(value = { "/findIncome" })
-//	public String findIncome(@RequestParam(true) FinanceModel e, Model model) {
-//
-//		List<FinanceModel> finances = new ArrayList<>();
-//		finances.add(e);
-//		model.addAttribute("finances", finances);
-//
-//		return "index";
-//	}
-	
 	@RequestMapping("/fill")
 	@Transactional
 	public String fillData(Model model) {
-
+//		@RequestParam String username,
+		
 		DataFactory df = new DataFactory();
 		CategorieModel categorie = null;
-		UserModel user = null;
-		
+
+//		UserModel user = null;
+
 
 		for (int i = 0; i < 5; i++) {
 			categorie = new CategorieModel("TestCategorie", "Description", "glyphicon glyphicon-shopping-cart", "#000000");
 			
-				String userFirstName = df.getFirstName();
-				String userLastName = df.getLastName();
-				String userAddress = df.getStreetName();
-				int userPostCode = 8010;
-				String userPlace = df.getCity();
-				String userPhone = df.getNumberText(8);
-				String userEmail = df.getEmailAddress();
-				user = userRepository.findFirstByLastName(userLastName);
-
-				if (user == null) {
-					user = new UserModel(userFirstName, userLastName, userAddress, userPostCode, userPlace,userPhone,
-							userEmail);
-				}
+//				String userFirstName = df.getFirstName();
+//				String userLastName = df.getLastName();
+//				user = userRepository.findByUsername(username);
+//
+//				if (user == null) {
+				
+				
 			
 			FinanceModel fm = new FinanceModel(df.chance(50), df.getBirthDate(), df.getNumberBetween(1, 2000), df.getFirstName());
 			fm.setCategorie(categorie);
-			fm.setUser(user);
+//			fm.setUser(user);
 			financeRepository.save(fm);
+//		}
 		}
 		return "forward:list";
 	}

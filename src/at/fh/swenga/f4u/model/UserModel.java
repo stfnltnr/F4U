@@ -6,12 +6,11 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+
+import at.fh.swenga.f4u.model.UserRole;
 
 @Entity
 @Table(name = "users")
@@ -19,33 +18,17 @@ public class UserModel implements java.io.Serializable {
 	private static final long serialVersionUID = 8198173157518983615L;
 	
 	@Id
-	@Column(name="id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	@Column(name = "username", unique = true, nullable = false, length = 45)
+	private String username;
 	
-	@NotNull(message = "{0} is required")
-	private String firstName;
+	@Column(name = "password", nullable = false, length = 60)
+	private String bCryptedPassword;
 	
-	@NotNull(message = "{0} is required")
-	private String lastName;
+	@Column(name = "enabled", nullable = false)
+	private boolean enabled;
 	
-	@NotNull(message = "{0} is required")
-	private String address;
-	
-	@NotNull(message = "{0} is required")
-	private int postCode;
-	
-	@NotNull(message = "{0} is required")
-	private String place;
-	
-	private String phone;
-	
-	@NotNull(message = "{0} is required")
-	private String email;
-
-	
-//	@NotNull(message = "{0} is required")
-//	private Date dayOfBirth;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	private Set<UserRole> userRole = new HashSet<UserRole>(0);
 	
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private Set<FinanceModel> finances;
@@ -54,92 +37,59 @@ public class UserModel implements java.io.Serializable {
 //	private Set<PermanentModel> permanents;
 
 	public UserModel() {
-	}
-	
-	public UserModel(String firstName, String lastName, String address, int postCode, String place, String phone, String email) {
 		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.address = address;
-		this.postCode = postCode;
-		this.place = place;
-		this.phone = phone;
-		this.email = email;
-//		this.dayOfBirth = dayOfBirth;
 	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public int getPostCode() {
-		return postCode;
-	}
-
-	public void setPostCode(int postCode) {
-		this.postCode = postCode;
-	}
-
-	public String getPlace() {
-		return place;
-	}
-
-	public void setPlace(String place) {
-		this.place = place;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-//	public Date getDayOfBirth() {
-//		return dayOfBirth;
-//	}
-//
-//	public void setDayOfBirth(Date dayOfBirth) {
-//		this.dayOfBirth = dayOfBirth;
-//	}
 	
+	public UserModel(String username, String password, boolean enabled) {
+		super();
+		this.username = username;
+		setBCryptedPassword(password);
+		this.enabled = enabled;
+	}
+
+	public UserModel(String username, String password, boolean enabled,
+			Set<UserRole> userRole) {
+		this.username = username;
+		//this.matchingPassword = matchingPassword;
+		setBCryptedPassword(password);
+		this.enabled = enabled;
+		this.userRole = userRole;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setBCryptedPassword(String hackedPassword) {
+		this.bCryptedPassword = hackedPassword;
+	}
+	
+	public String getBCryptedPassword() {
+		return bCryptedPassword;
+	}
+
+	@Column(name = "enabled", nullable=true)
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	
+	public Set<UserRole> getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(Set<UserRole> userRole) {
+		this.userRole = userRole;
+	}
+
+
 	public Set<FinanceModel> getFinances() {
 		return finances;
 	}
