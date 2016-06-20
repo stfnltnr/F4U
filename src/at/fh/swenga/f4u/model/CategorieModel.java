@@ -30,7 +30,7 @@ public class CategorieModel implements java.io.Serializable {
 	private String icon;
 	private String color;
 	
-	@OneToMany(mappedBy="categorie", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="categorie", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private Set<FinanceModel> finances;
 	
 	@OneToMany(mappedBy="categorie", fetch=FetchType.LAZY)
