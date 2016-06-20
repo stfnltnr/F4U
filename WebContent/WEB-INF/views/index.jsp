@@ -142,55 +142,25 @@
 				</form>
 				<!--  Filter by SubCategorie -->
 				<hr>
-				<!--  Search Notes -->
+				<!--  Search Date -->
 				<form class="form-horizontal" method="post" action="findDate">
 					<div class="form-group">
 						<label class="control-label col-md-2" for="searchValue">Search Date:</label>
-						<div class="col-md-4">
-							<input class="form-control" type="text" name="searchDate">
+						<div class="col-md-2">
+							<input id="searchDate" class="form-control form_datetime" type="text" name="searchDate">
 						</div>
 						<div class="col-md-6">	
-							<button class="btn btn-default" type="submit" value="findByNotesIgnoreCaseContaining"><input type="hidden" >Search</button>
+							<button class="btn btn-default" type="submit" >Search</button>
 							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						</div>
 					</div>
 				</form>
-				
-				<form class="form-horizontal" method="post">
-					<div class="form-group">
-						
-					</div>
-				</form>
-				
-				
-				
-	           
-	           
+				<!-- Search Date -->     
 	        </div>
 	     </div>
-	     
-	  </div>
-			<hr>	
-			<!-- Search for Date ----------------------------------------------------------- -->
-			<div class="row">
-				<form method="post" action="findDate">
-					<label for="searchDate">Search Date:</label> <select name="type">
-						<option value="findByBookDate">Search for Date</option>	
-					</select>
-
-					<input class="form_datetime" placeholder="Date" name="searchDate" type="text"/>
-					<input type="submit" value="Search">
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-				</form>
-			</div>
-			<hr>
-			<!--  Search for Date ----------------------------------------------------------- -->
-
-			<!--  Search + Fill ----------------------------------------------------------- -->
-			<%-- <h3>Count: ${count}</h3> --%>
-
-
-
+	     <!-- End Collapse -->
+	    </div> 
+	  	</div>
 		<!--  list all finances ----------------------------------------------------------- -->
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
@@ -206,8 +176,8 @@
 							<th>Book Date</th>
 							<th>Value</th>
 							<th>Notes</th>
-							<th>Categorie</th>
-							<th>User</th>
+							<th>Category</th>
+							<th>SubCategory</th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -240,19 +210,13 @@
 		</div>
 		<!--  list all finances  ----------------------------------------------------------- -->
 	</div>
-
 	
 	<!--  end of container -->
 	<%@include file="includes/bootstrapJs.js"%>
-	
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
-
 	<!-- (Optional) Latest compiled and minified JavaScript translation files -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js"></script>
-
-	
-	
 	<!-- JS for Datetime picker -->
 
 	<script type="text/javascript"

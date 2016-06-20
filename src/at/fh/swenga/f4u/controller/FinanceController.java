@@ -1,11 +1,10 @@
 package at.fh.swenga.f4u.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -185,11 +184,15 @@ public class FinanceController {
 	}
 	
 	@RequestMapping(value = { "/findDate" })
-	public String findDate(Model model, @RequestParam Date searchDate, @ModelAttribute("type") String type) {
-		
+	public String findDate(Model model, @RequestParam Date searchDate) {
+		System.out.println(searchDate);
+
+		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+		String date = formatter.format(searchDate);
+		System.out.println(date);
 		List<FinanceModel> finances = null;
 		addCats(model);
-		finances = financeRepository.findByBookDate(searchDate);
+		finances = financeRepository.findByBookDate(date);
 		model.addAttribute("finances", finances);
 		return "index";
 	}

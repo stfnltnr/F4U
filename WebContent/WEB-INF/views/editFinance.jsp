@@ -96,7 +96,6 @@
 									name="notes" value="<c:out value="${finance.notes}"/>">
 							</div>
 						</div>
-						
 						<!--  category  -->			
 						<div class="form-group">
 							<label for="inputCategorie" class="col-md-2 control-label">Categorie</label>
