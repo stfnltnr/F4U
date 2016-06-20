@@ -1,10 +1,13 @@
 package at.fh.swenga.f4u.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -18,8 +21,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.f4u.dao.CategorieRepository;
 import at.fh.swenga.f4u.dao.FinanceRepository;
+import at.fh.swenga.f4u.dao.SubCategorieRepository;
+import at.fh.swenga.f4u.dao.UserRepository;
 import at.fh.swenga.f4u.model.CategorieModel;
 import at.fh.swenga.f4u.model.FinanceModel;
+import at.fh.swenga.f4u.model.SubCategorieModel;
+import at.fh.swenga.f4u.model.UserModel;
 
 @Controller
 public class CategorieController {
@@ -28,17 +35,40 @@ public class CategorieController {
 	CategorieRepository categorieRepository;
 	
 	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
 	SubCategorieRepository subCategorieRepository;
 	
 	@Autowired
 	FinanceRepository financeRepository;
 	
+	//get current User
+	public void currentUser(Model model) { 	
+		model.addAttribute("user", getCurrrentUserModel());
+	}
+	
+	public String getCurrrentUserName(){
+		Object curUser = SecurityContextHolder.getContext()
+		.getAuthentication().getPrincipal();
+	String userName = ((UserDetails) curUser).getUsername();
+	return userName;
+	}
+	
+	public UserModel getCurrrentUserModel(){
+	UserModel user = userRepository.findByUsername(getCurrrentUserName());
+	return user;
+	}
+	
+
+	
 	@RequestMapping(value = "/listCat")
-	public String index(Model model) {
+	public String index(Model model) {	
 		List<CategorieModel> categories = categorieRepository.findAll();
-		List<SubCategorieModel> subcategories = subCategorieRepository.findAll();
+		List<SubCategorieModel> subcategories = subCategorieRepository.findByUser_username(getCurrrentUserName());
 		model.addAttribute("categories", categories);
 		model.addAttribute("subcategories", subcategories);
+		currentUser(model);
 		model.addAttribute("type", "findAll");
 		return "listCat";
 	}
@@ -93,6 +123,7 @@ public class CategorieController {
 		List<CategorieModel> cats = categorieRepository.findAll();
 		model.addAttribute("subcats", subcats);
 		model.addAttribute("cats", cats);
+		currentUser(model);
 		return "editCat";
 	}
 	
@@ -109,7 +140,7 @@ public class CategorieController {
 		}
 		
 		SubCategorieModel subcat = subCategorieRepository.findOne(newCatModel.getId());
-		
+
 		if(subcat!=null){
 			model.addAttribute("errormessage","Subcategorie already exists!<br>");
 		} else {
@@ -120,6 +151,7 @@ public class CategorieController {
 			cm.setIcon(newCatModel.getIcon());
 			cm.setMaincat(newCatModel.getCategorie().getId());
 			cm.setCategorie(newCatModel.getCategorie());
+			cm.setUser(getCurrrentUserModel());
 			subCategorieRepository.save(cm);
 			model.addAttribute("message", "New SubCategorie " +newCatModel.getName() + " added!");
 		}
@@ -133,6 +165,7 @@ public class CategorieController {
 			model.addAttribute("subcategorie", subcategorie);
 			List<CategorieModel> cats = categorieRepository.findAll();
 			model.addAttribute("cats", cats);
+			currentUser(model);
 			return "editCat";
 		} else {
 			model.addAttribute("errorMessage", "Couldn't find Categorie!");
@@ -152,7 +185,7 @@ public class CategorieController {
 		}
 		
 		SubCategorieModel cm = subCategorieRepository.findOne(editCatModel.getId());
-		
+
 		if(cm == null){
 			model.addAttribute("errorMessage", "Categorie doesn't exist!<br>");
 		} else {
@@ -163,6 +196,7 @@ public class CategorieController {
 			cm.setIcon(editCatModel.getIcon());
 			cm.setMaincat(editCatModel.getCategorie().getId());
 			cm.setCategorie(editCatModel.getCategorie());
+			cm.setUser(getCurrrentUserModel());
 			subCategorieRepository.save(cm);
 			model.addAttribute("message", "Changed categorie " + editCatModel.getName());
 		}
@@ -175,7 +209,7 @@ public class CategorieController {
 	public String deleteCat(Model model, @RequestParam int id) {
 		
 		
-		List<FinanceModel> finances = financeRepository.findBySubcategorieId(id);
+		List<FinanceModel> finances = financeRepository.findByUser_UsernameAndSubcategorieId(getCurrrentUserName(),id);
 		for(int i = 0; i< finances.size();i++) {
 			FinanceModel f = finances.get(i);
 			f.setId(f.getId());
@@ -189,7 +223,7 @@ public class CategorieController {
 			financeRepository.save(f);
 		}
 		subCategorieRepository.delete(id);
-		
+		currentUser(model);
 		return "forward:listCat";		
 	}
 		

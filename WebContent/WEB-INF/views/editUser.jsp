@@ -27,7 +27,7 @@
 		<!--  add or edit?  ----------------------------------------------------------- -->
 		<c:choose>
 			<c:when test="${not empty user}">
-				<c:set var="legend">Change User ${user.id}</c:set>
+				<c:set var="legend">Change User ${user.username}</c:set>
 				<c:set var="formAction">changeUser</c:set>
 				<c:set var="readonly">readonly</c:set>
 				<c:set var="shown">text</c:set>
@@ -43,86 +43,35 @@
 
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-				<form class="form-horizontal" method="post" action="${formAction}">
-					<fieldset>
+				<form id="login" class="form-horizontal" method="post" action="${formAction}" onsubmit="return checkForm(this);">
 						<legend>${legend}</legend>
-						<! ----------------  id ---------------- -->
-						<c:if test="${not empty user}">
-							<div class="form-group">
-								<label for="inputID" class="col-md-2 control-label">ID</label>
-								<div class="col-md-10">
-									<input class="form-control" id="inputID" type="text" name="id"
-										${readonly} value="<c:out value="${user.id}"/>">
-								</div>
-							</div>
-						</c:if>
-						<! ----------------  firstName ---------------- -->
+						<fieldset>
+						<! ----------------  username ---------------- -->
 						<div class="form-group">
-							<label for="inputFirstName" class="col-md-2 control-label">First
-								Name</label>
+							<label for="inputUsername" class="col-md-2 control-label">Username</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputFirstName" type="text"
-									name="firstName" value="<c:out value="${user.firstName}"/>">
+								<input class="form-control" id="inputUsername" type="text" placeholder="username" 
+									name="username" value="<c:out value="${user.username}"/>" autofocus>
+							</div>
+						</div>				
+						
+						<! ----------------  password ---------------- -->
+						<div class="form-group">
+							<label for="inputPassword" class="col-md-2 control-label">Password</label>
+							<div class="col-md-10">
+								<input class="form-control" id="inputPassword" type="password" placeholder="password" 
+									name="pwd1" required>
 							</div>
 						</div>
-						<! ----------------  lastName ---------------- -->
+
+						<! ----------------  confirm password ---------------- -->
 						<div class="form-group">
-							<label for="inputLastName" class="col-md-2 control-label">Last
-								Name</label>
+							<label for="matchingPassword" class="col-md-2 control-label">Confirm Password:</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputLastName" type="text"
-									name="lastName" value="<c:out value="${user.lastName}"/>">
+								<input class="form-control" id="matchingPassword" name="pwd2"
+									placeholder="retype password" type="password">
 							</div>
 						</div>
-						<! ----------------  address ---------------- -->
-						<div class="form-group">
-							<label for="inputAddress" class="col-md-2 control-label">Address</label>
-							<div class="col-md-10">
-								<input class="form-control" id="inputAddress" type="text"
-									name="address" value="<c:out value="${user.address}"/>">
-							</div>
-						</div>
-						<! ----------------  postCode ---------------- -->
-						<div class="form-group">
-							<label for="inputPostCode" class="col-md-2 control-label">Post Code</label>
-							<div class="col-md-10">
-								<input class="form-control" id="inputPostCode" type="text"
-									name="postCode" value="<c:out value="${user.postCode}"/>">
-							</div>
-						</div>
-						<! ----------------  place ---------------- -->
-						<div class="form-group">
-							<label for="inputPlace" class="col-md-2 control-label">Place</label>
-							<div class="col-md-10">
-								<input class="form-control" id="inputPlace" type="text"
-									name="place" value="<c:out value="${user.place}"/>">
-							</div>
-						</div>
-						<! ----------------  phone ---------------- -->
-						<div class="form-group">
-							<label for="inputPhone" class="col-md-2 control-label">Phone</label>
-							<div class="col-md-10">
-								<input class="form-control" id="inputPhone" type="text"
-									name="phone" value="<c:out value="${user.phone}"/>">
-							</div>
-						</div>
-						<! ----------------  email ---------------- -->
-						<div class="form-group">
-							<label for="inputEmail" class="col-md-2 control-label">E-Mail</label>
-							<div class="col-md-10">
-								<input class="form-control" id="inputEmail" type="text"
-									name="email" value="<c:out value="${user.email}"/>">
-							</div>
-						</div>
-						<%-- <! ----------------  dayOfBirth ---------------- -->
-						<div class="form-group">
-							<label for="inputDayOfBirth" class="col-md-2 control-label">Birthday</label>
-							<div class="col-md-10">
-								<input class="form_datetime" id="inputDayOfBirth" placeholder="Date"
-									type="text" readonly name="dayOfBirth"
-									value="<fmt:formatDate value="${user.dayOfBirth}" pattern="dd.MM.yyyy"/>">
-							</div>
-						</div> --%>
 						<! ----------------  buttons ---------------- -->
 						<div class="form-group">
 							<div class="col-md-10 col-md-offset-2">
@@ -150,25 +99,62 @@
 	<%@include file="includes/bootstrapJs.js"%>
 	<!-- JS for Bootstrap -->
 
+ <script type="text/javascript">
 
-	<!-- JS for Datetime picker -->
+  function checkForm(form)
+  {
+    if(form.username.value == "") {
+      alert("Error: Username cannot be blank!");
+      form.username.focus();
+      return false;
+    }
+    re = /^\w+$/;
+    if(!re.test(form.username.value)) {
+      alert("Error: Username must contain only letters, numbers and underscores!");
+      form.username.focus();
+      return false;
+    }
 
-	<script type="text/javascript"
-		src="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    if(form.pwd1.value != "" && form.pwd1.value == form.pwd2.value) {
+      if(form.pwd1.value.length < 8) {
+        alert("Error: Password must contain at least eight characters!");
+        form.pwd1.focus();
+        return false;
+      }
+      if(form.pwd1.value == form.username.value) {
+        alert("Error: Password must be different from Username!");
+        form.pwd1.focus();
+        return false;
+      }
+      re = /[0-9]/;
+      if(!re.test(form.pwd1.value)) {
+        alert("Error: password must contain at least one number (0-9)!");
+        form.pwd1.focus();
+        return false;
+      }
+      re = /[a-z]/;
+      if(!re.test(form.pwd1.value)) {
+        alert("Error: password must contain at least one lowercase letter (a-z)!");
+        form.pwd1.focus();
+        return false;
+      }
+      re = /[A-Z]/;
+      if(!re.test(form.pwd1.value)) {
+        alert("Error: password must contain at least one uppercase letter (A-Z)!");
+        form.pwd1.focus();
+        return false;
+      }
+    } else {
+      alert("Error: Please check that you've entered and confirmed your password!");
+      form.pwd1.focus();
+      return false;
+    }
 
-	<script>
-		$(function() {
+    alert("You entered valid credentials!"); /* + form.pwd1.value */
+    return true;
+  }
 
-			$(".form_datetime").datetimepicker({
-				format : "dd.mm.yyyy",
-				autoclose : true,
-				todayBtn : true,
-				pickerPosition : "bottom-left",
-				minView : 2
-			});
-
-		});
-	</script>
+</script>
 
 </body>
 </html>

@@ -39,13 +39,15 @@ public class FinanceModel implements java.io.Serializable {
 	
 	private String notes;
 	
+
 	@ManyToOne
 	CategorieModel categorie;
 	
+
 	@ManyToOne
 	SubCategorieModel subcategorie;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REFRESH})
 	UserModel user;
 	
 	@Version

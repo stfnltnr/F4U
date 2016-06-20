@@ -1,3 +1,4 @@
+
 package at.fh.swenga.f4u.model;
 
 import java.util.Set;
@@ -9,15 +10,17 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name="Categorie")
-public class CategorieModel implements java.io.Serializable {
+@Table(name="SubCategorie")
+public class SubCategorieModel implements java.io.Serializable {
 	
 	@Id
 	@Column(name="id")
@@ -30,27 +33,30 @@ public class CategorieModel implements java.io.Serializable {
 	private String description;
 	private String icon;
 	private String color;
+	private int maincat;
 	
-
-	@OneToMany(mappedBy="categorie", fetch=FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-
+	@ManyToOne(fetch=FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.REFRESH})
+	private CategorieModel categorie;
+	
+	@ManyToOne(fetch=FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.REFRESH})
+	private UserModel user;
+	
+	@OneToMany(mappedBy="subcategorie", fetch=FetchType.LAZY, cascade = {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH})
 	private Set<FinanceModel> finances;
-	
-	@OneToMany(mappedBy="categorie", fetch=FetchType.LAZY)
-	private Set<SubCategorieModel> subcategories;
-	
+		
 	@Version
 	long version;
 	
-	public CategorieModel() {
+	public SubCategorieModel() {
 	}
 	
-	public CategorieModel(String name, String description, String icon, String color) {
+	public SubCategorieModel(String name, String description, String icon, String color,int maincat) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.icon = icon;
 		this.color = color;
+		this.maincat = maincat;
 	}
 
 	public int getId() {
@@ -93,6 +99,30 @@ public class CategorieModel implements java.io.Serializable {
 		this.color = color;
 	}
 
+	public int getMaincat() {
+		return maincat;
+	}
+
+	public void setMaincat(int maincat) {
+		this.maincat = maincat;
+	}
+
+	public CategorieModel getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(CategorieModel categorie) {
+		this.categorie = categorie;
+	}
+
+	public UserModel getUser() {
+		return user;
+	}
+
+	public void setUser(UserModel user) {
+		this.user = user;
+	}
+
 	public Set<FinanceModel> getFinances() {
 		return finances;
 	}
@@ -100,13 +130,6 @@ public class CategorieModel implements java.io.Serializable {
 	public void setFinances(Set<FinanceModel> finances) {
 		this.finances = finances;
 	}
-
-	public Set<SubCategorieModel> getSubcategories() {
-		return subcategories;
-	}
-
-	public void setSubcategories(Set<SubCategorieModel> subcategories) {
-		this.subcategories = subcategories;
-	}
+	
 	
 }

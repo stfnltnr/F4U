@@ -14,9 +14,10 @@
 	<div class="collapse navbar-collapse" id="collapseNav">
 	<ul class="nav navbar-nav">
 		<li><a href="list">Overview</a></li>
-		<li><a href="listCat">Mange Categories</a></li>
+		<li><a href="listCat">Manage Categories</a></li>
 	</ul>		
 	<ul class="nav navbar-nav navbar-right">		
+		<li><a href="editUser">${user.username}</a></li>
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 		<!-- Logout -->
 		<li>

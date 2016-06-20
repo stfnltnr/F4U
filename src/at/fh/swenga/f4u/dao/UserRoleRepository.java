@@ -7,13 +7,15 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import at.fh.swenga.f4u.model.UserModel;
+import at.fh.swenga.f4u.model.UserRole;
+
 
 @Repository
 @Transactional
-public interface UserRepository extends JpaRepository<UserModel, Integer> {
+public interface UserRoleRepository extends JpaRepository<UserRole, Integer> {
 		
-	public List<UserModel> findByUsernameOrderByUsernameAsc(String username);
+	List<UserModel> removeByUser(UserModel user);
 	
-	public UserModel findByUsername(String username);
+	List<UserRole> findByUser(UserModel user);
 		
 }

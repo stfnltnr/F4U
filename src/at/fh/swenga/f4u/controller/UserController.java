@@ -3,8 +3,9 @@ package at.fh.swenga.f4u.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -15,13 +16,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.f4u.dao.FinanceRepository;
 import at.fh.swenga.f4u.dao.UserRepository;
+import at.fh.swenga.f4u.dao.UserRoleRepository;
 import at.fh.swenga.f4u.model.UserModel;
+import at.fh.swenga.f4u.model.UserRole;
 
 @Controller
 public class UserController {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	UserRoleRepository userRoleRepository;
 	
 //	@Autowired
 //	ReportRepository reportRepository;
@@ -38,14 +44,14 @@ public class UserController {
 //	}
 			
 	@RequestMapping(value = "/addU", method = RequestMethod.GET)
-	public String showAddDataForm(Model model) {
+	public String showAddDataForm() {
 		return "editUser";
 	}
 
-	@RequestMapping(value = "/addUser", method=RequestMethod.POST)
-	@Transactional
-	public String addData(@Valid @ModelAttribute UserModel newUserModel, BindingResult bindingResult, 
-			Model model){
+
+	
+	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
+	public String addData(@RequestParam String pwd2, @Valid @ModelAttribute UserModel newUserModel, BindingResult bindingResult,Model model) {
 		
 		if (bindingResult.hasErrors()) {
 			String errorMessage = "";
@@ -56,44 +62,49 @@ public class UserController {
 			return "login";
 		}
 		
-		UserModel user = userRepository.findOne(newUserModel.getId());
+		UserModel user = userRepository.findByUsername(newUserModel.getUsername());
 		
 		if(user!=null){
 			model.addAttribute("errorMessage", "User already exists!<br>");
 		}
 		else {
+			UserRole userRole = new UserRole(newUserModel, "ROLE_USER");
 			UserModel um = new UserModel();
-			um.setFirstName(newUserModel.getFirstName());
-			um.setLastName(newUserModel.getLastName());
-			um.setAddress(newUserModel.getAddress());
-			um.setPostCode(newUserModel.getPostCode());
-			um.setPlace(newUserModel.getPlace());
-			um.setPhone(newUserModel.getPhone());
-			um.setEmail(newUserModel.getEmail());
-//			um.setDayOfBirth(newUserModel.getDayOfBirth());
+			um.setUsername(newUserModel.getUsername());
+			um.setPassword(pwd2);
+			um.setEnabled(true);
 			userRepository.save(um);
-			model.addAttribute("message", "New user " + newUserModel.getId() + " added.");
+			userRoleRepository.save(userRole);
+						
+			model.addAttribute("message", "New user " + newUserModel.getUsername() + " added.");
 		}
 		
 		return "login";
 	}
 	
-	@RequestMapping(value = "/editU", method = RequestMethod.GET)
-	public String showEditUserForm(Model model, @RequestParam int id) {
-
-		UserModel user = userRepository.findOne(id);		
+	@RequestMapping(value = "/editUser", method = RequestMethod.GET)
+	public String showEditUserForm(Model model) {
+		
+		//get current User
+		Object curUser = SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		if (curUser instanceof UserDetails) {
+			String userName = ((UserDetails) curUser).getUsername();
+			UserModel user = userRepository.findByUsername(userName);
+		
 		if (user!=null) {
 			model.addAttribute("user", user);
 			return "editUser";
 		} else {
-			model.addAttribute("errorMessage", "Couldn't find user" + id);
+			model.addAttribute("errorMessage", "Couldn't find user " + userName);
 			return "forward:list";
 		}
+		}
+		else {return "forward:list";}
 	}
 	
 	@RequestMapping(value = "/changeUser", method = RequestMethod.POST)
-	@Transactional
-	public String editUser(@Valid @ModelAttribute UserModel editUserModel, BindingResult bindingResult,
+	public String editUser(@RequestParam String pwd2, @Valid @ModelAttribute UserModel editUserModel, BindingResult bindingResult,
 			Model model) {
  
 		if (bindingResult.hasErrors()) {
@@ -105,34 +116,20 @@ public class UserController {
 			return "forward:list";
 		}
  
-		UserModel user = userRepository.findOne(editUserModel.getId());
+		UserModel user = userRepository.findByUsername(editUserModel.getUsername());
 
 		if (user == null) {
 			model.addAttribute("errorMessage", "User does not exist!<br>");
 		} else {
-			user.setFirstName(editUserModel.getFirstName());
-			user.setLastName(editUserModel.getLastName());
-			user.setAddress(editUserModel.getAddress());
-			user.setPostCode(editUserModel.getPostCode());
-			user.setPlace(editUserModel.getPlace());
-			user.setPhone(editUserModel.getPhone());
-			user.setEmail(editUserModel.getEmail());
-//			user.setDayOfBirth(editUserModel.getDayOfBirth());
+			user.setUsername(editUserModel.getUsername());
+			user.setPassword(pwd2);
 			userRepository.save(user);
-			model.addAttribute("message", "Changed finance " + editUserModel.getId());
+			model.addAttribute("message", "Changed finance " + editUserModel.getUsername());
 		}
  
 		return "forward:list";
 	}
-	
-	
-	@RequestMapping("/deleteUser")
-	public String deleteData(Model model, @RequestParam int id) {
-		userRepository.delete(id);
-
-		return "forward:list";
-	}
-	
+		
 	public String handleAllException(Exception ex) {
 		return "showError";
 	}
