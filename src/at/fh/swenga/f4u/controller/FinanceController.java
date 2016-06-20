@@ -55,9 +55,12 @@ public class FinanceController {
 
 	@RequestMapping(value = { "/", "list" })
 	public String index(Model model) {
-		List<FinanceModel> finances = financeRepository.findAll();
+		List<FinanceModel> finances = financeRepository.findAllByOrderByBookDate();
+		List<CategorieModel> cats = categorieRepository.findAll();
+		List<SubCategorieModel> subcats = subCategorieRepository.findAll();
+		model.addAttribute("cats", cats);
+		model.addAttribute("subcats", subcats);
 		model.addAttribute("finances", finances);
-		model.addAttribute("type", "findAll");
 		return "index";
 	}
 
@@ -92,6 +95,15 @@ public class FinanceController {
 			finances = financeRepository.findByUserLastName(searchString);
 			break;
 		}
+		model.addAttribute("finances", finances);
+		return "index";
+	}
+	
+	@RequestMapping(value = { "/searchNotes" })
+	public String findById(Model model, @RequestParam String searchString ) {
+		List<FinanceModel> finances = null;
+		
+		finances = financeRepository.findByNotesIgnoreCaseContaining(searchString);
 		model.addAttribute("finances", finances);
 		return "index";
 	}

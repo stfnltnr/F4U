@@ -31,6 +31,8 @@ public interface FinanceRepository extends JpaRepository<FinanceModel, Integer> 
 	@Query("select f from FinanceModel f where f.payment = :payment")
 	public List<FinanceModel> findOutcome(@Param("payment")boolean payment);
 	
+	public List<FinanceModel> findAllByOrderByBookDate();
+	
 	public List<FinanceModel> findByBookDate(Date bookDate);
 	
 	public List<FinanceModel> findByCategorieName(String companyName);
@@ -39,5 +41,7 @@ public interface FinanceRepository extends JpaRepository<FinanceModel, Integer> 
 	
 	// for deleting subcategoriesentries in finances when a subcategorie is removed;
 	public List<FinanceModel> findBySubcategorieId (Integer id);
+	
+	public List<FinanceModel> findByCategorieId (Integer id);
 
 }

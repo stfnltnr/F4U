@@ -13,77 +13,116 @@
 <title>finance4you</title>
 <%@include file="includes/bootstrapCss.css"%>
 <%@include file="includes/treeView.css"%>
-<link
-	href="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css"
-	rel="stylesheet">
-	
+<link href="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css"	rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">	
 </head>
 <body>
 	<div class="container" role="main">
 	<!-- navigation -->
 	<jsp:include page="includes/nav.jsp"></jsp:include>
 	<!-- navigation -->
-		<center>
-			<h1>${type}</h1>
-			<!--   message ----------------------------------------------------------- -->
-			<!--  search by Id ----------------------------------------------------------- -->
-			<form action="findById" method="post">
-				Find by Id: <input type="text" name="id"> <input
-					type="submit" value="Do it"> <input type="hidden"
-					name="${_csrf.parameterName}" value="${_csrf.token}" />
-			</form>
-			<hr>
-
-			<!--  paging ----------------------------------------------------------- -->
-			<form action="getPage" method="post">
-				Paging: Page:<input type="text" name="page" value="0"> Size:<input
-					type="text" name="size" value="5"> <input type="submit"
-					value="Do it"> <input type="hidden"
-					name="${_csrf.parameterName}" value="${_csrf.token}" />
-			</form>
-			<hr>
-			
-			<!-- Eingang oder Ausgang --------------------------------------------------- -->
-	<div class="row">
-<%-- 				<form method="post" action="findBool">
-					<label for="searchValue">Search Value:</label> <select name="type">
-						<option value="findIncome">Income</option>			
-
-					</select><input
-						type="submit" value="Do it"> <input type="hidden"
-						name="${_csrf.parameterName}" value="${_csrf.token}" />
-
-				</form> --%>
-	 		<form method="post" action="findBool">
-       <fieldset>
-                <legend>What are you search for?</legend>
-                        <input type="radio" name="type" value="findAll" />All<br />
-                        <input type="radio" name="type" value="findIncome" />Income<br />
-                        <input type="radio" name="type" value="findOutcome" />Outcome<br />
-                        <input type="submit" value="Submit now" /><input type="hidden"
-						name="${_csrf.parameterName}" value="${_csrf.token}" />
-       </fieldset>
-</form> 
-</div>
-		<hr>	
-			<!-- Betragssuche ----------------------------------------------------------- -->
-			<div class="row">
-				<form method="post" action="findValue">
-					<label for="searchValue">Search Value:</label> <select name="type">
-						<option value="findByValue">genauer Betrag</option>
-						<option value="findByValueBetween">von bis</option>
-						<option value="findByValueGreaterThanEqual">>=</option>
-						<option value="findByValueLessThanEqual"><=</option>
-					
-
-					</select> <input type="text" name="searchValue"> <input
-						type="submit" value="Do it"> <input type="hidden"
-						name="${_csrf.parameterName}" value="${_csrf.token}" />
-
+	<!--  paging ----------------------------------------------------------- -->
+	<form action="getPage" method="post">
+		Paging: Page:<input type="text" name="page" value="0"> Size:<input
+			type="text" name="size" value="5"> <input type="submit"
+			value="Do it"> <input type="hidden"
+			name="${_csrf.parameterName}" value="${_csrf.token}" />
+	</form>
+	<hr>
+	
+	<!-- Search&Filter Collapse -->
+	<div class = "panel-group" id = "accordion">
+	  <div class = "panel panel-success">
+	     
+	     <div class = "panel-heading">
+	        <h4 class = "panel-title">
+	           <a data-toggle = "collapse" data-parent = "#accordion" href = "#collapseOne">Search & Filter Finances <span class="glyphicon glyphicon-chevron-down"></span></a>
+	        </h4>
+	     </div>
+	     
+	     <div id = "collapseOne" class = "panel-collapse collapse in">
+	        <div class = "panel-body">
+				<!-- Search Panel -->
+				<!-- Filter All/Income/Outcome -->	
+				<form class="form-horizontal" method="post" action="findBool">
+					<div class="form-group">						
+						<label class="control-label col-md-2" for="findBool">Filter:</label>
+						<div class="col-md-4">
+						<fieldset>
+							<label class="checkbox-inline"><input type="radio" name="type" value="findAll" />All</label>
+							<label class="checkbox-inline"><input type="radio" name="type" value="findIncome" />Income</label>
+							<label class="checkbox-inline"><input type="radio" name="type" value="findOutcome" />Outcome</label>
+							</div>
+							<div class="col-md-6">
+							<button class="btn btn-default" type="submit" value="Filter">Filter</button>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+							</div>
+						</fieldset>
+					</div>
 				</form>
-			</div>
-			<!--  Betragssuche ----------------------------------------------------------- -->
-			
+				<!-- Filter All/Income/Outcome -->					
+				<hr>
+				<!-- Search Values -->
+				<form class="form-horizontal" method="post" action="findValue">
+					<div class="form-group">
+						<label class="control-label col-md-2" for="searchValue">Search Value:</label>
+							<div class="col-md-4">
+								<input class="form-control" type="text" name="searchValue">
+							</div>
+							<div class="col-md-6">
+								<select class="selectpicker" data-width="fit" name="type">
+									<option value="findByValue">exact Value</option>
+<!--								<option value="findByValueBetween">von bis</option> -->
+									<option value="findByValueGreaterThanEqual">>=</option>
+									<option value="findByValueLessThanEqual"><=</option>
+								</select>
+								<button class="btn btn-default" type="submit">Search</button>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	
+							</div>
+						</div>
+				</form>
+				<!-- Search Values -->
+				<hr>
+				<!--  Search Notes -->
+				<form class="form-horizontal" method="post" action="searchNotes">
+					<div class="form-group">
+						<label class="control-label col-md-2" for="searchValue">Search Notes:</label>
+						<div class="col-md-4">
+							<input class="form-control" type="text" name="searchString">
+						</div>
+						<div class="col-md-6">	
+							<button class="btn btn-default" type="submit" value="findByNotesIgnoreCaseContaining"><input type="hidden" >Search</button>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						</div>
+					</div>
+				</form>
+				<!--  Search Notes -->
+				<hr>
+				<!--  Filter by Categorie -->
+				<form class="form-horizontal" method="post" action="filterByCat">
+					<div class="form-group">			
+						<label for="inputCategorie" class="col-md-2 control-label">Filter Categorie:</label>
+						<div class="col-md-10">
+							<select name="categorie" class="selectpicker show-tick" value="<c:out value="${finance.categorie}"/>">
+								<c:forEach items="${cats}" var="cat">
+										<option data-icon="${cat.icon }" value="${cat.id}">${cat.name}</option>
+								</c:forEach>
+							</select>
+							<button class="btn btn-default" type="submit">Filter</button>
+						</div>
+					</div>
+				</form>
+				<!--  Filter by Categorie -->
+				
+				
+				
+	           
+	           
+	        </div>
+	     </div>
+	     
+	  </div>
 			<hr>	
 			<!-- Search for Date ----------------------------------------------------------- -->
 			<div class="row">
@@ -101,35 +140,9 @@
 			</div>
 			<hr>
 			<!--  Search for Date ----------------------------------------------------------- -->
-			
-			<!--  Search + Fill ----------------------------------------------------------- -->
-			<div class="row">
-				<form method="post" action="find">
-					<label for="searchString">Search:</label> <select name="type">
-						<option value="findAll" selected="selected">findAll</option>
-						<option value="findByNotesIgnoreCaseContaining">Volltextsuche</option>
-						<option value="findByCategorieName">findByCategorieName</option>
-						<option value="findByUserLastName">findByUserLastName</option>
-						<!-- <option value="findByWhateverName">findByWhateverName</option>
-						<option value="doALike">doALike</option>
-						<option value="countByLastName">countByLastName</option>
-						<option value="removeByLastName">removeByLastName</option>
-						<option value="removeByCompanyName">removeByCompanyName</option>
-						<option value="findByLastNameContainingOrFirstNameContainingAllIgnoreCase">findByName</option>
-						<option value="findByOrderByLastNameAsc">orderByLastName</option>
-						<option value="findTop10ByOrderByLastNameAsc">orderByLastNameTOP10</option>
-						<option value="findByCompanyNameOrderByLastNameAsc">findByCompanyNameOrderByLastNameAsc</option> -->
-
-					</select> <input type="text" name="searchString"> <input
-						type="submit" value="Do it"> <input type="hidden"
-						name="${_csrf.parameterName}" value="${_csrf.token}" />
-
-				</form>
-			</div>
 
 			<!--  Search + Fill ----------------------------------------------------------- -->
 			<%-- <h3>Count: ${count}</h3> --%>
-		</center>
 
 
 
@@ -158,26 +171,22 @@
 							<tr>
 								<td>${finance.id}</td>
 								<td>${finance.payment}</td>
-								<td><fmt:formatDate value="${finance.bookDate}"
-										pattern="dd.MM.yyyy" /> </td>
+								<td><fmt:formatDate value="${finance.bookDate}" pattern="dd.MM.yyyy" /></td>
 								<td>${finance.value}</td>
 								<td>${finance.notes}</td>
 								<td><span class="${finance.categorie.icon }" aria-hidden="true" ></span> ${finance.categorie.name}</td>
 								<td><span class="${finance.subcategorie.icon }" style="color:${finance.subcategorie.color};" aria-hidden="true" ></span> ${finance.subcategorie.name}</td>
-
-								<sec:authorize access="hasRole('ROLE_ADMIN')">
-									<td><a href="edit?id=${finance.id}">
-											<button type="button" class="btn btn-xs btn-success">
-												<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-												Edit
-											</button>
-									</a> <a href="delete?id=${finance.id}">
-											<button type="button" class="btn btn-xs btn-danger">
-												<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-												Delete
-											</button>
-									</a></td>
-								</sec:authorize>
+								<td><a href="edit?id=${finance.id}">
+										<button type="button" class="btn btn-xs btn-success">
+											<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+											Edit
+										</button></a>
+									<a href="delete?id=${finance.id}">
+										<button type="button" class="btn btn-xs btn-danger">
+											<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+											Delete
+										</button></a>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -186,8 +195,18 @@
 		</div>
 		<!--  list all finances  ----------------------------------------------------------- -->
 	</div>
+
+	
 	<!--  end of container -->
 	<%@include file="includes/bootstrapJs.js"%>
+	
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+
+	<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js"></script>
+
+	
 	
 	<!-- JS for Datetime picker -->
 
