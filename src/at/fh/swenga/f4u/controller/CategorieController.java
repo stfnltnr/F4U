@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -20,9 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import at.fh.swenga.f4u.dao.CategorieRepository;
 import at.fh.swenga.f4u.dao.FinanceRepository;
 import at.fh.swenga.f4u.dao.SubCategorieRepository;
+import at.fh.swenga.f4u.dao.UserRepository;
 import at.fh.swenga.f4u.model.CategorieModel;
 import at.fh.swenga.f4u.model.FinanceModel;
 import at.fh.swenga.f4u.model.SubCategorieModel;
+import at.fh.swenga.f4u.model.UserModel;
 
 @Controller
 public class CategorieController {
@@ -31,17 +35,30 @@ public class CategorieController {
 	CategorieRepository categorieRepository;
 	
 	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
 	SubCategorieRepository subCategorieRepository;
 	
 	@Autowired
 	FinanceRepository financeRepository;
 	
+	//get current User
+	public void currentUser(Model model) { 		
+			Object curUser = SecurityContextHolder.getContext()
+			.getAuthentication().getPrincipal();
+		String userName = ((UserDetails) curUser).getUsername();
+		UserModel user = userRepository.findByUsername(userName);
+		model.addAttribute("user", user);
+	}
+	
 	@RequestMapping(value = "/listCat")
-	public String index(Model model) {
+	public String index(Model model) {		
 		List<CategorieModel> categories = categorieRepository.findAll();
 		List<SubCategorieModel> subcategories = subCategorieRepository.findAll();
 		model.addAttribute("categories", categories);
 		model.addAttribute("subcategories", subcategories);
+		currentUser(model);
 		model.addAttribute("type", "findAll");
 		return "listCat";
 	}
@@ -96,6 +113,7 @@ public class CategorieController {
 		List<CategorieModel> cats = categorieRepository.findAll();
 		model.addAttribute("subcats", subcats);
 		model.addAttribute("cats", cats);
+		currentUser(model);
 		return "editCat";
 	}
 	
@@ -136,6 +154,7 @@ public class CategorieController {
 			model.addAttribute("subcategorie", subcategorie);
 			List<CategorieModel> cats = categorieRepository.findAll();
 			model.addAttribute("cats", cats);
+			currentUser(model);
 			return "editCat";
 		} else {
 			model.addAttribute("errorMessage", "Couldn't find Categorie!");
@@ -192,7 +211,7 @@ public class CategorieController {
 			financeRepository.save(f);
 		}
 		subCategorieRepository.delete(id);
-		
+		currentUser(model);
 		return "forward:listCat";		
 	}
 		

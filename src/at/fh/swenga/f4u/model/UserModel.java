@@ -105,6 +105,7 @@ public class UserModel implements java.io.Serializable {
 		this.finances = finances;
 	}
 
+
 	public Set<SubCategorieModel> getSubcategories() {
 		return subcategories;
 	}
