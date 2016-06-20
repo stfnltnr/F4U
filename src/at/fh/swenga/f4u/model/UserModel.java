@@ -3,6 +3,7 @@ package at.fh.swenga.f4u.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,6 +35,9 @@ public class UserModel implements java.io.Serializable {
 	
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private Set<FinanceModel> finances;
+	
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade = {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH})
+	private Set<SubCategorieModel> subcategories;
 	
 //	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 //	private Set<PermanentModel> permanents;
@@ -93,7 +97,6 @@ public class UserModel implements java.io.Serializable {
 		this.userRole = userRole;
 	}
 
-
 	public Set<FinanceModel> getFinances() {
 		return finances;
 	}
@@ -101,4 +104,14 @@ public class UserModel implements java.io.Serializable {
 	public void setFinances(Set<FinanceModel> finances) {
 		this.finances = finances;
 	}
+
+
+	public Set<SubCategorieModel> getSubcategories() {
+		return subcategories;
+	}
+
+	public void setSubcategories(Set<SubCategorieModel> subcategories) {
+		this.subcategories = subcategories;
+	}
+	
 }

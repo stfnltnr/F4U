@@ -37,9 +37,12 @@ public class SubCategorieModel implements java.io.Serializable {
 	@ManyToOne(fetch=FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.REFRESH})
 	private CategorieModel categorie;
 	
+	@ManyToOne(fetch=FetchType.EAGER, cascade = {CascadeType.MERGE,CascadeType.REFRESH})
+	private UserModel user;
+	
 	@OneToMany(mappedBy="subcategorie", fetch=FetchType.LAZY, cascade = {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH})
 	private Set<FinanceModel> finances;
-	
+		
 	@Version
 	long version;
 	
@@ -109,6 +112,14 @@ public class SubCategorieModel implements java.io.Serializable {
 
 	public void setCategorie(CategorieModel categorie) {
 		this.categorie = categorie;
+	}
+
+	public UserModel getUser() {
+		return user;
+	}
+
+	public void setUser(UserModel user) {
+		this.user = user;
 	}
 
 	public Set<FinanceModel> getFinances() {

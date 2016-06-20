@@ -51,7 +51,7 @@
 							<label for="inputUsername" class="col-md-2 control-label">Username</label>
 							<div class="col-md-10">
 								<input class="form-control" id="inputUsername" type="text" placeholder="username" 
-									name="username" value="<c:out value="${user.username}"/>">
+									name="username" value="<c:out value="${user.username}"/>" autofocus>
 							</div>
 						</div>				
 						
@@ -60,7 +60,7 @@
 							<label for="inputPassword" class="col-md-2 control-label">Password</label>
 							<div class="col-md-10">
 								<input class="form-control" id="inputPassword" type="password" placeholder="password" 
-									name="pwd1" required autofocus>
+									name="pwd1" required>
 							</div>
 						</div>
 
@@ -69,7 +69,7 @@
 							<label for="matchingPassword" class="col-md-2 control-label">Confirm Password:</label>
 							<div class="col-md-10">
 								<input class="form-control" id="matchingPassword" name="pwd2"
-									placeholder="retype password" autofocus type="password">
+									placeholder="retype password" type="password">
 							</div>
 						</div>
 						<! ----------------  buttons ---------------- -->
