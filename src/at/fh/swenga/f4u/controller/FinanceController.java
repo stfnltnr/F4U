@@ -187,9 +187,6 @@ public class FinanceController {
 	
 	@RequestMapping(value = { "/findDate" })
 	public String findDate(Model model, @RequestParam Date searchDate) {
-
-		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-		String date = formatter.format(searchDate);
 		
 		List<FinanceModel> finances = null;
 		addCats(model);
