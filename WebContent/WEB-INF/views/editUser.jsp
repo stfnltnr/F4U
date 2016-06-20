@@ -27,7 +27,7 @@
 		<!--  add or edit?  ----------------------------------------------------------- -->
 		<c:choose>
 			<c:when test="${not empty user}">
-				<c:set var="legend">Change User ${user.id}</c:set>
+				<c:set var="legend">Change User ${user.username}</c:set>
 				<c:set var="formAction">changeUser</c:set>
 				<c:set var="readonly">readonly</c:set>
 				<c:set var="shown">text</c:set>
