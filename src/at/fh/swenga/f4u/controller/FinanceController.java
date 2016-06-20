@@ -192,7 +192,8 @@ public class FinanceController {
 		System.out.println(date);
 		List<FinanceModel> finances = null;
 		addCats(model);
-		finances = financeRepository.findByBookDate(date);
+		currentUser(model);
+		finances = financeRepository.findByUser_UsernameAndBookDate(getCurrentUserName(),searchDate);
 		model.addAttribute("finances", finances);
 		return "index";
 	}
