@@ -3,8 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -73,8 +72,8 @@
 								<select class="selectpicker" data-width="fit" name="type">
 									<option value="findByValue">exact Value</option>
 <!--								<option value="findByValueBetween">von bis</option> -->
-									<option value="findByValueGreaterThanEqual">>=</option>
-									<option value="findByValueLessThanEqual"><=</option>
+									<option value="findByValueGreaterThanEqual">greater than</option>
+									<option value="findByValueLessThanEqual">less than</option>
 								</select>
 								<button class="btn btn-default" type="submit">Search</button>
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -102,18 +101,46 @@
 				<!--  Filter by Categorie -->
 				<form class="form-horizontal" method="post" action="filterByCat">
 					<div class="form-group">			
-						<label for="inputCategorie" class="col-md-2 control-label">Filter Categorie:</label>
+						<label for="inputCategorie" class="col-md-2 control-label">Filter Category:</label>
 						<div class="col-md-10">
-							<select name="categorie" class="selectpicker show-tick" value="<c:out value="${finance.categorie}"/>">
+							<select name="id" class="selectpicker show-tick">
+								<option value="0">None</option>
 								<c:forEach items="${cats}" var="cat">
-										<option data-icon="${cat.icon }" value="${cat.id}">${cat.name}</option>
+									<option data-icon="${cat.icon }" value="${cat.id}">${cat.name}</option>
 								</c:forEach>
 							</select>
 							<button class="btn btn-default" type="submit">Filter</button>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 						</div>
 					</div>
 				</form>
 				<!--  Filter by Categorie -->
+				<hr>
+				<!--  Filter by SubCategorie -->
+				<form class="form-horizontal" method="post" action="filterBySubCat">
+					<div class="form-group">			
+						<label for="inputCategorie" class="col-md-2 control-label">Filter SubCategory:</label>
+						<div class="col-md-10">
+							<select name="id" class="selectpicker show-tick">
+								<c:set var="i" value="${1}"/>
+								<option value="3">None</option>
+								<c:forEach items="${cats}" var="cat" >
+									<optgroup label="${cat.name}">
+									<c:forEach items="${subcats}" var="subcat">
+										<c:if test="${subcat.maincat == i }">
+											<option data-icon="${subcat.icon}" value="${subcat.id}">${subcat.name}</option>
+										</c:if>
+									</c:forEach>
+									</optgroup>
+								<c:set var="i" value="${i+1}"/>
+								</c:forEach>
+							</select>
+							<button class="btn btn-default" type="submit">Filter</button>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						</div>
+					</div>
+				</form>
+				<!--  Filter by SubCategorie -->
 				
 				
 				
@@ -129,13 +156,9 @@
 				<form method="post" action="findDate">
 					<label for="searchDate">Search Date:</label> <select name="type">
 						<option value="findByBookDate">Search for Date</option>	
-
 					</select> 
-					<input class="form_datetime" placeholder="Date"
-						 name="searchDate" type="text">
-					 <input	type="submit" value="Search"> <input type="hidden"
-						name="${_csrf.parameterName}" value="${_csrf.token}" />
-
+					<input class="form_datetime" placeholder="Date" name="searchDate" type="text" >
+					<input type="submit" value="Search"> <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				</form>
 			</div>
 			<hr>

@@ -52,15 +52,19 @@ public class FinanceController {
 	public String handleLogin() {
 		return "login";
 	}
+	
+	public void addCats(Model model) {
+		List<CategorieModel> cats = categorieRepository.findAll();
+		List<SubCategorieModel> subcats = subCategorieRepository.findAll();
+		model.addAttribute("cats", cats);
+		model.addAttribute("subcats", subcats);	
+	}
 
 	@RequestMapping(value = { "/", "list" })
 	public String index(Model model) {
 		List<FinanceModel> finances = financeRepository.findAllByOrderByBookDate();
-		List<CategorieModel> cats = categorieRepository.findAll();
-		List<SubCategorieModel> subcats = subCategorieRepository.findAll();
-		model.addAttribute("cats", cats);
-		model.addAttribute("subcats", subcats);
 		model.addAttribute("finances", finances);
+		addCats(model);
 		return "index";
 	}
 
@@ -102,8 +106,26 @@ public class FinanceController {
 	@RequestMapping(value = { "/searchNotes" })
 	public String findById(Model model, @RequestParam String searchString ) {
 		List<FinanceModel> finances = null;
-		
+		addCats(model);
 		finances = financeRepository.findByNotesIgnoreCaseContaining(searchString);
+		model.addAttribute("finances", finances);
+		return "index";
+	}
+	
+	@RequestMapping(value ="/filterByCat")
+	public String filterCat(Model model, @RequestParam int id) {
+		List<FinanceModel> finances = null;
+		addCats(model);
+		if(id==0) {finances = financeRepository.findAllByOrderByBookDate();} else finances=financeRepository.findByCategorieId(id);
+		model.addAttribute("finances", finances);
+		return "index";
+	}
+	
+	@RequestMapping(value ="/filterBySubCat")
+	public String filterSubCat(Model model, @RequestParam int id) {
+		List<FinanceModel> finances = null;
+		addCats(model);
+		if(id==0) {finances = financeRepository.findAllByOrderByBookDate();} else finances = financeRepository.findBySubcategorieId(id);
 		model.addAttribute("finances", finances);
 		return "index";
 	}
@@ -111,6 +133,7 @@ public class FinanceController {
 	@RequestMapping(value = { "/findValue" })
 	public String findValue(Model model, @RequestParam double searchValue, @ModelAttribute("type") String type) {
 		List<FinanceModel> finances = null;
+		addCats(model);
 
 		switch (type) {
 		case "findAll":
@@ -140,6 +163,7 @@ public class FinanceController {
 	@RequestMapping(value = { "/findBool" })
 	public String findBool(Model model, @ModelAttribute("type") String type) {
 		List<FinanceModel> finances = null;
+		addCats(model);
 		boolean income = true;
 		boolean outcome = false;
 
@@ -268,10 +292,7 @@ public class FinanceController {
 
 		FinanceModel finance = financeRepository.findOne(id);		
 		if (finance!=null) {
-			List<CategorieModel> cats = categorieRepository.findAll();
-			List<SubCategorieModel> subcats = subCategorieRepository.findAll();
-			model.addAttribute("cats", cats);
-			model.addAttribute("subcats",subcats);
+			addCats(model);
 			model.addAttribute("finance", finance);
 			return "editFinance";
 		} else {

@@ -3,6 +3,9 @@ package at.fh.swenga.f4u.dao;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -40,9 +43,9 @@ public interface FinanceRepository extends JpaRepository<FinanceModel, Integer> 
 	public List<FinanceModel> findByUser_Username(String username);
 	
 	// for deleting subcategoriesentries in finances when a subcategorie is removed;
-	public List<FinanceModel> findBySubcategorieId (Integer id);
+	public List<FinanceModel> findBySubcategorieId (int id);
 	
-	public List<FinanceModel> findByCategorieId (Integer id);
+	public List<FinanceModel> findByCategorieId (int id);
 
 
 }
