@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 
-import org.fluttercode.datafactory.impl.DataFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +28,6 @@ import at.fh.swenga.f4u.dao.UserRepository;
 import at.fh.swenga.f4u.model.CategorieModel;
 import at.fh.swenga.f4u.model.FinanceModel;
 import at.fh.swenga.f4u.model.SubCategorieModel;
-import at.fh.swenga.f4u.model.UserModel;
 
 @Controller
 public class FinanceController {
@@ -186,51 +186,12 @@ public class FinanceController {
 	
 	@RequestMapping(value = { "/findDate" })
 	public String findDate(Model model, @RequestParam Date searchDate, @ModelAttribute("type") String type) {
-		List<FinanceModel> finances = null;
-
-		switch (type) {
-		case "findAll":
-			finances = financeRepository.findAll();
-			break;
-			
-		case "findByBookDate":
-			finances = financeRepository.findByBookDate(searchDate);
-			break;
 		
-		}
+		List<FinanceModel> finances = null;
+		addCats(model);
+		finances = financeRepository.findByBookDate(searchDate);
 		model.addAttribute("finances", finances);
 		return "index";
-	}
-	
-	@RequestMapping("/fill")
-	@Transactional
-	public String fillData(Model model) {
-//		@RequestParam String username,
-		
-		DataFactory df = new DataFactory();
-		CategorieModel categorie = null;
-
-//		UserModel user = null;
-
-
-		for (int i = 0; i < 5; i++) {
-			categorie = new CategorieModel("TestCategorie", "Description", "glyphicon glyphicon-shopping-cart", "#000000");
-			
-//				String userFirstName = df.getFirstName();
-//				String userLastName = df.getLastName();
-//				user = userRepository.findByUsername(username);
-//
-//				if (user == null) {
-				
-				
-			
-			FinanceModel fm = new FinanceModel(df.chance(50), df.getBirthDate(), df.getNumberBetween(1, 2000), df.getFirstName());
-			fm.setCategorie(categorie);
-//			fm.setUser(user);
-			financeRepository.save(fm);
-//		}
-		}
-		return "forward:list";
 	}
 
 	@RequestMapping(value = { "/findById" })

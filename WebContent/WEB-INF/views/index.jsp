@@ -141,6 +141,26 @@
 					</div>
 				</form>
 				<!--  Filter by SubCategorie -->
+				<hr>
+				<!--  Search Notes -->
+				<form class="form-horizontal" method="post" action="findDate">
+					<div class="form-group">
+						<label class="control-label col-md-2" for="searchValue">Search Date:</label>
+						<div class="col-md-4">
+							<input class="form-control" type="text" name="searchDate">
+						</div>
+						<div class="col-md-6">	
+							<button class="btn btn-default" type="submit" value="findByNotesIgnoreCaseContaining"><input type="hidden" >Search</button>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						</div>
+					</div>
+				</form>
+				
+				<form class="form-horizontal" method="post">
+					<div class="form-group">
+						
+					</div>
+				</form>
 				
 				
 				
@@ -156,9 +176,11 @@
 				<form method="post" action="findDate">
 					<label for="searchDate">Search Date:</label> <select name="type">
 						<option value="findByBookDate">Search for Date</option>	
-					</select> 
-					<input class="form_datetime" placeholder="Date" name="searchDate" type="text" >
-					<input type="submit" value="Search"> <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					</select>
+
+					<input class="form_datetime" placeholder="Date" name="searchDate" type="text"/>
+					<input type="submit" value="Search">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				</form>
 			</div>
 			<hr>
