@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import at.fh.swenga.f4u.model.UserRole;
 
 @Entity
@@ -21,7 +23,7 @@ public class UserModel implements java.io.Serializable {
 	@Column(name = "username", unique = true, nullable = false, length = 45)
 	private String username;
 	
-	@Column(name = "password", nullable = false, length = 60)
+	@Column(name = "password")
 	private String bCryptedPassword;
 	
 	@Column(name = "enabled", nullable = false)
@@ -50,7 +52,6 @@ public class UserModel implements java.io.Serializable {
 	public UserModel(String username, String password, boolean enabled,
 			Set<UserRole> userRole) {
 		this.username = username;
-		//this.matchingPassword = matchingPassword;
 		setBCryptedPassword(password);
 		this.enabled = enabled;
 		this.userRole = userRole;
@@ -71,8 +72,11 @@ public class UserModel implements java.io.Serializable {
 	public String getBCryptedPassword() {
 		return bCryptedPassword;
 	}
+	
+	public void setPassword(String password) {
+		setBCryptedPassword(new BCryptPasswordEncoder().encode(password));
+	}
 
-	@Column(name = "enabled", nullable=true)
 	public boolean isEnabled() {
 		return enabled;
 	}
