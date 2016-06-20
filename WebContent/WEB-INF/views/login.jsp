@@ -49,7 +49,7 @@
 					<label for="inputPassword" class="sr-only">Password</label>
 					<input type="password" id="password" class="form-control" 
 						placeholder="Password" required name="password">
-						
+	
 					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 						
 					<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
