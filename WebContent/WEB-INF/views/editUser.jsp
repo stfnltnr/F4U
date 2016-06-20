@@ -43,27 +43,35 @@
 
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-				<form class="form-horizontal" method="post" action="${formAction}">
-					<fieldset>
+				<form id="login" class="form-horizontal" method="post" action="${formAction}" onsubmit="return checkForm(this);">
 						<legend>${legend}</legend>
+						<fieldset>
 						<! ----------------  username ---------------- -->
 						<div class="form-group">
 							<label for="inputUsername" class="col-md-2 control-label">Username</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputUsername" type="text"
+								<input class="form-control" id="inputUsername" type="text" placeholder="username" 
 									name="username" value="<c:out value="${user.username}"/>">
 							</div>
-						</div>
+						</div>				
 						
 						<! ----------------  password ---------------- -->
 						<div class="form-group">
 							<label for="inputPassword" class="col-md-2 control-label">Password</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputPassword" type="text"
-									name="password" value="<c:out value="${user.password}"/>">
+								<input class="form-control" id="inputPassword" type="password" placeholder="password" 
+									name="pwd1" required autofocus>
 							</div>
 						</div>
-			
+
+						<! ----------------  confirm password ---------------- -->
+						<div class="form-group">
+							<label for="matchingPassword" class="col-md-2 control-label">Confirm Password:</label>
+							<div class="col-md-10">
+								<input class="form-control" id="matchingPassword" name="pwd2"
+									placeholder="retype password" autofocus type="password">
+							</div>
+						</div>
 						<! ----------------  buttons ---------------- -->
 						<div class="form-group">
 							<div class="col-md-10 col-md-offset-2">
@@ -91,7 +99,62 @@
 	<%@include file="includes/bootstrapJs.js"%>
 	<!-- JS for Bootstrap -->
 
+ <script type="text/javascript">
 
+  function checkForm(form)
+  {
+    if(form.username.value == "") {
+      alert("Error: Username cannot be blank!");
+      form.username.focus();
+      return false;
+    }
+    re = /^\w+$/;
+    if(!re.test(form.username.value)) {
+      alert("Error: Username must contain only letters, numbers and underscores!");
+      form.username.focus();
+      return false;
+    }
+
+    if(form.pwd1.value != "" && form.pwd1.value == form.pwd2.value) {
+      if(form.pwd1.value.length < 8) {
+        alert("Error: Password must contain at least eight characters!");
+        form.pwd1.focus();
+        return false;
+      }
+      if(form.pwd1.value == form.username.value) {
+        alert("Error: Password must be different from Username!");
+        form.pwd1.focus();
+        return false;
+      }
+      re = /[0-9]/;
+      if(!re.test(form.pwd1.value)) {
+        alert("Error: password must contain at least one number (0-9)!");
+        form.pwd1.focus();
+        return false;
+      }
+      re = /[a-z]/;
+      if(!re.test(form.pwd1.value)) {
+        alert("Error: password must contain at least one lowercase letter (a-z)!");
+        form.pwd1.focus();
+        return false;
+      }
+      re = /[A-Z]/;
+      if(!re.test(form.pwd1.value)) {
+        alert("Error: password must contain at least one uppercase letter (A-Z)!");
+        form.pwd1.focus();
+        return false;
+      }
+    } else {
+      alert("Error: Please check that you've entered and confirmed your password!");
+      form.pwd1.focus();
+      return false;
+    }
+
+    alert("You entered valid credentials!"); /* + form.pwd1.value */
+    return true;
+  }
+
+</script>
 
 </body>
 </html>
