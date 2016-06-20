@@ -1,7 +1,6 @@
 package at.fh.swenga.f4u.controller;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -19,10 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import at.fh.swenga.f4u.dao.CategorieRepository;
 import at.fh.swenga.f4u.dao.FinanceRepository;
-import at.fh.swenga.f4u.dao.SubCategorieRepository;
 import at.fh.swenga.f4u.model.CategorieModel;
 import at.fh.swenga.f4u.model.FinanceModel;
-import at.fh.swenga.f4u.model.SubCategorieModel;
 
 @Controller
 public class CategorieController {
