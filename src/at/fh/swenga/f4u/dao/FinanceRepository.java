@@ -44,7 +44,5 @@ public interface FinanceRepository extends JpaRepository<FinanceModel, Integer> 
 	
 	public List<FinanceModel> findByCategorieId (Integer id);
 
-	public List<FinanceModel> findByCategorieId(Integer id);
-
 
 }

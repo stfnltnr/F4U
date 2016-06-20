@@ -1,60 +1,3 @@
-<<<<<<< HEAD
-//package at.fh.swenga.f4u.model;
-//
-//import javax.persistence.Column;
-//import javax.persistence.Entity;
-//import javax.persistence.FetchType;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.GenerationType;
-//import javax.persistence.Id;
-//import javax.persistence.JoinColumn;
-//import javax.persistence.ManyToOne;
-//import javax.persistence.Table;
-//
-//@Entity
-//@Table(name = "user_roles")
-//public class UserRole implements java.io.Serializable {
-//	private static final long serialVersionUID = 8098173157518993615L;
-//	
-//	@Id
-//	@Column(name="userRoleId")
-//	@GeneratedValue(strategy=GenerationType.IDENTITY)
-//	private Integer userRoleId;
-//	private UserModel user;
-//	private String role;
-//
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//	@Column(name = "user_role_id", unique = true, nullable = false)
-//	public Integer getUserRoleId() {
-//		return userRoleId;
-//	}
-//
-//	public void setUserRoleId(Integer userRoleId) {
-//		this.userRoleId = userRoleId;
-//	}
-//
-//	@ManyToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "username", nullable = false)
-//	public UserModel getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(UserModel user) {
-//		this.user = user;
-//	}
-//
-//	@Column(name = "role", nullable = false, length = 45)
-//	public String getRole() {
-//		return role;
-//	}
-//
-//	public void setRole(String role) {
-//		this.role = role;
-//	}
-//
-//}
-=======
 package at.fh.swenga.f4u.model;
 
 import javax.persistence.Column;
@@ -117,4 +60,3 @@ public class UserRole implements java.io.Serializable {
 	}
 
 }
->>>>>>> branch 'master' of https://github.com/loete/F4U.git
