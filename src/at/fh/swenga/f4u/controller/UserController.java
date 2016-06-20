@@ -56,23 +56,21 @@ public class UserController {
 			return "login";
 		}
 		
-		UserModel user = userRepository.findOne(newUserModel.getId());
+		UserModel user = userRepository.findByUsername(newUserModel.getUsername());
+
 		
 		if(user!=null){
 			model.addAttribute("errorMessage", "User already exists!<br>");
 		}
 		else {
+			
 			UserModel um = new UserModel();
-			um.setFirstName(newUserModel.getFirstName());
-			um.setLastName(newUserModel.getLastName());
-			um.setAddress(newUserModel.getAddress());
-			um.setPostCode(newUserModel.getPostCode());
-			um.setPlace(newUserModel.getPlace());
-			um.setPhone(newUserModel.getPhone());
-			um.setEmail(newUserModel.getEmail());
-//			um.setDayOfBirth(newUserModel.getDayOfBirth());
+			um.setUsername(newUserModel.getUsername());
+			um.setPassword(newUserModel.getPassword());
+			um.setEnabled(true);
+			um.setUserRole("ROLE_USER");
 			userRepository.save(um);
-			model.addAttribute("message", "New user " + newUserModel.getId() + " added.");
+			model.addAttribute("message", "New user " + newUserModel.getUsername() + " added.");
 		}
 		
 		return "login";
@@ -105,21 +103,17 @@ public class UserController {
 			return "forward:list";
 		}
  
-		UserModel user = userRepository.findOne(editUserModel.getId());
+		UserModel user = userRepository.findByUsername(editUserModel.getUsername());
 
 		if (user == null) {
 			model.addAttribute("errorMessage", "User does not exist!<br>");
 		} else {
-			user.setFirstName(editUserModel.getFirstName());
-			user.setLastName(editUserModel.getLastName());
-			user.setAddress(editUserModel.getAddress());
-			user.setPostCode(editUserModel.getPostCode());
-			user.setPlace(editUserModel.getPlace());
-			user.setPhone(editUserModel.getPhone());
-			user.setEmail(editUserModel.getEmail());
-//			user.setDayOfBirth(editUserModel.getDayOfBirth());
+			user.setUsername(editUserModel.getUsername());
+			user.setPassword(editUserModel.getPassword());
+			user.setEnabled(true);
+			user.setUserRole("ROLE_USER");
 			userRepository.save(user);
-			model.addAttribute("message", "Changed finance " + editUserModel.getId());
+			model.addAttribute("message", "Changed finance " + editUserModel.getUsername());
 		}
  
 		return "forward:list";

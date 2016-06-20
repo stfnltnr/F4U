@@ -43,6 +43,7 @@ public class FinanceModel implements java.io.Serializable {
 	@ManyToOne
 	CategorieModel categorie;
 	
+
 	@ManyToOne
 	SubCategorieModel subcategorie;
 	

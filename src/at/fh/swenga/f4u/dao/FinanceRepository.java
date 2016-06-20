@@ -33,11 +33,14 @@ public interface FinanceRepository extends JpaRepository<FinanceModel, Integer> 
 	
 	public List<FinanceModel> findByBookDate(Date bookDate);
 	
-	public List<FinanceModel> findByCategorieName(String companyName);
+	public List<FinanceModel> findByCategorieName(String categorieName);
 	
-	public List<FinanceModel> findByUserLastName (String lastName);
+	public List<FinanceModel> findByUser_Username(String username);
 	
 	// for deleting subcategoriesentries in finances when a subcategorie is removed;
 	public List<FinanceModel> findBySubcategorieId (Integer id);
+
+	public List<FinanceModel> findByCategorieId(Integer id);
+
 
 }
