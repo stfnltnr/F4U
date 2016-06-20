@@ -1,8 +1,11 @@
 package at.fh.swenga.f4u.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -44,7 +47,7 @@ public class UserController {
 
 	@RequestMapping(value = "/addUser", method=RequestMethod.POST)
 	@Transactional
-	public String addData(@Valid @ModelAttribute UserModel newUserModel, BindingResult bindingResult, 
+	public String addData(@RequestParam String password, @Valid @ModelAttribute UserModel newUserModel, BindingResult bindingResult, 
 			Model model){
 		
 		if (bindingResult.hasErrors()) {

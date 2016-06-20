@@ -215,7 +215,6 @@
 
 	<script>
 		$(function() {
-
 			$(".form_datetime").datetimepicker({
 				format : "dd.mm.yyyy",
 				autoclose : true,
@@ -223,7 +222,6 @@
 				pickerPosition : "bottom-left",
 				minView : 2
 			});
-
 		});
 	</script>
 	
