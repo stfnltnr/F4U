@@ -1,3 +1,4 @@
+
 package at.fh.swenga.f4u.model;
 
 import java.util.Set;

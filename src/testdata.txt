@@ -1,0 +1,247 @@
+
+-- User anlegen --
+INSERT INTO users(username,password,enabled)
+VALUES ('admin','$2a$10$2BZh7qw/FSh23ZCbojA.OOoo7vzg7KaqHUp34l8/i9.ktxzcr3vJm', TRUE);
+
+INSERT INTO user_roles (username, ROLE)
+VALUES ('admin', 'ROLE_USER');
+
+INSERT INTO users(username,password,enabled)
+VALUES ('user','$2a$10$2BZh7qw/FSh23ZCbojA.OOoo7vzg7KaqHUp34l8/i9.ktxzcr3vJm', TRUE);
+
+INSERT INTO user_roles (username, ROLE)
+VALUES ('user', 'ROLE_USER');
+
+INSERT INTO users(username,password,enabled)
+VALUES ('Vize','$2a$10$2BZh7qw/FSh23ZCbojA.OOoo7vzg7KaqHUp34l8/i9.ktxzcr3vJm', TRUE);
+
+INSERT INTO user_roles (username, ROLE)
+VALUES ('Vize', 'ROLE_USER');
+
+INSERT INTO users(username,password,enabled)
+VALUES ('Kanzler','$2a$10$2BZh7qw/FSh23ZCbojA.OOoo7vzg7KaqHUp34l8/i9.ktxzcr3vJm', TRUE);
+
+INSERT INTO user_roles (username, ROLE)
+VALUES ('Kanzler', 'ROLE_USER');
+
+INSERT INTO users(username,password,enabled)
+VALUES ('loete','$2a$10$2BZh7qw/FSh23ZCbojA.OOoo7vzg7KaqHUp34l8/i9.ktxzcr3vJm', TRUE);
+
+INSERT INTO user_roles (username, ROLE)
+VALUES ('loete', 'ROLE_USER');
+
+
+-- Category anlegen --
+INSERT INTO Categorie(id, version, color, name, description, icon)
+VALUES (1, 1, '#000000', 'Shopping','All payments regarding shopping', 'glyphicon glyphicon-shopping-cart');
+
+INSERT INTO Categorie(id, version, color, name, description, icon)
+VALUES (2, 1, '#111111', 'Home','Outgoings like rent, fixed costs, ...', 'glyphicon glyphicon-home');
+
+INSERT INTO Categorie(id, version, color, name, description, icon)
+VALUES (3, 1, '#222222', 'Restaurant','Everything regarding going out for meal', 'glyphicon glyphicon-cutlery');
+
+INSERT INTO Categorie(id, version, color, name, description, icon)
+VALUES (4, 1, '#333333', 'Nightlife','Alcohol and more ...', 'glyphicon glyphicon-glass');
+
+INSERT INTO Categorie(id, version, color, name, description, icon)
+VALUES (5, 1, '#444444', 'Bills','Miscellaneous bills', 'glyphicon glyphicon-euro');
+
+INSERT INTO Categorie(id, version, color, name, description, icon)
+VALUES (6, 1, '#555555', 'Travelling','All payments related to traveling, vacation, ...', 'glyphicon glyphicon-plane');
+
+INSERT INTO Categorie(id, version, color, name, description, icon)
+VALUES (7, 1, '#666666', 'Miscellaneous','All miscellaneous payments, ...', 'glyphicon glyphicon-question-sign');
+
+INSERT INTO Categorie(id, version, color, name, description, icon)
+VALUES (8, 1, '#777777', 'Income','All incomes', 'glyphicon glyphicon-plus');
+ 
+ 
+-- Subcategory INSERT for Vize --
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (1, 1, '#5cb85c', 1, 1, 'Vize', 'Spar', 'All payments at Spar', 'glyphicon glyphicon-shopping-cart');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (2, 1, '#428bca', 1, 1, 'Vize', 'Hofer', 'All payments at Hofer', 'glyphicon glyphicon-shopping-cart');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (3, 1, '#d9534f', 1, 1, 'Vize', 'Penny Markt', 'All payments at Penny', 'glyphicon glyphicon-shopping-cart');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (4, 1, '#e9534e', 2, 2, 'Vize', 'Rent', 'Rent or flat', 'glyphicon glyphicon-home');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (5, 1, '#999999', 5, 5, 'Vize', 'Phone', 'Mobile bill', 'glyphicon glyphicon-phone');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (6, 1, '#363636', 5, 5, 'Vize', 'Internet', 'Internet bill', 'glyphicon glyphicon-globe');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (7, 1, '#171717', 7, 7, 'Vize', 'Car', 'Fuel, Maintainance, Vignette, Insurence', 'glyphicon glyphicon-road');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (8, 1, '#ff0000', 2, 2, 'Vize', 'Heating', 'Heating costs for the flat', 'glyphicon glyphicon-fire');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (9, 1, '#00ff00', 1, 1, 'Vize', 'Food', 'All Food i buy', 'glyphicon glyphicon-apple');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (10, 1, '##81BEF7', 2, 2, 'Vize', 'Electricity', 'Electricity costs for the flat', 'glyphicon glyphicon-flash');
+
+
+-- Subcategory INSERT for Kanzler --
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (11, 1, '#5cb85c', 1, 1, 'Kanzler', 'Spar', 'All payments at Spar', 'glyphicon glyphicon-shopping-cart');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (12, 1, '#428bca', 1, 1, 'Kanzler', 'Hofer', 'All payments at Hofer', 'glyphicon glyphicon-shopping-cart');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (13, 1, '#e9534e', 2, 2, 'Kanzler', 'Rent', 'Rent or flat', 'glyphicon glyphicon-home');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (14, 1, '#999999', 5, 5, 'Kanzler', 'Phone', 'Mobile bill', 'glyphicon glyphicon-phone');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (15, 1, '#363636', 5, 5, 'Kanzler', 'Internet', 'Internet bill', 'glyphicon glyphicon-globe');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (16, 1, '#171717', 7, 7, 'Kanzler', 'Car', 'Fuel, Maintainance, Vignette, Insurence', 'glyphicon glyphicon-road');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (17, 1, '#ff0000', 2, 2, 'Kanzler', 'Heating', 'Heating costs for the flat', 'glyphicon glyphicon-fire');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (18, 1, '##81BEF7', 2, 2, 'Kanzler', 'Electricity', 'Electricity costs for the flat', 'glyphicon glyphicon-flash');
+
+
+-- Subcategory INSERT for loete --
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (19, 1, '#5cb85c', 1, 1, 'loete', 'Spar', 'All payments at Spar', 'glyphicon glyphicon-shopping-cart');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (20, 1, '#428bca', 1, 1, 'loete', 'Hofer', 'All payments at Hofer', 'glyphicon glyphicon-shopping-cart');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (21, 1, '#e9534e', 2, 2, 'loete', 'Rent', 'Rent or flat', 'glyphicon glyphicon-home');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (22, 1, '#999999', 5, 5, 'loete', 'Phone', 'Mobile bill', 'glyphicon glyphicon-phone');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (23, 1, '#363636', 5, 5, 'loete', 'Internet', 'Internet bill', 'glyphicon glyphicon-globe');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (24, 1, '#ff0000', 2, 2, 'loete', 'Heating', 'Heating costs for the flat', 'glyphicon glyphicon-fire');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (25, 1, '##81BEF7', 2, 2, 'loete', 'Electricity', 'Electricity costs for the flat', 'glyphicon glyphicon-flash');
+
+
+-- Subcategory INSERT for user --
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (26, 1, '#e9534e', 2, 2, 'user', 'Rent', 'Rent or flat', 'glyphicon glyphicon-home');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (27, 1, '#999999', 5, 5, 'user', 'Phone', 'Mobile bill', 'glyphicon glyphicon-phone');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (28, 1, '#363636', 5, 5, 'user', 'Internet', 'Internet bill', 'glyphicon glyphicon-globe');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (29, 1, '#ff0000', 2, 2, 'user', 'Heating', 'Heating costs for the flat', 'glyphicon glyphicon-fire');
+
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (30, 1, '##81BEF7', 2, 2, 'user', 'Electricity', 'Electricity costs for the flat', 'glyphicon glyphicon-flash');
+
+-- Subcategory INSERT for admin --
+INSERT INTO SubCategorie(id, version, color, maincat, categorie_id, user_username, name, description, icon)
+VALUES (31, 1, '#e9534e', 7, 7, 'admin', 'Beer', 'All Beer', 'glyphicon glyphicon-filter');
+
+
+
+-- Finance INSERT for Vize --
+INSERT INTO Finance(id, version, bookDate, categorie_id, subcategorie_id, payment, value, user_username, notes)
+VALUES (1, 1, '2016.06.20', 1, 1, FALSE, 38.90, 'Vize', 'an haufn champignons, rote zwiebel, klopapier');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, subcategorie_id, payment, value, user_username, notes)
+VALUES (2, 1, '2016.06.21', 1, 2, FALSE, 7.50, 'Vize', 'österreichische Tomaten, Basmati Reis und Tiefkühlpizza');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, subcategorie_id, payment, value, user_username, notes)
+VALUES (3, 1, '2016.06.21', 1, 1, FALSE, 48.00, 'Vize', '2 Paletten Puntigamer für die Mühe heute');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, payment, value, user_username, notes)
+VALUES (4, 1, '2016.06.24', 3, FALSE, 25.00, 'Vize', 'gscheit Essen und a paar Bier zum Geburtstag');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, payment, value, user_username, notes)
+VALUES (5, 1, '2016.06.24', 4, FALSE, 260.00, 'Vize', 'PARTY, PARTY, 2 LVA abgeschlossen, PARTY, PARTY');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, payment, value, user_username, notes)
+VALUES (6, 1, '2016.06.24', 7, TRUE, 24.00, 'Vize', '1 Kiste Bier gewonnen');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, payment, value, user_username, notes)
+VALUES (7, 1, '2016.06.24', 7, TRUE, 50.00, 'Vize', 'beim USI Fest Gewinnspiel gewonnen');
+
+
+-- Finance INSERT for Kanzler --
+INSERT INTO Finance(id, version, bookDate, categorie_id, subcategorie_id, payment, value, user_username, notes)
+VALUES (8, 1, '2016.06.20', 1, 11, FALSE, 6.90, 'Kanzler', 'speck');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, subcategorie_id, payment, value, user_username, notes)
+VALUES (9, 1, '2016.06.21', 1, 12, FALSE, 2.50, 'Kanzler', 'a weckerl');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, subcategorie_id, payment, value, user_username, notes)
+VALUES (10, 1, '2016.06.21', 1, 11, FALSE, 78.00, 'Kanzler', '3 mal an Fussl');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, payment, value, user_username, notes)
+VALUES (11, 1, '2016.06.24', 3, FALSE, 25.00, 'Kanzler', 'gscheit Essen und a paar Bier zum Geburtstag mitn Vize');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, payment, value, user_username, notes)
+VALUES (12, 1, '2016.06.24', 4, FALSE, 260.00, 'Kanzler', 'PARTY, PARTY, 2 LVA abgeschlossen, PARTY, PARTY');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, payment, value, user_username, notes)
+VALUES (13, 1, '2016.06.24', 7, FALSE, 24.00, 'Kanzler', '1 Kiste Bier verloren an Knaller');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, payment, value, user_username, notes)
+VALUES (14, 1, '2016.06.24', 7, TRUE, 50.00, 'Kanzler', 'beim USI Fest Gewinnspiel gewonnen');
+
+-- Finance INSERT for loete --
+INSERT INTO Finance(id, version, bookDate, categorie_id, subcategorie_id, payment, value, user_username, notes)
+VALUES (15, 1, '2016.06.20', 1, 19, FALSE, 6.90, 'loete', 'gulasch');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, subcategorie_id, payment, value, user_username, notes)
+VALUES (16, 1, '2016.06.21', 1, 20, FALSE, 2.50, 'loete', 'a weckerl fürs gulasch');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, subcategorie_id, payment, value, user_username, notes)
+VALUES (17, 1, '2016.06.21', 1, 19, FALSE, 78.00, 'loete', 'an Monatsvorrat an Gulasch eingekauft');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, payment, value, user_username, notes)
+VALUES (18, 1, '2016.06.24', 3, FALSE, 25.00, 'loete', 'gscheit Essen und a paar Bier zum Geburtstag mitn Vize');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, payment, value, user_username, notes)
+VALUES (19, 1, '2016.06.24', 4, FALSE, 260.00, 'loete', 'PARTY, PARTY, 2 LVA abgeschlossen, PARTY, PARTY');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, payment, value, user_username, notes)
+VALUES (20, 1, '2016.06.24', 7, FALSE, 24.00, 'loete', '1 Kiste Bier/Redbull bei Kicktipp verloren an Niti94 obwohl er auch Bonus Punkte gewonnen hat ');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, payment, value, user_username, notes)
+VALUES (21, 1, '2016.06.24', 7, TRUE, 3000.00, 'loete', 'beim aneren Kicktipp gewonnen');
+
+
+-- Finance INSERT for user --
+INSERT INTO Finance(id, version, bookDate, categorie_id, subcategorie_id, payment, value, user_username, notes)
+VALUES (22, 1, '2016.06.20', 5, 28, FALSE, 16.90, 'user', 'Internet rechnung');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, payment, value, user_username, notes)
+VALUES (23, 1, '2016.06.24', 7, TRUE, 777.00, 'user', 'beim Black Jack gewonnen im Casino');
+
+-- Finance INSERT for admin --
+INSERT INTO Finance(id, version, bookDate, categorie_id, subcategorie_id, payment, value, user_username, notes)
+VALUES (24, 1, '2016.06.20', 7, 31, FALSE, 450.00, 'admin', 'Monatsvorrat an BIER');
+
+INSERT INTO Finance(id, version, bookDate, categorie_id, payment, value, user_username, notes)
+VALUES (25, 1, '2016.06.24', 7, TRUE, 200.00, 'admin', 'laut Zipfer Jahresvorrat an Bier gewonnen');
+
+
+ 
+
