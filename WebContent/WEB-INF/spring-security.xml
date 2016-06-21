@@ -11,7 +11,6 @@
 		<intercept-url pattern="/login" access="permitAll" />
 		<intercept-url pattern="/**" access="hasRole('USER')" />
 		<intercept-url pattern="/delete" access="permitAll" />
-		<intercept-url pattern="/uploadPic" access="permitAll" />
 		<form-login login-page="/login" />
 		<logout logout-success-url="/" logout-url="/logout" />
 	</http>
