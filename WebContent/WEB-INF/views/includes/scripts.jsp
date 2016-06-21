@@ -43,8 +43,7 @@ $(function () {
 
 <!-- JS for Datetime picker -->
 
-<script type="text/javascript"
-	src="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
 
 <script>
 	$(function() {

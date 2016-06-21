@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.Date" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -220,11 +221,12 @@
 							<!--  Filter by SubCategorie -->
 							<hr>
 							<!--  Search Date -->
+							<jsp:useBean id="now" class="java.util.Date" />
 							<form class="form-horizontal" method="post" action="findDate">
 								<div class="form-group">
 									<label class="control-label col-md-2" for="searchValue">Search Date:</label>
 									<div class="col-md-2">
-										<input id="searchDate" class="form-control form_datetime" type="text" name="searchDate">
+										<input id="searchDate" class="form-control form_datetime" value="<fmt:formatDate pattern="dd.MM.yyyy" value="${now}" />" type="text" name="searchDate">
 									</div>
 									<div class="col-md-6">	
 										<button class="btn btn-default" type="submit" >Search</button>
@@ -232,7 +234,24 @@
 									</div>
 								</div>
 							</form>
-							<!-- Search Date -->     
+							<!-- Search Date -->
+							<!-- Search Date Between -->
+							<form class="form-horizontal" method="post" action="findDateBeetween">
+								<div class="form-group">
+									<label class="control-label col-md-2" for="searchValue">Search Date Between:</label>
+									<div class="col-md-2">
+										<input id="searchDate" class="form-control form_datetime" value="<fmt:formatDate pattern="dd.MM.yyyy" value="${now}" />" type="text" name="searchDate1">
+									</div>
+									<div class="col-md-2">
+										<input id="searchDate" class="form-control form_datetime" value="<fmt:formatDate pattern="dd.MM.yyyy" value="${now}" />" type="text" name="searchDate2">
+									</div>
+									<div class="col-md-6">
+										<button class="btn btn-default" type="submit">Search</button>
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+									</div>
+								</div>
+							</form>
+							<!-- Search Date Between -->  
 				        </div>
 				    	</div>
 		    			<!-- End Collapse -->

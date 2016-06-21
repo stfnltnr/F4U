@@ -206,6 +206,17 @@ public class FinanceController {
 		model.addAttribute("finances", finances);
 		return "index";
 	}
+	
+	@RequestMapping(value = { "/findDateBeetween" })
+	public String findDate(Model model, @RequestParam Date searchDate1, @RequestParam Date searchDate2) {
+
+		List<FinanceModel> finances = null;
+		addCats(model);
+		currentUser(model);
+		finances = financeRepository.findByUser_UsernameAndDateBetween(getCurrrentUserModel(),searchDate1, searchDate2);
+		model.addAttribute("finances", finances);
+		return "index";
+	}
 
 	@RequestMapping(value = { "/findById" })
 	public String findById(@RequestParam("id") FinanceModel e, Model model) {

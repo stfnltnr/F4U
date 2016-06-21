@@ -73,6 +73,6 @@
         </div>
     </div>
 	<!--  End of container -->
-	<jsp:include page="includes/bootstrapJs.jsp" />
+<jsp:include page="includes/bootstrapJs.jsp" />
 </body>
 </html>
