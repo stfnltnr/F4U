@@ -5,22 +5,74 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<%@include file="includes/bootstrapMeta.inc"%>
-<title>finance4you</title>
-<%@include file="includes/bootstrapCss.css"%>
-<%@include file="includes/treeView.css"%>
-
+<jsp:include page="includes/head.jsp"></jsp:include>
 </head>
 <body>
-	<div class="container">
-	<!-- navigation -->
-	<jsp:include page="includes/nav.jsp"></jsp:include>
-	<!-- navigation -->
+<div id="wrapper">
+
+	<!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <!-- navbar-header -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="list">F4U - finance for you</a>
+        </div>
+        <!-- navbar-header -->
+		<!-- navbar-top-links -->
+        <ul class="nav navbar-top-links navbar-right">
+        	<li>
+            	<a href="editUser"><i class="fa fa-user fa-fw"></i> ${user.username}</a>
+            </li>
+            <li>
+            	<c:url value="/logout" var="logoutUrl" />
+				<form action="${logoutUrl }" method="post">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					<button class="btn btn-xs btn-danger" type="submit" value="Logout">
+					<span class="glyphicon glyphicon-log-out"></span> Logout
+					</button>
+				</form>
+            </li>
+        </ul>
+        <!-- navbar-top-links -->
+		<!-- navbar-static-sidebar -->
+        <div class="navbar-default sidebar" role="navigation">
+        	<!-- sidebar-collapse -->
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li>
+                        <a href="list"><i class="fa fa-eye fa-fw"></i> Finance Overview</a>
+                    </li>
+                    <li>
+                        <a href="listCat"><i class="fa fa-table fa-fw"></i> Manage Categories</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-edit fa-fw"></i> Reports</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- sidebar-collapse -->
+        </div>
+        <!-- navbar-static-side -->
+    </nav>
+    <!-- Navigation -->
+    <div id="page-wrapper">
+    	<div class="row">
+                <div class="col-lg-10">
+                    <h1 class="page-header">Manage Categories</h1>
+                    <a href="fillCat"><button type="button" class="btn btn-success">Fill Cat</button></a>
+                </div>
+                <div class="col-lg-10">
+                	<jsp:include page="includes/errors.jsp"></jsp:include>
+                </div>
+            </div>
 		<!--  list all categories ----------------------------------------------------------- -->
 		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
-				<h2>Manage Categories</h2>
-				<a href="fillCat"><button type="button" class="btn btn-success">Fill Cat</button></a>
+			<div class="col-lg-10">
 				<c:forEach items="${categories}" var="cat">
 				<c:set var="i" value="${cat.id}" />	
 				<table class="table table-striped">
@@ -59,8 +111,12 @@
 				<div class="col-md-10"></div>	
 			</div>
 		<!--  list all categories ----------------------------------------------------------- -->
+		</div>
 	</div>
-	<!--  end of container -->
-	<%@include file="includes/bootstrapJs.js"%>
+	<!--  END page-wrapper -->
+</div>
+<!-- END wrapper -->
+<!-- java scripts -->
+<jsp:include page="includes/scripts.jsp"></jsp:include>
 </body>
 </html>

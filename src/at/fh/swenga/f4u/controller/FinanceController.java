@@ -8,6 +8,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,27 +54,34 @@ public class FinanceController {
 	SubCategorieRepository subCategorieRepository;
 	
 	//get current User
-		public void currentUser(Model model) { 	
-			model.addAttribute("user", getCurrrentUserModel());
-		}
-		
-		public String getCurrentUserName(){
-			Object curUser = SecurityContextHolder.getContext()
-			.getAuthentication().getPrincipal();
-		String userName = ((UserDetails) curUser).getUsername();
-		return userName;
-		}
-		
-		public UserModel getCurrrentUserModel(){
-		UserModel user = userRepository.findByUsername(getCurrentUserName());
-		return user;
-		}
+	public void currentUser(Model model) { 	
+		model.addAttribute("user", getCurrrentUserModel());
+	}
+	
+	public String getCurrentUserName(){
+		Object curUser = SecurityContextHolder.getContext()
+		.getAuthentication().getPrincipal();
+	String userName = ((UserDetails) curUser).getUsername();
+	return userName;
+	}
+	
+	public UserModel getCurrrentUserModel(){
+	UserModel user = userRepository.findByUsername(getCurrentUserName());
+	return user;
+	}
 	
 	public void addCats(Model model) {
 		List<CategorieModel> cats = categorieRepository.findAll();
 		List<SubCategorieModel> subcats = subCategorieRepository.findByUser_username(getCurrentUserName());
 		model.addAttribute("cats", cats);
 		model.addAttribute("subcats", subcats);	
+	}
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+		dateFormat.setLenient(false);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
 	}
 	
 	// LOGIN
@@ -249,7 +260,6 @@ public class FinanceController {
 			financeRepository.save(fm);
 			model.addAttribute("message", "New finance " + newFinanceModel.getNotes() + " added.");
 		}
-		
 		return "forward:list";
 	}
 	
@@ -270,8 +280,7 @@ public class FinanceController {
 	
 	@RequestMapping(value = "/changeFinance", method = RequestMethod.POST)
 	@Transactional
-	public String editFinance(@Valid @ModelAttribute FinanceModel editFinanceModel, BindingResult bindingResult,
-			Model model) {
+	public String editFinance(@Valid @ModelAttribute FinanceModel editFinanceModel, BindingResult bindingResult, Model model) {
  
 		if (bindingResult.hasErrors()) {
 			String errorMessage = "";
@@ -298,7 +307,6 @@ public class FinanceController {
 			financeRepository.save(finance);
 			model.addAttribute("message", "Changed finance " + editFinanceModel.getNotes());
 		}
- 
 		return "forward:list";
 	}
 			
@@ -307,10 +315,10 @@ public class FinanceController {
 		financeRepository.delete(id);
 		addCats(model);
 		currentUser(model);
-
 		return "forward:list";
 	}
 
+	@ExceptionHandler
 	public String handleAllException(Exception ex) {
 		return "showError";
 	}

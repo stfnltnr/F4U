@@ -21,8 +21,6 @@
 </head>
 <body>
 	<div class="container" role="main">
-		<!-- Navigation -->
-		<jsp:include page="includes/nav.jsp"></jsp:include>
 
 		<!--  add or edit?  ----------------------------------------------------------- -->
 		<c:choose>
@@ -33,7 +31,7 @@
 				<c:set var="shown">text</c:set>
 			</c:when>
 			<c:otherwise>
-				<c:set var="legend">New User</c:set>
+				<c:set var="legend">Create new account</c:set>
 				<c:set var="formAction">addUser</c:set>
 				<c:set var="readonly">readonly</c:set>
 				<c:set var="shown">hidden</c:set>
@@ -42,6 +40,28 @@
 		<!--  add or edit?  ----------------------------------------------------------- -->
 
 		<div class="row">
+		<!--  Messages -->
+		<center>
+		<!--  Error message ----------------------------------------------------------- -->
+		<c:if test="${not empty errorMessage}">
+			<div class="alert alert-danger" role="alert">${errorMessage}</div>
+		</c:if>
+		<!--  Error message ----------------------------------------------------------- -->
+		
+		<!--  Warning message ----------------------------------------------------------- -->
+		<c:if test="${not empty warningMessage}">
+			<div class="alert alert-warning" role="warning">
+				${warningMessage}</div>
+		</c:if>
+		<!--  Warning message ----------------------------------------------------------- -->
+		
+		<!--   message ----------------------------------------------------------- -->
+		<c:if test="${not empty message}">
+			<div class="alert alert-success" role="warning">${message}</div>
+		</c:if>
+		<!--   message ----------------------------------------------------------- -->
+		</center>
+		<!-- Messages -->
 			<div class="col-md-8 col-md-offset-2">
 				<form id="login" class="form-horizontal" method="post" action="${formAction}" onsubmit="return checkForm(this);">
 						<legend>${legend}</legend>
