@@ -9,7 +9,6 @@
 <title>finance4you</title>
 <%-- <jsp:include page="includes/bootstrapCss.jsp" /> --%>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="css/sb-admin-2.css" type="text/css">
 </head>
 <body>
 	<div class="container">

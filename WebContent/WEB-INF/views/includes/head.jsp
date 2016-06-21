@@ -9,7 +9,7 @@
 <title>F4U - finance for you</title>
 
 <!-- Bootstrap Core CSS -->
-<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
 <!-- MetisMenu CSS -->
 <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
