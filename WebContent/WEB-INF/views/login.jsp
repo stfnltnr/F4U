@@ -7,7 +7,6 @@
 <head>
 <jsp:include page="includes/bootstrapMeta.jsp" />
 <title>finance4you</title>
-<%-- <jsp:include page="includes/bootstrapCss.jsp" /> --%>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body>
