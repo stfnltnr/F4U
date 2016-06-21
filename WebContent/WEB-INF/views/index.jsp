@@ -10,6 +10,7 @@
 <jsp:include page="includes/head.jsp"></jsp:include>
 </head>
 <body>
+
 	<!-- Wrapper -->
     <div id="wrapper">
     
@@ -238,6 +239,30 @@
 		    		</div> 
 		  		</div>
 		  	</div>
+		  	
+		  	<!--  reports ----------------------------------------------------------- -->
+		 <form action="reportAll" method="post">
+	  	<center>
+	  		<input type="submit" name="excel" value="Report All" class="btn btn-primary">
+	  				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		</form>
+	  	<form class="form-horizontal" method="post" action="reportDate">
+					<div class="form-group">
+						<div class="col-md-2">
+							<input id="searchDate" class="form-control form_datetime" type="text" name="searchDate1">
+						</div>
+						<div class="col-md-2">
+							<input id="searchDate" class="form-control form_datetime" type="text" name="searchDate2">
+						</div>
+						<div class="col-md-6">	
+							<input type="submit" name="excel" value="Report between" class="btn btn-primary">
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						</div>
+					</div>
+				</form>
+	  	</center>
+	  	<!--  reports ----------------------------------------------------------- -->
+	  	
 		  	<!-- End Search & Filter Accordion -->
 		  	<!--  list all finances ----------------------------------------------------------- -->
 			<div class="row">
