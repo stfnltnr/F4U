@@ -10,18 +10,61 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<%@include file="includes/bootstrapMeta.inc"%>
-<title>finance4you</title>
-<%@include file="includes/bootstrapCss.css"%>
-<%@include file="includes/treeView.css"%>
-<link href="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+<jsp:include page="includes/head.jsp"></jsp:include>
 </head>
 <body>
-	<div class="container" role="main">
+<div id="wrapper">
 	<!-- Navigation -->
-	<jsp:include page="includes/nav.jsp"></jsp:include>
-
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <!-- navbar-header -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="list">F4U - finance for you</a>
+        </div>
+        <!-- navbar-header -->
+		<!-- navbar-top-links -->
+        <ul class="nav navbar-top-links navbar-right">
+        	<li>
+            	<a href="editUser"><i class="fa fa-user fa-fw"></i> ${user.username}</a>
+            </li>
+            <li>
+            	<c:url value="/logout" var="logoutUrl" />
+				<form action="${logoutUrl }" method="post">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					<button class="btn btn-xs btn-danger" type="submit" value="Logout">
+					<span class="glyphicon glyphicon-log-out"></span> Logout
+					</button>
+				</form>
+            </li>
+        </ul>
+        <!-- navbar-top-links -->
+		<!-- navbar-static-sidebar -->
+        <div class="navbar-default sidebar" role="navigation">
+        	<!-- sidebar-collapse -->
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li>
+                        <a href="list"><i class="fa fa-eye fa-fw"></i> Finance Overview</a>
+                    </li>
+                    <li>
+                        <a href="listCat"><i class="fa fa-table fa-fw"></i> Manage Categories</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-edit fa-fw"></i> Reports</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- sidebar-collapse -->
+        </div>
+        <!-- navbar-static-side -->
+    </nav>
+    <!-- Navigation -->
+	<div id="page-wrapper" style="min-height: 890px;" role="main">
 		<!--  add or edit?  ----------------------------------------------------------- -->
 		<c:choose>
 			<c:when test="${not empty finance}">
@@ -37,163 +80,132 @@
 				<c:set var="shown">hidden</c:set>
 			</c:otherwise>
 		</c:choose>
-		<!--  add or edit? -->		
+		<!--  add or edit? -->
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
-				<form class="form-horizontal" method="post" action="${formAction}">
-					<fieldset>
-						<legend>${legend}</legend>
-						<!--  id  -->
-						<c:if test="${not empty finance}">
-								<input class="form-control" id="inputID" type="${shown }" name="id"
-									${readonly} value="<c:out value="${finance.id}"/>"> 
-						</c:if>
-						<!--  payment  -->
-						<div class="form-group">
-							<label for="inputPayment" class="col-md-2 control-label">Payment</label>
-							<div class="col-md-10">
-								<select name="payment" size="2" value="<c:out value="${finance.payment}"/>">
-								<c:if test="${finance.payment == true}">
-									<option value="true" selected>Incoming</option>
-									<option value="false">Outgoing</option>
-								</c:if>
-								<c:if test="${finance.payment == false}">
-									<option value="true">Incoming</option>
-									<option value="false" selected>Outgoing</option>
-								</c:if>
-								<c:if test="${empty finance.payment}">
-									<option value="true" selected>Incoming</option>
-									<option value="false">Outgoing</option>
-								</c:if>
-								</select>
-							</div>
-						</div>
-						
-						<!--  bookDate  -->
-						<div class="form-group">
-							<label for="inputDate" class="col-md-2 control-label">Date</label>
-							<div class="col-md-10">
-								<input class="form_datetime" id="inputDate" placeholder="Date"
-									type="text" readonly name="bookDate"
-									value="<fmt:formatDate value="${finance.bookDate}" pattern="dd.MM.yyyy"/>">
-							</div>
-							</div>
-
-						<!--  value  -->
-						<div class="form-group">
-							<label for="inputValue" class="col-md-2 control-label">Value</label>
-							<div class="col-md-10">
-								<input class="form-control" id="inputValue" type="text"
-									name="value" value="<c:out value="${finance.value}"/>">
-							</div>
-						</div>
-
-						<!--  notes  -->
-						<div class="form-group">
-							<label for="inputNotes" class="col-md-2 control-label">Notes</label>
-							<div class="col-md-10">
-								<input class="form-control" id="inputNotes" type="text"
-									name="notes" value="<c:out value="${finance.notes}"/>">
-							</div>
-						</div>
-						<!--  category  -->			
-						<div class="form-group">
-							<label for="inputCategorie" class="col-md-2 control-label">Categorie</label>
-							<div class="col-md-10">
-								<select name="categorie" class="selectpicker show-tick" value="<c:out value="${finance.categorie}"/>">
-									<c:set var="maincat" value="${finance.categorie.id }"/>
-									<c:forEach items="${cats}" var="cat">
-									<c:choose>
-										<c:when test="${cat.id == maincat}">
-											<option data-icon="${cat.icon }" selected="selected" value="${cat.id}">${cat.name}</option>
-										</c:when>
-										<c:otherwise>
-											<option data-icon="${cat.icon }" value="${cat.id}">${cat.name}</option>
-										</c:otherwise>
-									</c:choose>
-									</c:forEach>
-								</select>
-							</div>
-						</div> 						
-						<!--  subcategory  -->			
-						<div class="form-group">
-							<label for="inputCategorie" class="col-md-2 control-label">SubCategory</label>
-							<div class="col-md-10">
-								<select name="subcategorie" class="selectpicker show-tick" title="Choose SubCategory ..."value="<c:out value="${finance.subcategorie}"/>">
-									<c:set var="i" value="${1}"/>
-									<c:set var="sc" value="${finance.subcategorie.id }"/>
-									<option value="">None</option>
-									<c:forEach items="${cats}" var="cat" >
-										<optgroup label="${cat.name}">
-										<c:forEach items="${subcats}" var="subcat">
-										<c:if test="${subcat.maincat == i }">
-										<c:choose>
-											<c:when test="${subcat.id == sc}">
-												<option data-icon="${subcat.icon }" selected="selected" value="${subcat.id}">${subcat.name}</option>
-											</c:when>
-											<c:otherwise>
-												<option data-icon="${subcat.icon }" value="${subcat.id}">${subcat.name}</option>
-											</c:otherwise>
-										</c:choose>
-										</c:if>
-										</c:forEach>
-										</optgroup>
-									<c:set var="i" value="${i+1}"/>
-									</c:forEach>
-								</select>
-							</div>
-						</div>
-						<!--  buttons  -->
-						<div class="form-group">
-							<div class="col-md-10 col-md-offset-2">
-								<button type="submit" class="btn btn-primary">Submit</button>
-								<a href="list">
-									<button type="button" class="btn btn-default">Cancel</button>
-								</a>
-							</div>
-						</div>
-
-					</fieldset>
-
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-
-				</form>
+			<div class="col-lg-6">
+	    		<h1 class="page-header">${legend}</h1>
 			</div>
 		</div>
-
+		<div class="row">
+			<div class="col-lg-6">
+				<form class="form-horizontal" method="post" action="${formAction}">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						<fieldset>
+							<!--  id  -->
+							<c:if test="${not empty finance}">
+									<input class="form-control" id="inputID" type="${shown }" name="id" ${readonly} value="<c:out value="${finance.id}"/>"> 
+							</c:if>
+							<!--  payment  -->
+							<div class="form-group">
+								<label for="inputPayment" class="col-md-2 control-label">Payment</label>
+								<div class="col-md-10">
+									<select name="payment" class="selectpicker" data-width="fit" size="2" value="<c:out value="${finance.payment}"/>">
+									<c:if test="${finance.payment == true}">
+										<option value="true" selected>Incoming</option>
+										<option value="false">Outgoing</option>
+									</c:if>
+									<c:if test="${finance.payment == false}">
+										<option value="true">Incoming</option>
+										<option value="false" selected>Outgoing</option>
+									</c:if>
+									<c:if test="${empty finance.payment}">
+										<option value="true" >Incoming</option>
+										<option value="false" selected>Outgoing</option>
+									</c:if>
+									</select>
+								</div>
+							</div>
+							
+							<!--  bookDate  -->
+							<div class="form-group">
+								<label for="inputDate" class="col-md-2 control-label">Date</label>
+								<div class="col-md-2">
+									<input class="form-control form_datetime" id="inputDate" placeholder="Date"	type="text" name="bookDate"	value="<fmt:formatDate value="${finance.bookDate}" pattern="dd.MM.yyyy"/>">
+								</div>
+								</div>
+		
+							<!--  value  -->
+							<div class="form-group">
+								<label for="inputValue" class="col-md-2 control-label">Value</label>
+								<div class="col-md-10">
+									<input class="form-control" id="inputValue" type="text"
+										name="value" value="<c:out value="${finance.value}"/>">
+								</div>
+							</div>
+		
+							<!--  notes  -->
+							<div class="form-group">
+								<label for="inputNotes" class="col-md-2 control-label">Notes</label>
+								<div class="col-md-10">
+									<input class="form-control" id="inputNotes" type="text"
+										name="notes" value="<c:out value="${finance.notes}"/>">
+								</div>
+							</div>
+							<!--  category  -->			
+							<div class="form-group">
+								<label for="inputCategorie" class="col-md-2 control-label">Categorie</label>
+								<div class="col-md-10">
+									<select name="categorie" class="selectpicker show-tick" value="<c:out value="${finance.categorie}"/>">
+										<c:set var="maincat" value="${finance.categorie.id }"/>
+										<c:forEach items="${cats}" var="cat">
+										<c:choose>
+											<c:when test="${cat.id == maincat}">
+												<option data-icon="${cat.icon }" selected="selected" value="${cat.id}">${cat.name}</option>
+											</c:when>
+											<c:otherwise>
+												<option data-icon="${cat.icon }" value="${cat.id}">${cat.name}</option>
+											</c:otherwise>
+										</c:choose>
+										</c:forEach>
+									</select>
+								</div>
+							</div> 						
+							<!--  subcategory  -->			
+							<div class="form-group">
+								<label for="inputCategorie" class="col-md-2 control-label">SubCategory</label>
+								<div class="col-md-10">
+									<select name="subcategorie" class="selectpicker show-tick" title="Choose SubCategory ..."value="<c:out value="${finance.subcategorie}"/>">
+										<c:set var="i" value="${1}"/>
+										<c:set var="sc" value="${finance.subcategorie.id }"/>
+										<option value="">None</option>
+										<c:forEach items="${cats}" var="cat" >
+											<optgroup label="${cat.name}">
+											<c:forEach items="${subcats}" var="subcat">
+											<c:if test="${subcat.maincat == i }">
+											<c:choose>
+												<c:when test="${subcat.id == sc}">
+													<option data-icon="${subcat.icon }" selected="selected" value="${subcat.id}">${subcat.name}</option>
+												</c:when>
+												<c:otherwise>
+													<option data-icon="${subcat.icon }" value="${subcat.id}">${subcat.name}</option>
+												</c:otherwise>
+											</c:choose>
+											</c:if>
+											</c:forEach>
+											</optgroup>
+										<c:set var="i" value="${i+1}"/>
+										</c:forEach>
+									</select>
+								</div>
+							</div>
+							<!--  buttons  -->
+							<div class="form-group">
+								<div class="col-md-10 col-md-offset-2">
+									<button type="submit" class="btn btn-primary">Submit</button>
+									<a href="list">
+										<button type="button" class="btn btn-default">Cancel</button>
+									</a>
+								</div>
+							</div>
+		
+						</fieldset>
+					</form>
+				</div>
+		</div>
 	</div>
-	<!--  End of container -->
-
-
-	<!-- JS for Bootstrap -->
-	<%@include file="includes/bootstrapJs.js"%>
-	<!-- JS for Bootstrap -->
+</div>
 	
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
-
-	<!-- (Optional) Latest compiled and minified JavaScript translation files -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js"></script>
-
-
-	<!-- JS for Datetime picker -->
-
-	<script type="text/javascript"
-		src="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-
-	<script>
-		$(function() {
-
-			$(".form_datetime").datetimepicker({
-				format : "dd.mm.yyyy",
-				autoclose : true,
-				todayBtn : true,
-				pickerPosition : "bottom-left",
-				minView : 2
-			});
-
-		});
-	</script>
-
+<!-- java scripts -->
+<jsp:include page="includes/scripts.jsp"></jsp:include>
 </body>
 </html>
