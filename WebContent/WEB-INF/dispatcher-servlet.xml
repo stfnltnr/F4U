@@ -60,7 +60,14 @@
 		class="org.springframework.data.web.PageableHandlerMethodArgumentResolver">
 		<constructor-arg ref="sortResolver" />
 	</bean>
-
+               
+    <bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- one of the several properties available; the maximum file size in 
+			bytes -->
+		<!-- <property name="maxUploadSizePerFile" value="15242880" /> -->
+	</bean>
+	        
 	<mvc:annotation-driven conversion-service="conversionService">
 		<mvc:argument-resolvers>
 			<ref bean="sortResolver" />

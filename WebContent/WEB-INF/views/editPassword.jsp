@@ -35,7 +35,7 @@
 			<c:otherwise>
 				<c:set var="legend">New User</c:set>
 				<c:set var="formAction">addUser</c:set>
-				<c:set var="readonly">readonly</c:set>
+				<c:set var="readonly"></c:set>
 				<c:set var="shown">text</c:set>
 			</c:otherwise>
 		</c:choose>
@@ -44,7 +44,7 @@
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<form id="login" class="form-horizontal" method="post"
-					action="${formAction}">
+					action="changePWD" onsubmit="return checkForm(this);">
 					<legend>${legend}</legend>
 					<fieldset>
 						<! ----------------  username ---------------- -->
@@ -53,60 +53,44 @@
 							<div class="col-md-10">
 								<input class="form-control" id="inputUsername" type="text"
 									placeholder="username" name="username"
-									value="<c:out value="${user.username}"/>" autofocus ${readonly}>
+									value="<c:out value="${user.username}"/>" ${readonly} autofocus>
 							</div>
 						</div>
-						
+
 						<! ----------------  E-Mail ---------------- -->
+						<c:if test="${empty user}">
 						<div class="form-group">
 							<label for="inputEmail" class="col-md-2 control-label">E-Mail</label>
 							<div class="col-md-10">
 								<input class="form-control" id="inputEmail" type="text"
 									placeholder="eMail" name="eMail"
-									value="<c:out value="${user.eMail}"/>" autofocus >
+									value="<c:out value="${user.eMail}"/>" autofocus}>
 							</div>
 						</div>
-						
-						<! ----------------  upload picture ---------------- -->
+						</c:if>
+						<! ----------------  password ---------------- -->
 						<div class="form-group">
-						<td><c:choose>
-								<c:when test="${not empty user.picture}">
-									<%-- <a href="download?documentId=${user.picture.id}"
-										target="_blank">${user.picture.filename}</a> --%>
-											<td> <img src="${user.picture.filename}"></td>						
-								</c:when>
-								<c:otherwise>
-												-- no Picture available ---
-											</c:otherwise>
-							</c:choose></td>
-						<%-- <td><a href="upload?username=${user.username}">
-								<button type="button" class="btn btn-xs btn-success">
-									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-									Upload
-								</button>
-						</a></td> --%>
-						<td><a href="upload">
-								<button type="button" class="btn btn-xs btn-success">
-									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-									Upload
-								</button>
-						</a></td>
+							<label for="inputPassword" class="col-md-2 control-label">Password</label>
+							<div class="col-md-10">
+								<input class="form-control" id="inputPassword" type="password"
+									placeholder="password" name="pwd1" required>
+							</div>
 						</div>
-						
-						<! ----------------  change pwd ---------------- -->
+
+						<! ----------------  confirm password ---------------- -->
 						<div class="form-group">
-						<td><a href="editPassword">
-								<button type="button" class="btn btn-xs btn-success">
-									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-									Change Password
-								</button>
-						</a></td>
+							<label for="matchingPassword" class="col-md-2 control-label">Confirm
+								Password:</label>
+							<div class="col-md-10">
+								<input class="form-control" id="matchingPassword" name="pwd2"
+									placeholder="retype password" type="password">
+							</div>
 						</div>
 						<! ----------------  buttons ---------------- -->
 						<div class="form-group">
 							<div class="col-md-10 col-md-offset-2">
 								<button type="submit" class="btn btn-primary">Submit</button>
-								<a href="index">
+								<a href="login">
 									<button type="button" class="btn btn-default">Cancel</button>
 								</a>
 							</div>
@@ -127,6 +111,61 @@
 
 	<!-- JS for Bootstrap -->
 	<%@include file="includes/bootstrapJs.js"%>
-	
+	<!-- JS for Bootstrap -->
+
+	<script type="text/javascript">
+		function checkForm(form) {
+			if (form.username.value == "") {
+				alert("Error: Username cannot be blank!");
+				form.username.focus();
+				return false;
+			}
+			re = /^\w+$/;
+			if (!re.test(form.username.value)) {
+				alert("Error: Username must contain only letters, numbers and underscores!");
+				form.username.focus();
+				return false;
+			}
+
+			if (form.pwd1.value != "" && form.pwd1.value == form.pwd2.value) {
+				if (form.pwd1.value.length < 8) {
+					alert("Error: Password must contain at least eight characters!");
+					form.pwd1.focus();
+					return false;
+				}
+				if (form.pwd1.value == form.username.value) {
+					alert("Error: Password must be different from Username!");
+					form.pwd1.focus();
+					return false;
+				}
+				re = /[0-9]/;
+				if (!re.test(form.pwd1.value)) {
+					alert("Error: password must contain at least one number (0-9)!");
+					form.pwd1.focus();
+					return false;
+				}
+				re = /[a-z]/;
+				if (!re.test(form.pwd1.value)) {
+					alert("Error: password must contain at least one lowercase letter (a-z)!");
+					form.pwd1.focus();
+					return false;
+				}
+				re = /[A-Z]/;
+				if (!re.test(form.pwd1.value)) {
+					alert("Error: password must contain at least one uppercase letter (A-Z)!");
+					form.pwd1.focus();
+					return false;
+				}
+			} else {
+				alert("Error: Please check that you've entered and confirmed your password!");
+				form.pwd1.focus();
+				return false;
+			}
+
+			alert("You entered valid credentials!"); /* + form.pwd1.value */
+			return true;
+		}
+	</script>
+
 </body>
 </html>

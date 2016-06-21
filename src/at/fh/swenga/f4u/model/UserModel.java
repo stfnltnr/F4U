@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +24,9 @@ public class UserModel implements java.io.Serializable {
 	@Id
 	@Column(name = "username", unique = true, nullable = false, length = 45)
 	private String username;
+	
+	@Column(name = "email")
+	private String eMail;
 	
 	@Column(name = "password")
 	private String bCryptedPassword;
@@ -39,6 +43,9 @@ public class UserModel implements java.io.Serializable {
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY, cascade = {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH})
 	private Set<SubCategorieModel> subcategories;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+	private PictureModel picture;
+	
 //	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 //	private Set<PermanentModel> permanents;
 
@@ -46,16 +53,18 @@ public class UserModel implements java.io.Serializable {
 		super();
 	}
 	
-	public UserModel(String username, String password, boolean enabled) {
+	public UserModel(String username, String eMail, String password, boolean enabled) {
 		super();
 		this.username = username;
+		this.eMail = eMail;
 		setBCryptedPassword(password);
 		this.enabled = enabled;
 	}
 
-	public UserModel(String username, String password, boolean enabled,
+	public UserModel(String username, String eMail, String password, boolean enabled,
 			Set<UserRole> userRole) {
 		this.username = username;
+		this.eMail = eMail;
 		setBCryptedPassword(password);
 		this.enabled = enabled;
 		this.userRole = userRole;
@@ -67,6 +76,14 @@ public class UserModel implements java.io.Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String geteMail() {
+		return eMail;
+	}
+
+	public void seteMail(String eMail) {
+		this.eMail = eMail;
 	}
 
 	public void setBCryptedPassword(String hackedPassword) {
@@ -105,7 +122,6 @@ public class UserModel implements java.io.Serializable {
 		this.finances = finances;
 	}
 
-
 	public Set<SubCategorieModel> getSubcategories() {
 		return subcategories;
 	}
@@ -113,5 +129,14 @@ public class UserModel implements java.io.Serializable {
 	public void setSubcategories(Set<SubCategorieModel> subcategories) {
 		this.subcategories = subcategories;
 	}
+
+	public PictureModel getPicture() {
+		return picture;
+	}
+
+	public void setPicture(PictureModel picture) {
+		this.picture = picture;
+	}
+	
 	
 }
