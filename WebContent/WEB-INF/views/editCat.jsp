@@ -9,19 +9,62 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<%@include file="includes/bootstrapMeta.inc"%>
-<title>finance4you</title>
-<%@include file="includes/bootstrapCss.css"%>
-<%@include file="includes/treeView.css"%>
-<link href="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css"	rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+<jsp:include page="includes/head.jsp"></jsp:include>
 </head>
 <body>
-	<div class="container" role="main">
+<div id="wrapper">
 	<!-- Navigation -->
-	<jsp:include page="includes/nav.jsp"></jsp:include>
-
-		<!--  add or edit?  ----------------------------------------------------------- -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <!-- navbar-header -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="list">F4U - finance for you</a>
+        </div>
+        <!-- navbar-header -->
+		<!-- navbar-top-links -->
+        <ul class="nav navbar-top-links navbar-right">
+        	<li>
+            	<a href="editUser"><i class="fa fa-user fa-fw"></i> ${user.username}</a>
+            </li>
+            <li>
+            	<c:url value="/logout" var="logoutUrl" />
+				<form action="${logoutUrl }" method="post">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					<button class="btn btn-xs btn-danger" type="submit" value="Logout">
+					<span class="glyphicon glyphicon-log-out"></span> Logout
+					</button>
+				</form>
+            </li>
+        </ul>
+        <!-- navbar-top-links -->
+		<!-- navbar-static-sidebar -->
+        <div class="navbar-default sidebar" role="navigation">
+        	<!-- sidebar-collapse -->
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li>
+                        <a href="list"><i class="fa fa-eye fa-fw"></i> Finance Overview</a>
+                    </li>
+                    <li>
+                        <a href="listCat"><i class="fa fa-table fa-fw"></i> Manage Categories</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-edit fa-fw"></i> Reports</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- sidebar-collapse -->
+        </div>
+        <!-- navbar-static-side -->
+    </nav>
+    <!-- End Navigation -->
+	<div id="page-wrapper" role="main">
+		<!--  add or edit? -->
 		<c:choose>
 			<c:when test="${not empty subcategorie}">
 				<c:set var="legend">Change SubCategorie ${subcategorie.name}</c:set>
@@ -36,34 +79,34 @@
 				<c:set var="shown">hidden</c:set>
 			</c:otherwise>
 		</c:choose>
-		<!--  add or edit?  ----------------------------------------------------------- -->
+		<!--  add or edit? -->
+		<div class="row">
+			<div class="col-lg-6">
+	    		<h1 class="page-header">${legend}</h1>
+			</div>
+		</div>
 
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
+			<div class="col-lg-6">
 				<form class="form-horizontal" method="post" action="${formAction}">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					<fieldset>
-						<legend>${legend}</legend>
 						 <!-- id Subcategorie-->
-						 <c:if test="${not empty subcategorie}">
-						
-								<input class="form-control" id="inputID" type="${shown }" name="id"
-									${readonly} value="<c:out value="${subcategorie.id}"/>">
-
+						 <c:if test="${not empty subcategorie}">						
+							<input class="form-control" id="inputID" type="${shown }" name="id"	${readonly} value="<c:out value="${subcategorie.id}"/>">
 						</c:if>
 						<!-- Name Subcategorie  -->
 						<div class="form-group">
 							<label for="inputIncoming" class="col-md-2 control-label">Name</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputName" type="text"
-									name="name" value="<c:out value="${subcategorie.name}"/>">
+								<input class="form-control" id="inputName" type="text" name="name" value="<c:out value="${subcategorie.name}"/>">
 							</div>
 						</div>
 						<!-- Description Subcategorie  -->
 						<div class="form-group">
 							<label for="inputOutgoing" class="col-md-2 control-label">Description</label>
 							<div class="col-md-10">
-								<input class="form-control" id="inputDescription" type="text"
-									name="description"  value="<c:out value="${subcategorie.description}"/>"></textarea>
+								<input class="form-control" id="inputDescription" type="text" name="description"  value="<c:out value="${subcategorie.description}"/>">
 							</div>
 						</div>
 						<!-- Icon Subcategorie  -->
@@ -71,10 +114,7 @@
 							<label for="inputIcon" class="col-md-2 control-label">Icon</label>
 							<div class="col-md-10">
 							<select name="icon" id="inputIcon" class="selectpicker show-tick" data-width="fit" data-size="10" title="Choose icon ..." value="<c:out value="${subcategorie.icon }"/>">
-							<c:forTokens items="glyphicon glyphicon-euro,glyphicon glyphicon-shopping-cart,glyphicon glyphicon-cutlery,glyphicon glyphicon-glass,glyphicon glyphicon-home,glyphicon glyphicon-piggy-bank,glyphicon glyphicon-user,glyphicon glyphicon-heart,glyphicon glyphicon-globe,glyphicon glyphicon-film,glyphicon glyphicon-ok,glyphicon glyphicon-remove,glyphicon glyphicon-road,glyphicon glyphicon-lock,glyphicon glyphicon-headphones,glyphicon glyphicon-book,glyphicon glyphicon-picture,glyphicon glyphicon-facetime-video,glyphicon glyphicon-exclamation-sign,glyphicon glyphicon-gift,glyphicon glyphicon-plane,glyphicon glyphicon-shopping-cart,glyphicon glyphicon-wrench,glyphicon glyphicon-phone,glyphicon glyphicon-flash,glyphicon glyphicon-phone-alt,glyphicon glyphicon-sunglasses,glyphicon glyphicon-education,glyphicon glyphicon-ice-lolly-tasted,glyphicon glyphicon-ice-lolly,glyphicon glyphicon-cd,glyphicon glyphicon-tree-deciduous,glyphicon glyphicon-cog,glyphicon glyphicon-film,glyphicon glyphicon-pencil,glyphicon glyphicon-music,glyphicon glyphicon-map-marker,glyphicon glyphicon-question-sign,glyphicon glyphicon-baby-formula"
-							delims="," var="glyph">
-												
-												
+							<c:forTokens items="glyphicon glyphicon-euro,glyphicon glyphicon-shopping-cart,glyphicon glyphicon-cutlery,glyphicon glyphicon-glass,glyphicon glyphicon-home,glyphicon glyphicon-piggy-bank,glyphicon glyphicon-user,glyphicon glyphicon-heart,glyphicon glyphicon-globe,glyphicon glyphicon-film,glyphicon glyphicon-ok,glyphicon glyphicon-remove,glyphicon glyphicon-road,glyphicon glyphicon-lock,glyphicon glyphicon-headphones,glyphicon glyphicon-book,glyphicon glyphicon-picture,glyphicon glyphicon-facetime-video,glyphicon glyphicon-exclamation-sign,glyphicon glyphicon-gift,glyphicon glyphicon-plane,glyphicon glyphicon-shopping-cart,glyphicon glyphicon-wrench,glyphicon glyphicon-phone,glyphicon glyphicon-flash,glyphicon glyphicon-phone-alt,glyphicon glyphicon-sunglasses,glyphicon glyphicon-education,glyphicon glyphicon-ice-lolly-tasted,glyphicon glyphicon-ice-lolly,glyphicon glyphicon-cd,glyphicon glyphicon-tree-deciduous,glyphicon glyphicon-cog,glyphicon glyphicon-film,glyphicon glyphicon-pencil,glyphicon glyphicon-music,glyphicon glyphicon-map-marker,glyphicon glyphicon-question-sign,glyphicon glyphicon-baby-formula" delims="," var="glyph">
 								<c:choose>
 									<c:when test="${glyph == subcategorie.icon }">
 										<option data-icon="${glyph}" value="${glyph}" selected="selected" >&zwnj;</option>
@@ -152,7 +192,6 @@
 
 					</fieldset>
 
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
 				</form>
 			</div>
@@ -160,38 +199,11 @@
 		
 
 	</div>
-	<!--  End of container -->
+	<!--  End of page-wrapper -->
+</div>
+<!-- End Wrapper -->
 
-
-	<!-- JS for Bootstrap -->
-	<%@include file="includes/bootstrapJs.js"%>
-	<!-- JS for Bootstrap -->
-	
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
-
-	<!-- (Optional) Latest compiled and minified JavaScript translation files -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js"></script>
-
-
-	<!-- JS for Datetime picker -->
-
-	<script type="text/javascript"
-		src="http://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-
-	<script>
-		$(function() {
-
-			$(".form_datetime").datetimepicker({
-				format : "dd.mm.yyyy",
-				autoclose : true,
-				todayBtn : true,
-				pickerPosition : "bottom-left",
-				minView : 2
-			});
-
-		});
-	</script>
-
+<!-- java scripts -->
+<jsp:include page="includes/scripts.jsp"></jsp:include>
 </body>
 </html>
