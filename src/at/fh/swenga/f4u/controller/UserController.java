@@ -53,7 +53,7 @@ public class UserController {
 			
 	@RequestMapping(value = "/addU", method = RequestMethod.GET)
 	public String showAddDataForm() {
-		return "editPassword";
+		return "newUser";
 	}
 	
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)

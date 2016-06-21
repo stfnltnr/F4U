@@ -25,7 +25,11 @@ public interface FinanceRepository extends JpaRepository<FinanceModel, Integer> 
 	
 	public List<FinanceModel> findByUser_UsernameAndValue(String username,double value);
 	
-//	public List<FinanceModel> findByValueBetween(double value, double value);
+	@Query("select f from FinanceModel f where f.user = :user AND f.bookDate BETWEEN :date1 AND :date2")
+	public List<FinanceModel> findByUser_UsernameAndDateBetween(@Param("user")UserModel username,@Param("date1")Date bookDate1, @Param("date2")Date bookDate2);
+	
+	@Query("select f from FinanceModel f where f.user = :user AND f.value BETWEEN :value1 AND :value2")
+	public List<FinanceModel> findByUser_UsernameAndValueBetween(@Param("user")UserModel username,@Param("value1")double value1, @Param("value2")double value2);
 	
 	public List<FinanceModel> findByUser_UsernameAndValueGreaterThanEqual(String username,double value);
 	
