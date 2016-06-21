@@ -28,7 +28,7 @@
 		<c:choose>
 			<c:when test="${not empty user}">
 				<c:set var="legend">Change User ${user.username}</c:set>
-				<c:set var="formAction">changeUser</c:set>
+				<c:set var="formAction">changePWD</c:set>
 				<c:set var="readonly">readonly</c:set>
 				<c:set var="shown">hidden</c:set>
 			</c:when>
@@ -44,7 +44,7 @@
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<form id="login" class="form-horizontal" method="post"
-					action="changePWD" onsubmit="return checkForm(this);">
+					action="${formAction}" onsubmit="return checkForm(this);">
 					<legend>${legend}</legend>
 					<fieldset>
 						<! ----------------  username ---------------- -->
