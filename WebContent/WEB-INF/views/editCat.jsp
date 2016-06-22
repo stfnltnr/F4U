@@ -28,19 +28,26 @@
         <!-- navbar-header -->
 		<!-- navbar-top-links -->
         <ul class="nav navbar-top-links navbar-right">
-        	<li>
-            	<a href="editUser"><i class="fa fa-user fa-fw"></i> ${user.username}</a>
-            </li>
-            <li>
-            	<c:url value="/logout" var="logoutUrl" />
-				<form action="${logoutUrl }" method="post">
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-					<button class="btn btn-xs btn-danger" type="submit" value="Logout">
-					<span class="glyphicon glyphicon-log-out"></span> Logout
-					</button>
-				</form>
-            </li>
-        </ul>
+			<li class="dropdown">
+		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+		            <i class="fa fa-user fa-fw"></i>  ${user.username} <i class="fa fa-caret-down"></i>
+		        </a>
+	        <ul class="dropdown-menu dropdown-user">
+	            <li><a href="editUser"><i class="fa fa-user fa-fw"></i> Edit Profile</a>
+	            </li>
+	        </ul>
+        	<!-- /.dropdown-user -->
+    		</li>
+   			 <li>
+    		<c:url value="/logout" var="logoutUrl" />
+			<form action="${logoutUrl }" method="post">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				<button class="btn btn-xs btn-danger" type="submit" value="Logout">
+				<span class="glyphicon glyphicon-log-out"></span> Logout
+				</button>
+			</form>
+           </li>
+       </ul>
         <!-- navbar-top-links -->
 		<!-- navbar-static-sidebar -->
         <div class="navbar-default sidebar" role="navigation">
@@ -54,7 +61,7 @@
                         <a href="listCat"><i class="fa fa-table fa-fw"></i> Manage Categories</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-edit fa-fw"></i> Reports</a>
+                        <a href="report"><i class="fa fa-edit fa-fw"></i> Reports</a>
                     </li>
                 </ul>
             </div>

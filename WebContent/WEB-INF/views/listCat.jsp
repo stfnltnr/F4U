@@ -25,19 +25,26 @@
         <!-- navbar-header -->
 		<!-- navbar-top-links -->
         <ul class="nav navbar-top-links navbar-right">
-        	<li>
-            	<a href="editUser"><i class="fa fa-user fa-fw"></i> ${user.username}</a>
-            </li>
-            <li>
-            	<c:url value="/logout" var="logoutUrl" />
-				<form action="${logoutUrl }" method="post">
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-					<button class="btn btn-xs btn-danger" type="submit" value="Logout">
-					<span class="glyphicon glyphicon-log-out"></span> Logout
-					</button>
-				</form>
-            </li>
-        </ul>
+			<li class="dropdown">
+		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+		            <i class="fa fa-user fa-fw"></i>  ${user.username} <i class="fa fa-caret-down"></i>
+		        </a>
+	        <ul class="dropdown-menu dropdown-user">
+	            <li><a href="editUser"><i class="fa fa-user fa-fw"></i> Edit Profile</a>
+	            </li>
+	        </ul>
+        	<!-- /.dropdown-user -->
+    		</li>
+   			 <li>
+    		<c:url value="/logout" var="logoutUrl" />
+			<form action="${logoutUrl }" method="post">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				<button class="btn btn-xs btn-danger" type="submit" value="Logout">
+				<span class="glyphicon glyphicon-log-out"></span> Logout
+				</button>
+			</form>
+           </li>
+       	</ul>
         <!-- navbar-top-links -->
 		<!-- navbar-static-sidebar -->
         <div class="navbar-default sidebar" role="navigation">
@@ -51,7 +58,7 @@
                         <a href="listCat"><i class="fa fa-table fa-fw"></i> Manage Categories</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-edit fa-fw"></i> Reports</a>
+                        <a href="report"><i class="fa fa-edit fa-fw"></i> Reports</a>
                     </li>
                 </ul>
             </div>
@@ -62,53 +69,64 @@
     <!-- Navigation -->
     <div id="page-wrapper">
     	<div class="row">
-                <div class="col-lg-10">
-                    <h1 class="page-header">Manage Categories</h1>
-                    <a href="fillCat"><button type="button" class="btn btn-success">Fill Cat</button></a>
-                </div>
-                <div class="col-lg-10">
-                	<jsp:include page="includes/errors.jsp"></jsp:include>
-                </div>
-            </div>
+	        <div class="col-lg-10">
+	            <h1 class="page-header">Manage Categories</h1>
+	        </div>
+	        <div class="col-lg-10">
+	      		<jsp:include page="includes/errors.jsp"></jsp:include>
+	        </div>
+		</div>
 		<!--  list all categories ----------------------------------------------------------- -->
 		<div class="row">
 			<div class="col-lg-10">
 				<c:forEach items="${categories}" var="cat">
-				<c:set var="i" value="${cat.id}" />	
-				<table class="table table-striped">
-				<thead>
-				<th class="col-md-8" colspan="2">
-					<h5><strong><span class="${cat.icon }" style="color:${cat.color};" aria-hidden="true"></span> ${cat.name}</strong></h5>
-					
-				</th>
-				<th class="col-md-2">
-					<a href="addCat"><button type="button" class="btn btn-sm btn-success">
-					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>SubCategorie</button></a>
-				</th>
-				</thead>
-				<tbody>
-				<c:forEach items="${subcategories}" var="subcat">
-				<c:if test="${subcat.maincat == i }">		
-					<tr>
-						<td class="col-md-2"><span class="${subcat.icon }" style="color:${subcat.color};" aria-hidden="true" ></span> ${subcat.name}</td>
-						<td class="col-md-6">${subcat.description}</td>
-						<td class="col-md-2">
-							<a href="editC?id=${subcat.id}">
-							<button type="button" class="btn btn-xs btn-success">
+				<c:set var="i" value="${cat.id}" />
+				<div class="row">
+	                <div class="col-lg-12">
+	                    <div class="panel panel-primary">
+	                        <div class="panel-heading">
+	                            <div class="row">
+	                                <div class="col-xs-9">
+	                                    <i class="${cat.icon} fa-3x"></i><span class="huge"> ${cat.name }</span>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <a href="addCat">
+	                            <div class="panel-footer">
+	                                <span class="pull-right"><i class="fa fa-plus-circle"></i><strong> Add SubCategory</strong></span>
+	                                <div class="clearfix"></div>
+	                            </div>
+	                        </a>
+	                    </div>
+	                </div>
+                </div>
+                <c:forEach items="${subcategories}" var="subcat">
+				<c:if test="${subcat.maincat == i }">
+                <div class="row">
+                	<div class="col-lg-12">
+                		<div class="col-lg-2">
+                			<h4><i class="${subcat.icon }" style="color:${subcat.color};" aria-hidden="true" ></i> ${subcat.name}</h4>
+                		</div>
+                		<div class="col-lg-6">
+                			<h4>${subcat.description}</h4>
+                		</div>
+                		<div class="col-lg-4 text-right">
+                			<a href="editC?id=${subcat.id}">
+							<button type="button" class="btn btn-md btn-success">
 							<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 							Edit</button></a>
 							<a href="deleteCat?id=${subcat.id}">
-							<button type="button" class="btn btn-xs btn-danger">
+							<button type="button" class="btn btn-md btn-danger">
 							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 							Delete</button></a>
-						</td>
-					</tr>				
+                		</div>	
+                	</div>
+                </div>				
 				</c:if>
 				</c:forEach>
-				</tbody>
+				<div class="col-lg-9"></div>
 				</c:forEach>
-				</table>
-				<div class="col-md-10"></div>	
+				<div class="col-lg-9"></div>	
 			</div>
 		<!--  list all categories ----------------------------------------------------------- -->
 		</div>

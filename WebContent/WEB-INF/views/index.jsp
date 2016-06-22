@@ -30,8 +30,15 @@
             <!-- navbar-header -->
 			<!-- navbar-top-links -->
             <ul class="nav navbar-top-links navbar-right">
-            	<li>
-                	<a href="editUser"><i class="fa fa-user fa-fw"></i> ${user.username}</a>
+            	<li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  ${user.username} <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="editUser"><i class="fa fa-user fa-fw"></i> Edit Profile</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
                 </li>
                 <li>
                 	<c:url value="/logout" var="logoutUrl" />
@@ -56,7 +63,7 @@
                             <a href="listCat"><i class="fa fa-table fa-fw"></i> Manage Categories</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-edit fa-fw"></i> Reports</a>
+                            <a href="report"><i class="fa fa-edit fa-fw"></i> Reports</a>
                         </li>
                     </ul>
                 </div>
@@ -258,39 +265,15 @@
 		    		</div> 
 		  		</div>
 		  	</div>
-		  	
-		  	<!--  reports ----------------------------------------------------------- -->
-		 <form action="reportAll" method="post">
-	  	<center>
-	  		<input type="submit" name="excel" value="Report All" class="btn btn-primary">
-	  				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-		</form>
-	  	<form class="form-horizontal" method="post" action="reportDate">
-					<div class="form-group">
-						<div class="col-md-2">
-							<input id="searchDate" class="form-control form_datetime" type="text" name="searchDate1">
-						</div>
-						<div class="col-md-2">
-							<input id="searchDate" class="form-control form_datetime" type="text" name="searchDate2">
-						</div>
-						<div class="col-md-6">	
-							<input type="submit" name="excel" value="Report between" class="btn btn-primary">
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-						</div>
-					</div>
-				</form>
-	  	</center>
-	  	<!--  reports ----------------------------------------------------------- -->
-	  	
 		  	<!-- End Search & Filter Accordion -->
 		  	<!--  list all finances ----------------------------------------------------------- -->
 			<div class="row">
 				<div class="col-lg-10">
-					<table data-toggle="table" class="table table-striped">
+					<table data-toggle="table"
+							data-pagination="true">
 						<thead>
 							<tr>
-								<th>Payment</th>
-								<th>Book Date</th>
+								<th>Date</th>
 								<th>Value</th>
 								<th>Notes</th>
 								<th>Category</th>
@@ -301,9 +284,16 @@
 						<tbody>
 							<c:forEach items="${finances}" var="finance">
 								<tr>
-									<td>${finance.payment}</td>
 									<td><fmt:formatDate value="${finance.bookDate}" pattern="dd.MM.yyyy" /></td>
-									<td>${finance.value}</td>
+									<c:choose>
+										<c:when test="${finance.payment == true }">
+											<td>${finance.value}</td>
+										</c:when>
+										<c:otherwise>
+											<td class="text-danger">-${finance.value}</td>
+										</c:otherwise>
+									</c:choose>
+									</td>
 									<td>${finance.notes}</td>
 									<td><span class="${finance.categorie.icon }" aria-hidden="true" ></span> ${finance.categorie.name}</td>
 									<td><span class="${finance.subcategorie.icon }" style="color:${finance.subcategorie.color};" aria-hidden="true" ></span> ${finance.subcategorie.name}</td>
