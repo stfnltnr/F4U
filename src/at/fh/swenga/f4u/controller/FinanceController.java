@@ -169,13 +169,12 @@ public class FinanceController {
 	
 	@RequestMapping(value = { "/findValueBetween" })
 	public String findDate(Model model, @RequestParam double searchValue1, @RequestParam double searchValue2) {
-	
 		List<FinanceModel> finances = null;
 		addCats(model);
 		currentUser(model);
 		finances = financeRepository.findByUser_UsernameAndValueBetween(getCurrrentUserModel(),searchValue1, searchValue2);
 		model.addAttribute("finances", finances);
-		return "excelReport";
+		return "index";
 	}
 	
 	@RequestMapping(value = { "/findBool" })

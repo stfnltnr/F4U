@@ -87,7 +87,7 @@
 	                        <div class="panel-heading">
 	                            <div class="row">
 	                                <div class="col-xs-9">
-	                                    <i class="${cat.icon} fa-3x"></i><span class="huge"> ${cat.name }</span>
+	                                    <i class="${cat.icon} fa-2x"></i><span class="h2"> ${cat.name }</span>
 	                                </div>
 	                            </div>
 	                        </div>
@@ -126,7 +126,6 @@
 				</c:forEach>
 				<div class="col-lg-9"></div>
 				</c:forEach>
-				<div class="col-lg-9"></div>	
 			</div>
 		<!--  list all categories ----------------------------------------------------------- -->
 		</div>

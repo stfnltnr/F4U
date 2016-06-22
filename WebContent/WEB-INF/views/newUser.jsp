@@ -17,6 +17,13 @@
 <body>
 	<div class="row"></div> 
 	<div class="container" role="main">
+	<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<div class="panel">
+					<center><strong><h1>finance 4 you</h1></strong></center>
+				</div>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<div class="login-panel panel panel-default">

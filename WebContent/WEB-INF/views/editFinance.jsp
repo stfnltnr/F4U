@@ -71,11 +71,11 @@
         <!-- navbar-static-side -->
     </nav>
     <!-- Navigation -->
-	<div id="page-wrapper" style="min-height: 890px;" role="main">
+	<div id="page-wrapper" role="main">
 		<!--  add or edit?  ----------------------------------------------------------- -->
 		<c:choose>
 			<c:when test="${not empty finance}">
-				<c:set var="legend">Change finance entry: ${finance.notes}</c:set>
+				<c:set var="legend">Edit: ${finance.notes}</c:set>
 				<c:set var="formAction">changeFinance</c:set>
 				<c:set var="readonly">readonly</c:set>
 				<c:set var="shown">hidden</c:set>
@@ -104,7 +104,7 @@
 							</c:if>
 							<!--  payment  -->
 							<div class="form-group">
-								<label for="inputPayment" class="col-md-2 control-label">Payment</label>
+								<label for="inputPayment" class="col-md-2 control-label">Payment:</label>
 								<div class="col-md-10">
 									<select name="payment" class="selectpicker" data-width="fit" size="2" value="<c:out value="${finance.payment}"/>">
 									<c:if test="${finance.payment == true}">
@@ -126,7 +126,7 @@
 							<!--  bookDate  -->
 							<div class="form-group">
 								<label for="inputDate" class="col-md-2 control-label">Date</label>
-								<div class="col-md-2">
+								<div class="col-md-10">
 									<input class="form-control form_datetime" id="inputDate" placeholder="Date"	type="text" name="bookDate"	value="<fmt:formatDate value="${finance.bookDate}" pattern="dd.MM.yyyy"/>">
 								</div>
 								</div>

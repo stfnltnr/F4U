@@ -80,7 +80,7 @@
 				<c:set var="formAction">changePWD</c:set>
 				<c:set var="readonly">readonly</c:set>
 				<c:set var="shown">hidden</c:set>
-				<c:set var="cancel">list</c:set>
+				<c:set var="cancel">editUser</c:set>
 			</c:when>
 			<c:otherwise>
 				<c:set var="legend">New User</c:set>
@@ -93,7 +93,7 @@
 		<!--  add or edit? -->
 		<div class="row">
 			<div class="col-lg-6">
-	    		<h1 class="page-header">${legend}</h1>
+	    		<h1 class="page-header">Change password for user ${user.username}</h1>
 			</div>
 			<div class="col-lg-6">
               	<jsp:include page="includes/errors.jsp"></jsp:include>
@@ -102,7 +102,7 @@
 
 		<div class="row">
 			<div class="col-lg-6">
-				<form id="login" class="form-horizontal" method="post" action="${formAction}" onsubmit="return checkForm(this);">
+				<form id="login" class="form-horizontal" method="post" action="changePWD" onsubmit="return checkForm(this);">
 					<fieldset>
 						<!-- username -->
 						<div class="form-group">
@@ -145,7 +145,7 @@
 							<label for="buttons" class="col-lg-3 control-label"></label>
 							<div class="col-lg-9">
 								<button type="submit" class="btn btn-primary">Submit</button>
-								<a href="${cancel}">
+								<a href="editUser">
 									<button type="button" class="btn btn-default">Cancel</button>
 								</a>
 							</div>
@@ -153,8 +153,7 @@
 
 					</fieldset>
 
-					<input type="hidden" name="${_csrf.parameterName}"
-						value="${_csrf.token}" />
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
 				</form>
 			</div>

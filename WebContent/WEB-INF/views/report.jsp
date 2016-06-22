@@ -29,8 +29,15 @@
             <!-- navbar-header -->
 			<!-- navbar-top-links -->
             <ul class="nav navbar-top-links navbar-right">
-            	<li>
-                	<a href="editUser"><i class="fa fa-user fa-fw"></i> ${user.username}</a>
+            	<li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  ${user.username} <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="editUser"><i class="fa fa-user fa-fw"></i> Edit Profile</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
                 </li>
                 <li>
                 	<c:url value="/logout" var="logoutUrl" />
@@ -55,7 +62,7 @@
                             <a href="listCat"><i class="fa fa-table fa-fw"></i> Manage Categories</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-edit fa-fw"></i> Reports</a>
+                            <a href="report"><i class="fa fa-edit fa-fw"></i> Reports</a>
                         </li>
                     </ul>
                 </div>
@@ -120,20 +127,19 @@
 				     <div id = "collapseOne" class = "panel-collapse collapse">
 				        <div class = "panel-body">
 							<!-- Report Panel -->				
-							<hr>
 							<!--  Report Date -->
-							 <jsp:useBean id="now" class="java.util.Date" />
+							<jsp:useBean id="now" class="java.util.Date" />
 							<form class="form-horizontal" method="post" action="reportDate">
 								<div class="form-group">
 									<label class="control-label col-md-2">Report Date between:</label>
-								<div class="col-md-2">
-							<input id="reportDate" class="form-control form_datetime" value="<fmt:formatDate pattern="dd.MM.yyyy" value="${now}" />" type="text" name="searchDate1">
-						</div>
-						<div class="col-md-2">
-							<input id="reportDate" class="form-control form_datetime" value="<fmt:formatDate pattern="dd.MM.yyyy" value="${now}" />" type="text" name="searchDate2">
-						</div>
-									<div class="col-md-6">	
-										<button class="btn btn-default" type="submit" >Report</button>
+									<div class="col-md-3">
+										<input id="reportDate" class="form-control form_datetime" value="<fmt:formatDate pattern="dd.MM.yyyy" value="${now}" />" type="text" name="searchDate1">
+									</div>
+									<div class="col-md-3">
+										<input id="reportDate" class="form-control form_datetime" value="<fmt:formatDate pattern="dd.MM.yyyy" value="${now}" />" type="text" name="searchDate2">
+									</div>
+									<div class="col-md-4">	
+										<button class="btn btn-default" type="submit" >Create Report</button>
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									</div>
 								</div>
@@ -144,13 +150,15 @@
 							<form class="form-horizontal" method="post" action="reportCategorie">
 								<div class="form-group">
 									<label class="control-label col-md-2">Report Category:</label>
-									<div class="col-md-10">
+									<div class="col-md-7">
+									<fieldset>
 											<c:forEach items="${cats}" var="cat">
-												<td><input type="checkbox" name="categorieId" value="${cat.id}">${cat.name}</td>
+												<label class="checkbox-inline""><input type="checkbox" name="categorieId" value="${cat.id}">${cat.name}</label>
 											</c:forEach>
+									</fieldset>
 									</div>
-									<div class="col-md-6">	
-										<button class="btn btn-default" type="submit" >Report</button>
+									<div class="col-md-3">	
+										<button class="btn btn-default" type="submit" >Create Report</button>
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									</div>
 								</div>
@@ -161,12 +169,14 @@
 							<form class="form-horizontal" method="post" action="reportPayment">
 								<div class="form-group">
 									<label class="control-label col-md-2">Report Payment:</label>
-									<div class="col-md-10">
-										<label class="checkbox-inline"><input type="radio" name="type" value="findIncome" />Income</label>
-										<label class="checkbox-inline"><input type="radio" name="type" value="findOutcome" />Outcome</label>
+									<div class="col-md-2">
+										<fieldset>
+											<label class="radio-inline"><input type="radio" name="type" value="findIncome" />Income</label>
+											<label class="radio-inline"><input type="radio" name="type" value="findOutcome" />Outcome</label>
+										</fieldset>
 									</div>
-									<div class="col-md-6">	
-										<button class="btn btn-default" type="submit" >Report</button>
+									<div class="col-md-8">	
+										<button class="btn btn-default" type="submit" >Create Report</button>
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 									</div>
 								</div>

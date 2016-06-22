@@ -74,6 +74,7 @@
         <!-- Navigation -->
 
         <div id="page-wrapper">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-10">
                     <h1 class="page-header">Finance Overview</h1>
@@ -131,17 +132,19 @@
 							<form class="form-horizontal" method="post" action="findBool">
 								<div class="form-group">						
 									<label class="control-label col-lg-2" for="findBool">Filter:</label>
-									<div class="col-lg-6">
+									<div class="col-lg-4">
 									<fieldset>
 										<label class="checkbox-inline"><input type="radio" name="type" value="findAll" />All</label>
 										<label class="checkbox-inline"><input type="radio" name="type" value="findIncome" />Income</label>
 										<label class="checkbox-inline"><input type="radio" name="type" value="findOutcome" />Outcome</label>
-										</div>
-										<div class="col-md-6">
+									</fieldset>
+									</div>
+									<div class="col-lg-6">
+										
 										<button class="btn btn-default" type="submit" value="Filter">Filter</button>
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-										</div>
-									</fieldset>
+									
+									</div>
 								</div>
 							</form>
 							<!-- Filter All/Income/Outcome -->					
@@ -149,24 +152,39 @@
 							<!-- Search Values -->
 							<form class="form-horizontal" method="post" action="findValue">
 								<div class="form-group">
-									<label class="control-label col-md-2" for="searchValue">Search Value:</label>
-										<div class="col-md-4">
-											<input class="form-control" type="text" name="searchValue">
+									<label class="control-label col-lg-2" for="searchValue">Search Value:</label>
+										<div class="col-lg-4">
+											<input class="form-control" type="text" name="searchValue" value="0">
 										</div>
-										<div class="col-md-6">
+										<div class="col-lg-6">
 											<select class="selectpicker" data-width="fit" name="type">
 												<option value="findByValue">exact Value</option>
-				<!--								<option value="findByValueBetween">von bis</option> -->
 												<option value="findByValueGreaterThanEqual">greater than</option>
 												<option value="findByValueLessThanEqual">less than</option>
 											</select>
 											<button class="btn btn-default" type="submit">Search</button>
 											<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-				
 										</div>
-									</div>
+								</div>
 							</form>
 							<!-- Search Values -->
+							<!-- Search Value Between -->
+							<form class="form-horizontal" method="post" action="findValueBetween">
+								<div class="form-group">
+									<label class="control-label col-md-2" for="searchValue">Search Value Between:</label>
+									<div class="col-md-2">
+										<input id="searchValue" class="form-control" value="0" type="text" name="searchValue1">
+									</div>
+									<div class="col-md-2">
+										<input id="searchValue" class="form-control" value="0" type="text" name="searchValue2">
+									</div>
+									<div class="col-md-6">
+										<button class="btn btn-default" type="submit">Search</button>
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+									</div>
+								</div>
+							</form>
+							<!-- Search Date Between -->
 							<hr>
 							<!--  Search Notes -->
 							<form class="form-horizontal" method="post" action="searchNotes">
@@ -265,24 +283,22 @@
 		    		</div> 
 		  		</div>
 		  	</div>
-<<<<<<< HEAD
-=======
-		  		  	
->>>>>>> branch 'master' of https://github.com/loete/F4U.git
+
 		  	<!-- End Search & Filter Accordion -->
 		  	<!--  list all finances ----------------------------------------------------------- -->
-			<div class="row">
 				<div class="col-lg-10">
-					<table data-toggle="table"
-							data-pagination="true">
+					<table class="table table-striped" 
+							data-toggle="table" 
+							data-pagination="true"
+							data-height="505">
 						<thead>
 							<tr>
-								<th>Date</th>
-								<th>Value</th>
-								<th>Notes</th>
-								<th>Category</th>
-								<th>SubCategory</th>
-								<th>Action</th>
+								<th class="col-lg-1">Date</th>
+								<th class="col-lg-1">Value</th>
+								<th class="col-lg-4">Notes</th>
+								<th class="col-lg-2">Category</th>
+								<th class="col-lg-2">SubCategory</th>
+								<th class="col-lg-2">Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -320,7 +336,6 @@
 			</div>
 			<!--  list all finances  ----------------------------------------------------------- -->
         </div>
-        	
         <!-- /#page-wrapper -->
 
     </div>
