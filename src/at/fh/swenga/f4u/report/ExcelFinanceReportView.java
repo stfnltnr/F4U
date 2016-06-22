@@ -1,5 +1,7 @@
 package at.fh.swenga.f4u.report;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -16,17 +18,22 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.view.document.AbstractXlsxView;
 
 import at.fh.swenga.f4u.model.FinanceModel;
+import at.fh.swenga.f4u.model.UserModel;
 
 public class ExcelFinanceReportView extends AbstractXlsxView {
-
+	
 	@Override
 	protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
 		List<FinanceModel> finances = (List<FinanceModel>) model.get("finances");
+		UserModel user = (UserModel) model.get("user");
 
 		// create a worksheet
 		Sheet sheet = workbook.createSheet("Finance Report");
@@ -99,11 +106,15 @@ public class ExcelFinanceReportView extends AbstractXlsxView {
 		}
 		Row sumRow = sheet.createRow(rowNum++);
 		Row lastRow = sheet.createRow(rowNum+1);
+		Row userRow = sheet.createRow(rowNum+3);
+		Row dateRow = sheet.createRow(rowNum+4);
 		sumRow.createCell(3).setCellValue("Sum");
 		sumRow.createCell(4).setCellValue(sumIncoming);
 		sumRow.createCell(5).setCellValue(sumOutgoing);
 		lastRow.createCell(3).setCellValue("Total");
 		lastRow.createCell(5).setCellValue(sumIncoming+sumOutgoing);
+		userRow.createCell(1).setCellValue("User: "+user.getUsername());
+		dateRow.createCell(1).setCellValue("Date: "+ new Date());
 		
 		
 		// adjust column width to fit the content

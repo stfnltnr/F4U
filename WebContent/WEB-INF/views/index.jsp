@@ -265,6 +265,10 @@
 		    		</div> 
 		  		</div>
 		  	</div>
+<<<<<<< HEAD
+=======
+		  		  	
+>>>>>>> branch 'master' of https://github.com/loete/F4U.git
 		  	<!-- End Search & Filter Accordion -->
 		  	<!--  list all finances ----------------------------------------------------------- -->
 			<div class="row">
