@@ -92,13 +92,13 @@ public class FinanceController {
 
 	@RequestMapping(value = { "/", "list" })
 	public String index(Model model) {
-		List<FinanceModel> finances = financeRepository.findByUser_UsernameOrderByBookDate(getCurrentUserName());
+		List<FinanceModel> finances = financeRepository.findByUser_UsernameOrderByBookDateDesc(getCurrentUserName());
 		model.addAttribute("finances", finances);
 		addCats(model);
 		currentUser(model);
 		return "index";
 	}
-
+	
 	@RequestMapping(value = { "/getPage" })
 	public String getPage(Pageable page, Model model) {
 		Page<FinanceModel> finances = financeRepository.findAll(page);
@@ -124,7 +124,7 @@ public class FinanceController {
 		List<FinanceModel> finances = null;
 		addCats(model);
 		currentUser(model);
-		if(id==0) {finances = financeRepository.findByUser_UsernameOrderByBookDate(getCurrentUserName());} else finances=financeRepository.findByUser_UsernameAndCategorieId(getCurrentUserName(),id);
+		if(id==0) {finances = financeRepository.findByUser_UsernameOrderByBookDateDesc(getCurrentUserName());} else finances=financeRepository.findByUser_UsernameAndCategorieIdOrderByBookDateDesc(getCurrentUserName(),id);
 		model.addAttribute("finances", finances);
 		return "index";
 	}
@@ -134,7 +134,7 @@ public class FinanceController {
 		List<FinanceModel> finances = null;
 		addCats(model);
 		currentUser(model);
-		if(id==0) {finances = financeRepository.findByUser_UsernameOrderByBookDate(getCurrentUserName());} 
+		if(id==0) {finances = financeRepository.findByUser_UsernameOrderByBookDateDesc(getCurrentUserName());} 
 		else finances = financeRepository.findByUser_UsernameAndSubcategorieId(getCurrentUserName(),id);
 		model.addAttribute("finances", finances);
 		return "index";
@@ -154,11 +154,7 @@ public class FinanceController {
 		case "findByValue":
 			finances = financeRepository.findByUser_UsernameAndValue(getCurrentUserName(),searchValue);
 			break;
-			
-//		case "findByValueBetween":
-//			finances = financeRepository.findByValueBetween(searchValue);
-//			break;
-			
+						
 		case "findByValueGreaterThanEqual":
 			finances = financeRepository.findByUser_UsernameAndValueGreaterThanEqual(getCurrentUserName(),searchValue);
 			break;
@@ -169,6 +165,17 @@ public class FinanceController {
 		}
 		model.addAttribute("finances", finances);
 		return "index";
+	}
+	
+	@RequestMapping(value = { "/findValueBetween" })
+	public String findDate(Model model, @RequestParam double searchValue1, @RequestParam double searchValue2) {
+	
+		List<FinanceModel> finances = null;
+		addCats(model);
+		currentUser(model);
+		finances = financeRepository.findByUser_UsernameAndValueBetween(getCurrrentUserModel(),searchValue1, searchValue2);
+		model.addAttribute("finances", finances);
+		return "excelReport";
 	}
 	
 	@RequestMapping(value = { "/findBool" })
